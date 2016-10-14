@@ -1,0 +1,97 @@
+---
+title: Home
+main_menu: true
+sort_info: 1
+template: default.template
+---
+
+<div id="content">
+  <!-- Banner -->
+  <section id="banner">
+    <header>
+      <h2><em>A Versatile PDF Creation and Manipulation Library for Ruby</em></h2>
+      <pre><code>$ gem install hexapdf</code></pre>
+      <p>Coming soon</p>
+    </header>
+  </section>
+
+  <!-- Highlights -->
+  <section class="wrapper style1">
+    <div class="container">
+      <div class="row 200%">
+        <section class="4u 12u(narrower)">
+          <div class="box highlight">
+            <i class="icon major fa-paper-plane"></i>
+            <h3>PDF Creation</h3>
+
+            <p>HexaPDF includes facilities for creating PDF documents from scratch, using a canvas
+            object for drawing and outputting text.</p>
+
+            </div>
+        </section>
+        <section class="4u 12u(narrower)">
+          <div class="box highlight">
+            <i class="icon major fa-pencil"></i>
+            <h3>PDF Manipulation</h3>
+
+            <p>HexaPDF can read existing documents and modify them in various ways, e.g. adding,
+            modifying or deleting pages, annotations, files, ...</p>
+
+          </div>
+        </section>
+        <section class="4u 12u(narrower)">
+          <div class="box highlight">
+            <i class="icon major fa-wrench"></i>
+            <h3>PDF File Merging</h3>
+
+            <p>HexaPDF can be used to merge multiple PDF files together. Advanced merge facilities
+            can be built on the existing infrastructure.</p>
+
+          </div>
+        </section>
+      </div>
+      <div class="row 200%">
+        <section class="4u 12u(narrower)">
+          <div class="box highlight">
+            <i class="icon major fa-paper-plane"></i>
+            <h3>Content Extraction</h3>
+
+            <p>HexaPDF allows extracting various parts of a PDF file, e.g. text from a page,
+            attached files, embedded images, ...</p>
+
+          </div>
+        </section>
+        <section class="4u 12u(narrower)">
+          <div class="box highlight">
+            <i class="icon major fa-pencil"></i>
+            <h3>PDF Encryption</h3>
+
+            <p>HexaPDF supports all password based encryption mechanisms, including AES 256bit, when
+            reading and writing PDF files.</p>
+
+          </div>
+        </section>
+        <section class="4u 12u(narrower)">
+          <div class="box highlight">
+            <i class="icon major fa-wrench"></i>
+            <h3>PDF Optimization</h3>
+
+            <p>HexaPDF is written to output PDF files as compactly as possible. Additionally, it can
+            optimize existing PDF files to reduce their file size.</p>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta" class="wrapper style3">
+    <div class="container">
+      <header>
+        <h2>Ready to start with HexaPDF?</h2>
+        <a href="{relocatable: api/}" class="button"><i class="icon fa-book"></i>&nbsp;API Documentation</a>
+      </header>
+    </div>
+  </section>
+</div>

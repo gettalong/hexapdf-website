@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>HexaPDF - {title:}</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="{relocatable: assets/sass/main.css}" />
+  </head>
+  <body>
+    <div id="page-wrapper">
+
+      <!-- Header -->
+      <div id="header">
+        <!-- Nav -->
+        <nav id="nav">
+          <div class="container">
+            <h1 id="logo"><a href="{relocatable: /}">HexaPDF</a></h1>
+            {menu: {css_class: mainmenu, options: {mi: {main_menu: true}, sort: true, absolute_levels: 1}}}
+            <div id="search"><input type="text" placeholder="search" id="tipue_search_input" /></div>
+          </div>
+          <div id="tipue_search_content"></div>
+        </nav>
+      </div>
+
+      <webgen:block name="content" />
+
+      <!-- Footer -->
+      <div id="footer">
+        <!-- Copyright -->
+        <div class="copyright">
+          <ul class="menu">
+            <li>&copy; <a href="http://gettalong.org">Thomas Leitner</a></li>
+            <li><a href="https://github.com/gettalong/hexapdf" class="icon fa-github">&nbsp;gettalong/hexapdf</a></li>
+            <li>Design based on Arcana by <a href="http://html5up.net">HTML5 UP</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="{relocatable: assets/js/app.js}"></script>
+    <script src="{relocatable: assets/search_data.js}"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch({"mode":"static", "liveDescription":"#content"});
+      });
+      $(document).ready(function() {
+        $('#tipue_search_input').keyup(function(event) {
+          if(event.keyCode == '27') {
+            $('#tipue_search_content').hide();
+          }
+        });
+      });
+    </script>
+
+    <!-- Start of StatCounter Code -->
+    <script type="text/javascript">
+      //<![CDATA[
+      var sc_project=11134595;
+      var sc_invisible=1;
+      var sc_security="121d83e4";
+      var scJsHost = (("https:" == document.location.protocol) ? "https://secure." : "http://www.");
+      document.write("<sc"+"ript type='text/javascript' src='" + scJsHost+ "statcounter.com/counter/counter_xhtml.js'></"+"script>");
+      //]]>
+    </script>
+    <noscript><div class="statcounter"><a title="shopify site analytics" href="http://statcounter.com/shopify/" class="statcounter"><img class="statcounter" src="//c.statcounter.com/11134595/0/121d83e4/1/" alt="shopify site analytics" /></a></div></noscript>
+    <!-- End of StatCounter Code -->
+
+  </body>
+</html>

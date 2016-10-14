@@ -1,0 +1,16 @@
+--- name:content pipeline:erb
+<section class="wrapper style1">
+  <div class="container">
+    <div class="row">
+      <div class="3u 12u(narrower) sidemenu">
+         <%= context.tag('menu', 'options' => {'mi' => {'side_menu' => true}, 'sort' => true}) %>
+      </div>
+
+      <div class="8u 12u(narrower) important(narrower)">
+        <div id="content">
+          <%= context.render_block(name: "content") %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

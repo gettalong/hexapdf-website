@@ -1,0 +1,32 @@
+--- name:paths
+/assets/search_data.js:
+  handler: tipue_search
+  entries: {alcn: /**/*.html}
+  mode: static
+  content_css: '#content'
+
+[/**/*.woff, /**/*.woff2, /**/*.svg, /**/*.eot, /**/*.ttf]:
+  handler: copy
+
+'**/*.page':
+  template: /templates/page.template
+
+--- name:alcn
+api/:
+  title: API
+  main_menu: true
+  sort_info: 5
+
+api/**/*.html:
+  link:
+    css: /assets/sass/api.css
+
+examples/:
+  main_menu: true
+  sort_info: 3
+
+examples/*.html:
+  side_menu: true
+
+examples/index.*.html:
+  side_menu: false

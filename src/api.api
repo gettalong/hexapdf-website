@@ -1,0 +1,5 @@
+---
+rdoc_options: ../hexapdf/lib/ -x '/.yaml$/' --main API.rdoc --root ../hexapdf/
+prefix_link_defs: false
+api_template: /templates/api.template
+output_structure: hierarchical
