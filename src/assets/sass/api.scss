@@ -184,6 +184,22 @@
     }
   }
 
+  table.class-details {
+    background: #eee;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+
+    th {
+      font-weight: bold;
+      text-align: left;
+      width: 14em;
+    }
+
+    td,th {
+      padding: 0.25em 0.5em;
+    }
+  }
+
   /* @group Method Details */
 
   .method-source-code {

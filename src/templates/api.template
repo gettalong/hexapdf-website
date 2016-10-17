@@ -65,6 +65,47 @@ end
 <div class="api-documentation api-<%= klass.type %>">
   <h2 class="<%= klass.type %>"><%= klass.type %> <%= klass.full_name %></h2>
 
+  <% if klass.type == 'class' || !klass.includes.empty? || !klass.extends.empty? then %>
+  <table class="class-details">
+  <% if klass.type == 'class' then %>
+    <tr id="parent-class-section">
+    <th>Parent</th>
+    <% if klass.superclass and not String === klass.superclass then %>
+    <td class="link"><a href="<%= klass.aref_to klass.superclass.path %>"><%= klass.superclass.full_name %></a></td>
+    <% else %>
+    <td class="link"><%= klass.superclass %></td>
+    <% end %>
+    </tr>
+  <% end %>
+  <% unless klass.extends.empty? then %>
+    <tr id="extends-section">
+    <th>Extended With</th>
+    <td class="link-list">
+      <% klass.each_extend do |ext| %>
+      <% unless String === ext.module then %>
+        <a class="extend" href="<%= klass.aref_to ext.module.path %>"><%= ext.module.full_name %></a><br />
+      <% else %>
+        <span class="extend"><%= ext.name %></span><br />
+      <% end %>
+      <% end %>
+    </td></tr>
+  <% end %>
+  <% unless klass.includes.empty? then %>
+    <tr id="includes-section">
+    <th>Included Modules</th>
+    <td class="link-list">
+      <% klass.each_include do |inc| %>
+      <% unless String === inc.module then %>
+        <a class="include" href="<%= klass.aref_to inc.module.path %>"><%= inc.module.full_name %></a><br />
+      <% else %>
+        <span class="include"><%= inc.name %></span><br />
+      <% end %>
+      <% end %>
+    </td></tr>
+  <% end %>
+  </table>
+  <% end %>
+
   <div class="description">
     <%= klass.description %>
   </div><!-- description -->
