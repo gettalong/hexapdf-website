@@ -5,7 +5,7 @@
   mode: static
   content_css: '#content'
 
-[/**/*.woff, /**/*.woff2, /**/*.svg, /**/*.eot, /**/*.ttf]:
+[/**/*.woff, /**/*.woff2, /**/*.svg, /**/*.eot, /**/*.ttf, /.htaccess]:
   handler: copy
 
 '**/*.page':
