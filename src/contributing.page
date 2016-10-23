@@ -1,0 +1,17 @@
+---
+title: Contributing
+---
+
+## Contributing
+
+You are welcome to contribute to HexaPDF. Please note that HexaPDF is licensed under the GNU Affero
+General Public License version 3 and only code licensed as such can be included.
+
+Before you contribute please sign the [individual contributor license agreement](CLA-I.pdf) or
+[entity contributor license agreement](CLA-E.pdf) (for companies and other organizations) and email
+the signed document to <t_leitner@gmx.at>. This agreement serves a dual-purpose:
+
+* It provides the basis for a possible relicensing later on, without the trouble of tracking down
+  each individual contributor.
+
+* It allows me to keep my options open in regard to commercializing HexaPDF at a later date.
