@@ -1,0 +1,8 @@
+---
+template: page.template
+--- name:content
+<webgen:block name="content" />
+--- name:sidebar-before
+<webgen:block name="sidebar-before" notfound="ignore" node="first" />
+<h3>News Items</h3>
+{menu: {options: {and: news, sort: sort_info, reverse: true}}}

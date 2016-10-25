@@ -1,0 +1,6 @@
+--- name:alcn
+'**/*.html':
+  template: /templates/post.template
+
+index.*.html:
+  template: /templates/news.template

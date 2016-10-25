@@ -1,0 +1,15 @@
+---
+title: News
+---
+
+{menu: {template: <%= context.ref_node.alcn %>, options: {and: news, limit: 3, sort: sort_info, reverse: true}, tracking_style: content}}
+
+--- name:sidebar-before
+[Atom-Feed](feed.atom)
+
+--- name:tag.menu
+<%
+template = context.ref_node.resolve('/templates/post.template')
+context[:nodes].each do |node| %>
+<%= context.render_block(name: "content", chain: [template, node]) %>
+<% end %>

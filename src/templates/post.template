@@ -1,0 +1,13 @@
+---
+template: news.template
+--- name:content
+<article class="post">
+  <header>
+    <h2><%= context.dest_node.link_to(context.node) %></h2>
+    <div class="meta">
+      Published on <time class="published" datetime="<%= context.node['created_at'].strftime("%FT%T%:z") %>"><%= context.node['created_at'].strftime("%A, %d %B %Y") %></time>
+    </div>
+  </header>
+  <webgen:block name="content" />
+</article>
+
