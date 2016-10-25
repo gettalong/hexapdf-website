@@ -925,7 +925,7 @@
       }
     }
 
-    .sidemenu {
+    .sidebar {
       li {
         padding-left: 1em;
         text-indent: -1em;
@@ -964,6 +964,29 @@
       }
       .tipue_search_content_loc {
         display: none;
+      }
+    }
+
+    .sidebar {
+      h3 {
+        border-bottom: 1px solid _palette(border);
+        margin-bottom: 0;
+      }
+
+      a {
+        border-bottom: none;
+      }
+    }
+
+    .post header {
+      margin-bottom: 1em;
+
+      h2 {
+        margin-bottom: 0;
+      }
+
+      .meta {
+        font-size: 80%;
       }
     }
 
@@ -1193,7 +1216,7 @@
 
 		/* Off-Canvas Navigation */
 
-            .sidemenu {
+            .sidebar {
               display: none;
             }
 

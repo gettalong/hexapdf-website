@@ -2,7 +2,7 @@
 <section class="wrapper style1">
   <div class="container">
     <div class="row">
-      <div class="3u 12u(narrower) api-menu">
+      <div class="3u 12u(narrower) sidebar api-menu">
         <section>
           <h3>Classes and Modules</h3>
 <%
