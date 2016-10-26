@@ -1,0 +1,15 @@
+---
+title: Initial Release of HexaPDF
+created_at: 2016-10-26 09:30:00 +02:00
+---
+
+The code of HexaPDF is now available on [Github](https://github.com/gettalong/hexapdf) and the first
+version 0.1.0 can be downloaded from [Rubygems](https://rubygems/gems/hexapdf).
+
+This release provides the basic functionalities for reading and writing PDFs as well as low-level
+support for creating PDFs. A command line application for often needed tasks is also available.
+
+Bugs and issues can be reported at HexaPDF's [issue
+tracker](https://github.com/gettalong/hexapdf/issues). The
+[roadmap](https://github.com/gettalong/hexapdf/wiki/Roadmap-and-Feature-Requests) shows what
+features will be implemented next and the Wiki page can also be used to request features.
