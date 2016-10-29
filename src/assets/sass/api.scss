@@ -224,7 +224,6 @@
     font-size: 125%;
     font-weight: bold;
   }
-  .method-heading :link,
   .method-heading :visited {
     color: inherit;
   }
@@ -278,6 +277,19 @@
   /* @end */
 
   /* @end */
+
+  .target {
+    .target-link {
+      visibility: hidden;
+      font-size: 120%;
+      display: inline-block;
+      margin-left: 0.5em;
+    }
+
+    &:hover .target-link {
+      visibility: visible;
+    }
+  }
 
   /* @group Source Code */
 
