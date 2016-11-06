@@ -76,7 +76,7 @@ template: default.template
             <i class="icon major fa-wrench"></i>
             <h3>PDF Optimization</h3>
 
-            <p>HexaPDF is written to output PDF files as compactly as possible. Additionally, it can
+            <p>HexaPDF writes output PDF files as compactly as possible. Additionally, it can
             optimize existing PDF files to reduce their file size.</p>
 
           </div>
