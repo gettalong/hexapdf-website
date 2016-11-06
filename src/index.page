@@ -85,6 +85,35 @@ template: default.template
     </div>
   </section>
 
+  <section class="wrapper style2">
+    <div class="container">
+      <div class="row">
+        <section class="8u -2u 12u(narrower)">
+          <div class="box">
+            <h2>License</h2>
+
+            <p>HexaPDF is licensed under
+            the <a href="https://github.com/gettalong/hexapdf/blob/master/LICENSE">GNU Affero
+            General Public License (AGPL)</a>, an open source license. It allows you to use HexaPDF for
+            free as long as you adhere to the license.</p>
+
+            <p>The AGPL puts some restrictions in place to make sure that the community benefits
+            from changes to the code. For example, if you use HexaPDF in an application and
+            distribute that application, you have to make the source code of the whole application
+            available under the AGPL. The same applies if your application is used over a
+            network.</p>
+
+            <p>See {link: contributing.html} for more details.</p>
+
+            <p>If you want to use HexaPDF in a commercial setting
+            please <a href="mailto:t_leitner@gmx.at">send me an e-mail</a>. Note that there is
+            currently no commercial license for HexaPDF available.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section id="cta" class="wrapper style3">
     <div class="container">
