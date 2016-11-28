@@ -4,3 +4,8 @@ ExpiresActive On
 ExpiresDefault "access plus 1 day"
 ExpiresByType image/png "access plus 1 month"
 ExpiresByType image/jpeg "access plus 1 month"
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ %{REQUEST_FILENAME}.html
