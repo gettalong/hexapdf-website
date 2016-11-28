@@ -31,6 +31,10 @@ examples/*.html:
 examples/index.*.html:
   side_menu: false
 
+documentation/:
+  main_menu: true
+  sort_info: 7
+
 news/:
   main_menu: true
   sort_info: 10
