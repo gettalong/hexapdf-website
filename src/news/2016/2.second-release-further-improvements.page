@@ -1,0 +1,21 @@
+---
+title: Second Release - Further Improvements
+created_at: 2016-11-28 22:35:00 +02:00
+---
+
+The second release of HexaPDF is now available. The most promiment changes concern the `hexapdf`
+application which gained, among other things, support for [merging PDF files][hp-modify]. However,
+the internal library structure has also been adapted and various bugs fixed. See the [changelog] for
+details.
+
+The website has also seen some enhancements, from an added explanation on the landing page regarding
+what the AGPL as license means to a new documentation section providing the [manual page] of the
+`hexapdf` application and an HTML version of the [changelog].
+
+Plans for the near future include TrueType font subsetting and image extraction support. If you like
+to see certain features in HexaPDF, have a look at the [roadmap] which is used for tracking them.
+
+[hp-modify]: /documentation/hexapdf.1.html#modify
+[changelog]: /documentation/changelog.html
+[manual page]: /documentation/hexapdf.1.html
+[roadmap]: https://github.com/gettalong/hexapdf/wiki/Roadmap-and-Feature-Requests
