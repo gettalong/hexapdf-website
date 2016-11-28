@@ -2,7 +2,7 @@
 <section class="wrapper style1">
   <div class="container">
     <div class="row">
-      <div class="3u 12u(narrower) sidebar">
+      <div class="3u 12u(narrower) sidebar sidemenu">
          <%= context.render_block(name: "sidebar-before", notfound: "ignore", node: "first") %>
          <%= context.tag('menu', 'options' => {'mi' => {'side_menu' => true}, 'siblings' => [0, -1], 'sort' => true}) %>
          <%= context.render_block(name: "sidebar-after", notfound: "ignore", node: "first") %>
