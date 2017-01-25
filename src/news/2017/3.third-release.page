@@ -1,0 +1,48 @@
+---
+title: HexaPDF 0.3.0 - TTF Font Subsetting and CLI enhancements
+created_at: 2017-01-25 19:11:00 +01:00
+---
+
+This third release is about two major features: TrueType font subsetting support and CLI
+enhancements.
+
+> **But before we come to them I want to ask you for your help**:
+>
+> I launched a [Patreon site][patreon] to fund further development of HexaPDF. Especially if you
+> are a company interested in the prospects of HexaPDF, you might want to sponsor HexaPDF because
+> **I intend to change the license to MIT once I reach a certain goal**!
+>
+> **So help me reach that goal ---** <a href="https://www.patreon.com/bePatron?u=4908963" class="button"><img height="15px" style="vertical-align: baseline" src="{relocatable: /assets/patreonpblack.png}" />&nbsp;&nbsp;Become a Patron!</a>
+> {: style="text-align: center"}
+
+With the introduction of TrueType font subsetting, PDF files using the [HexaPDF::Content::Canvas]
+API will now be much smaller when TrueType fonts are used. HexaPDF does font subsetting by default
+now but this can be disabled on a font-by-font basis, see
+[HexaPDF::FontLoader::FromConfiguration::call].
+
+The other major overhaul was with respect to the `hexapdf` application. The `hexapdf modify` command
+was split into three individual commands to allow easier use:
+
+* [`hexapdf modify`][hp-modify] for modifying an existing file,
+* [`hexapdf merge`][hp-merge] for merging multiple PDF files into a single PDF file, and
+* [`hexapdf optimize`][hp-optimize] for easily optimizing PDF files.
+
+Additionally, the `hexapdf extract` command was renamed to [`hexapdf files`][hp-files] since a new
+[`hexapdf images`][hp-images] command was added. The later can be used to list or extract images
+embedded in a PDF file.
+
+The HexaPDF library itself also gained some new features, the most important one being the correct
+handling of hybrid-reference PDF files. Most of you won't know what these special PDF files are but
+if you have used HexaPDF before and a file was corrupted when writing, there is a good chance that
+the input file was such a hybrid-reference file.
+
+As always, have a look at the [changelog] for an overview of the changes.
+
+
+[hp-modify]: /documentation/hexapdf.1.html#modify
+[hp-merge]: /documentation/hexapdf.1.html#merge
+[hp-optimize]: /documentation/hexapdf.1.html#optimize
+[hp-files]: /documentation/hexapdf.1.html#files
+[hp-images]: /documentation/hexapdf.1.html#images
+[changelog]: /documentation/changelog.html
+[patreon]: https://patreon.com/gettalong
