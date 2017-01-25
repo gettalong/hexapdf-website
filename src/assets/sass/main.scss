@@ -165,6 +165,10 @@
 		border-left: solid 0.5em _palette(border);
 		font-style: italic;
 		padding: 1em 0 1em 2em;
+
+        *:last-child {
+          margin-bottom: 0;
+        }
 	}
 
 	section, article {
