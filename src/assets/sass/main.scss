@@ -112,6 +112,16 @@
 		margin: 0 0 2em 0;
 	}
 
+    article {
+      p:last-child, ul:last-child, ol:last-child, dl:last-child, table:last-child, blockquote:last-child {
+        margin-bottom: 2em;
+      }
+    }
+
+    p:last-child, ul:last-child, ol:last-child, dl:last-child, table:last-child, blockquote:last-child {
+      margin-bottom: 0;
+    }
+
     dd {
       margin-left: 2em;
     }
