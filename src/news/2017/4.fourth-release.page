@@ -1,0 +1,43 @@
+---
+title: HexaPDF 0.4.0 - Composite Font Support and many CLI enhancements
+created_at: 2017-03-19 10:30:00 +01:00
+---
+
+HexaPDF continues to grow and mature, with this release bringing composite font support and many CLI
+enhancements.
+
+> **Support HexaPDF ---** <a href="https://www.patreon.com/bePatron?u=4908963" class="button"><img height="15px" style="vertical-align: baseline" src="{relocatable: /assets/patreonpblack.png}" />&nbsp;&nbsp;Become a Patron!</a>
+> {: style="text-align: center; margin-bottom: 0"}
+
+Texts in PDF can be created using *simple* fonts or *composite* fonts where **composite fonts are
+much more capable**, allowing the use of fonts in the OpenType font format and vertical writing.
+HexaPDF already produced text using the composite font PDF structures and with this release it is
+also able to handle composite fonts for text extraction and such.
+
+On the CLI side I got requests for **better verbosity control** and **batch processing**. Therefore
+I created a new [`hexapdf batch`][hp-batch] command that can be used to execute a command on several
+PDF files.
+
+This is especially useful when dealing with small files since the startup overhead is gone: When
+running `hexapdf batch 'info {}'` on my set of test files, it takes only about 14 seconds compared
+to 150 seconds running `hexapdf info` the usual way!
+
+Additionally, **in-place processing of PDF files** is now possible and **embedded TrueType fonts can
+be optimized**, sometimes leading to big file size improvements.
+
+Memory usage and text generation performance has been improved, too. **HexaPDF is now about as fast
+as Prawn** in raw text output when using the standard PDF fonts, and much faster when using TrueType
+fonts, while generating smaller files. Have a look at the [text rendering benchmark] to see the
+whole comparison and some caveats.
+
+As always, have a look at the [changelog] for an overview of the changes.
+
+For the next release I will concentrate on bringing more advanced text features to HexaPDF, like box
+layouting and support for kerning. **If you have a request**, drop me an
+[e-mail](mailto:t_leitner@gmx.at) or [open an issue]!
+
+
+[text rendering benchmark]: https://gist.github.com/gettalong/0d7c576064725774299cdf4d1a51d2b9
+[changelog]: /documentation/changelog.html
+[hp-batch]: /documentation/hexapdf.1.html#batch
+[open an issue]: https://github.com/gettalong/hexapdf/issues
