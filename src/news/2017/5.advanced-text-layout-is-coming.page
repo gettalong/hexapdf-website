@@ -1,0 +1,91 @@
+---
+title: Advanced Text Layout is Coming
+created_at: 2017-04-28 19:15:00 +02:00
+---
+
+Since HexaPDF 0.4.0 was released, I focused on becoming more knowledgeable in the area of text
+layout and the role font files play in this regard. Therefore not much coding was done in the last
+few weeks.
+
+The reason for this foray is that one of the next features to land in HexaPDF is **advanced text
+layout**. This means that one can specify a (for the time being) rectangular area in which text
+should be placed as well as formatting options (like text alignment, font and font size, color, ...)
+and HexaPDF does the rest. Additionally, **kerning**, **ligatures** and such will also be supported.
+
+Such a feature may sound easy to implement for anyone having worked with GUI interfaces. However,
+with GUI interfaces one doesn't need to concern oneself with font details like glyphs (more or less
+a visual representation of a character), glyph spacing, ascenders, descenders, ligatures, kerning,
+right-to-left text and much more. Strictly speaking, much of this (like ligatures and kerning) is
+not necessary for the box layouting of text.
+
+When I started creating the [Canvas] class for drawing on a page, I started with the easy things,
+the vector graphics directly supported by the PDF format. These are easy because there is no need
+for deep knowledge about graphics rendering (e.g. Bézier curve drawing or anti-aliasing) because the
+rendering is done by the PDF reader application, not the writer.
+
+However, with text it is exactly the other way around. The **writer application has to do
+everything** and the reader application just needs to draw the glyphs at the given positions. This
+certainly leads to a more consistent appearance of PDF files across different platforms and reader
+applications but makes implementing a good writer application that much harder. One positive effect
+of this approach, though, is that embedded font files can be stripped down to the minimum
+information needed (note that [sometimes][rlissue] this doesn't seem to be wildly known...).
+
+You might say: "But HexaPDF already *supports* text output in the Canvas class!". And you would be
+right. However, **currently only the very low-level functionality is implemented** which can be used
+for text output but doesn't lead to nice results. I.e. there is no automatic line-wrapping, fitting
+into a pre-defined box, automatic kerning, support for ligatures, ...
+
+Since some of the features like kerning and ligatures are orthogonal to the box layouting facility,
+they will be implemented separately and in a way to customize each step. For example, it will be
+possible to do box layouting without other advanced text layout features like automatic kerning when
+this is not needed.
+
+To give you a small idea of the problems that have to be dealt with:
+
+* Some **characters can be represented in multiple ways in in Unicode**. For example, "ä" may be
+  represented using the single codepoint 0x00E4 or two codepoints 0x0061 ("a") and 0x0308 (combining
+  diaeresis). If such differences are not taken into account, the [output][nfc/nfd] will not look
+  correct.
+
+* **Kerning** describes how the spacing between two characters need to be adjusted to achieve a
+  better visual result. This information is available in most TrueType fonts. However, some font
+  files use a 'kern' table while others use the new OpenType table 'GPOS'.
+
+  Due to the fact that kerning must be done in addition to everything else, some PDF writers do not
+  implement kerning due to performance concerns. For example, whereas [Prawn] does support kerning,
+  [ReportLab] does not.
+
+* **Ligatures** are sometimes used to provide nicer visual results, like combining 'fi' into a
+  single character. However, some languages like Arabic more or less (I'm not an expert) need
+  ligatures to be correctly displayed. Again, this information is available in modern font files,
+  for example in the 'GSUB' table of OpenType fonts.
+
+* Speaking of Arabic, **some languages are laid out from right to left**. To do this correctly with
+  Unicode the [Unicode Bidirectional Algorithm][UniBidi] has to be used. And correctly combined with
+  glyph substitution (e.g. ligatures) and positioning (e.g. kerning). Oh, and some are laid out
+  vertically.
+
+* There are already may **algorithms for line breaking and layouting text in a box**. One classic
+  algorithm is the [Knuth-Plass line breaking algorithm][KnuthPlass]. So in this area one *only* has
+  to choose the needed sophistication of the line breaking and layouting algorithm.
+
+These are just some things I'm currently thinking about with regards to HexaPDF. And to give you
+another idea of the complexity behind all this: [iText], one of the biggest players in the PDF area
+with their product written in Java and therefore even able to use many external libraries, only
+implemented full support for complex text layout with version 7, released last year.
+
+So I will keep it small and simple for the time being and build the more complex parts later on. I
+will start with support for kerning and a simple box layouting algorithm. **If you have a request**,
+drop me an [e-mail](mailto:t_leitner@gmx.at) or [open an issue]!
+
+
+[Canvas]: https://hexapdf.gettalong.org/api/HexaPDF/Content/Canvas.html
+[text rendering benchmark]: https://gist.github.com/gettalong/0d7c576064725774299cdf4d1a51d2b9
+[iText]: http://itextpdf.com/itext7/pdfcalligraph
+[nfc/nfd]: https://gist.github.com/gettalong/d894c29b551917573c708cd5110653a0
+[UniBidi]: http://unicode.org/reports/tr9/
+[KnuthPlass]: https://dx.doi.org/10.1002%2Fspe.4380111102
+[prawn]: http://prawnpdf.org/
+[reportlab]: http://www.reportlab.com/
+[rlissue]: https://bitbucket.org/rptlab/reportlab/issues/72/support-opentype-fonts
+[open an issue]: https://github.com/gettalong/hexapdf/issues
