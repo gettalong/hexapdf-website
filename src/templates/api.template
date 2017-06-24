@@ -5,6 +5,25 @@
       <div class="3u 12u(narrower) sidebar api-menu">
         <section>
           <h3>Classes and Modules</h3>
+
+          <input type="text" id="filter_menu" onkeyup="filter()"  placeholder="Search..." style="height: 1.5em">
+          <script>
+            document.getElementById('filter_menu').focus();
+            function filter() {
+              var filter_value, li, a, i;
+              filter_value = document.getElementById('filter_menu').value.toLowerCase();
+              li = document.querySelectorAll('.api-menu li')
+
+              for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                if (a.innerHTML.toLowerCase().indexOf(filter_value) > -1) {
+                  a.style.display = "";
+                } else {
+                  a.style.display = "none";
+                }
+              }
+            }
+          </script>
 <%
 rdoc_object = context.node.node_info[:rdoc_object]
 api = context.node.node_info[:api]
