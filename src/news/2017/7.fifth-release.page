@@ -1,0 +1,58 @@
+---
+title: HexaPDF 0.5.0 - Advanced Text Layout
+created_at: 2017-06-24 09:05:00 +02:00
+---
+
+HexaPDF continues to grow and mature, with this release bringing advanced text layout as first step
+into providing full document layout features.
+
+> **Support HexaPDF ---** <a href="https://www.patreon.com/bePatron?u=4908963" class="button"><img height="15px" style="vertical-align: baseline" src="{relocatable: /assets/patreonpblack.png}" />&nbsp;&nbsp;Become a Patron!</a>
+> {: style="text-align: center; margin-bottom: 0"}
+
+Advanced text layout means that HexaPDF is now able to:
+
+* Apply **kerning and ligatures** to text, with the possibility to easily add other positioning or
+  substitution steps (e.g. for correctly positioning diacritical marks)
+
+* Apply **different styles** to different parts of the text of a paragraph ([example][ex-style])
+
+* **Wrap lines** while supporting special characters like non-breaking spaces, soft-hyphens and
+  zero-width spaces ([example][ex-wrap])
+
+* Use **arbitrarily shaped boxes** for text layout ([example][ex-shapes])
+
+* **Align text horizontally and vertically**, e.g. left, center, right and justify; and top, center,
+  bottom ([example][ex-align])
+
+* **Mix text and inline boxes**, e.g. for showing images or arbitrary drawings together with text
+  ([example][ex-inline])
+
+* **Calculate the height of a text box** without drawing it, or limiting the height and **retrieving
+  the overflowing items**
+
+In essence [HexaPDF::Layout::TextBox] together with the other classes in [HexaPDF::Layout] is
+similar to Prawn's formatted text box implementation. However, HexaPDF still lacks some text box
+features like text colors, links or underlining. This will be fixed with a future release.
+
+To see how HexaPDF's implementation compares to Prawn's in terms of performance I adapted the [text
+rendering benchmark] to use the text box implementations. The results (see the [text box benchmark]
+for details and caveats) are rather promising, with **HexaPDF being about 10 times faster than
+Prawn**!
+
+HexaPDF's text box implementation can already be used to compose whole documents but it is still
+only another stepping stone on the way to full document layout features. There are major parts
+missing for this, like automatic page breaking, tables, column layout and a composition class to
+make using all these parts easier.
+
+As always, have a look at the [changelog] for an overview of all changes. And **if you have a
+request**, drop me an [e-mail](mailto:t_leitner@gmx.at) or [open an issue]!
+
+[ex-style]: ../../examples/text_box_styling.html
+[ex-wrap]: ../../examples/text_box_line_wrapping.html
+[ex-shapes]: ../../examples/text_box_shapes.html
+[ex-align]: ../../examples/text_box_alignment.html
+[ex-inline]: ../../examples/text_box_inline_boxes.html
+[changelog]: /documentation/changelog.html
+[open an issue]: https://github.com/gettalong/hexapdf/issues
+[text rendering benchmark]: https://gist.github.com/gettalong/0d7c576064725774299cdf4d1a51d2b9
+[text box benchmark]: https://gist.github.com/gettalong/8afae547ac3e50e9b8ce6c521a2a0eea
