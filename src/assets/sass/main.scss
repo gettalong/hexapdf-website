@@ -1577,7 +1577,10 @@
 
 
 
-.highlighter-rouge pre {
+div.highlighter-rouge {
+  white-space: pre;
+  font-family: monospace;
+  font-size: 85%;
   overflow: auto;
   background: #f8f8f8;
   border: 1px solid #eee;
