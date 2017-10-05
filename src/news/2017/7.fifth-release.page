@@ -47,11 +47,11 @@ make using all these parts easier.
 As always, have a look at the [changelog] for an overview of all changes. And **if you have a
 request**, drop me an [e-mail](mailto:t_leitner@gmx.at) or [open an issue]!
 
-[ex-style]: ../../examples/text_box_styling.html
-[ex-wrap]: ../../examples/text_box_line_wrapping.html
-[ex-shapes]: ../../examples/text_box_shapes.html
-[ex-align]: ../../examples/text_box_alignment.html
-[ex-inline]: ../../examples/text_box_inline_boxes.html
+[ex-style]: ../../examples/text_layouter_styling.html
+[ex-wrap]: ../../examples/text_layouter_line_wrapping.html
+[ex-shapes]: ../../examples/text_layouter_shapes.html
+[ex-align]: ../../examples/text_layouter_alignment.html
+[ex-inline]: ../../examples/text_layouter_inline_boxes.html
 [changelog]: /documentation/changelog.html
 [open an issue]: https://github.com/gettalong/hexapdf/issues
 [text rendering benchmark]: https://gist.github.com/gettalong/0d7c576064725774299cdf4d1a51d2b9
