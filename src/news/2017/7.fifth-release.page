@@ -30,7 +30,7 @@ Advanced text layout means that HexaPDF is now able to:
 * **Calculate the height of a text box** without drawing it, or limiting the height and **retrieving
   the overflowing items**
 
-In essence [HexaPDF::Layout::TextBox] together with the other classes in [HexaPDF::Layout] is
+In essence HexaPDF::Layout::TextBox together with the other classes in [HexaPDF::Layout] is
 similar to Prawn's formatted text box implementation. However, HexaPDF still lacks some text box
 features like text colors, links or underlining. This will be fixed with a future release.
 
