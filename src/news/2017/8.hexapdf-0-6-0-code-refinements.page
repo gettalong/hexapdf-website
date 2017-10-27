@@ -1,0 +1,42 @@
+---
+title: HexaPDF 0.6.0 - Code Refinements
+created_at: 2017-10-27 18:14:00 +02:00
+---
+
+The last release brought some cool new features with respect to advanced text layout. This release
+builds on that and refines the implementation for future features.
+
+> **Support HexaPDF ---** <a href="https://www.patreon.com/bePatron?u=4908963" class="button"><img height="15px" style="vertical-align: baseline" src="{relocatable: /assets/patreonpblack.png}" />&nbsp;&nbsp;Become a Patron!</a>
+> {: style="text-align: center; margin-bottom: 0"}
+
+The supported text and box styling properties have been greatly expanded (also see the expanded
+[styling example][ex-style]):
+
+* Boxes now support CSS-like **padding, margins and borders as well as background colors**. And
+  since the inline boxes are now based on a proper box implementation, they can use these new
+  styles, too!
+
+* Text fragments now support **text color and opacity, text rendering modes** (e.g. only showing the
+  text outlines), **superscript, subscript, underlining and strikeout**.
+
+Additonally, boxes as well as text fragments now support **pre-defined and custom
+underlays/overlays**. This is the basis for the implemented support for **links to other pages,
+external files and URIs**.
+
+Apart from these layout related changes, support for some types of **PDF actions and annotations**
+has been added, e.g. the action for opening an URI and the link annotation type.
+
+As always, have a look at the [changelog] for an overview of all changes. And **if you have a
+request**, drop me an [e-mail](mailto:t_leitner@gmx.at) or [open an issue]!
+
+Last but not least, I have not yet decided on which parts I will be working on in the coming
+months. So if you need some functionality sooner than later, head over to my **[patreon
+page][poll] to fill out the poll**!  
+And while you are already there, you might wanna [become a patron][patron]! 😉
+{:.dropotron}
+
+[ex-style]: ../../examples/text_layouter_styling.html
+[changelog]: /documentation/changelog.html
+[open an issue]: https://github.com/gettalong/hexapdf/issues
+[poll]: https://www.patreon.com/posts/next-features-15075087
+[patron]: https://www.patreon.com/bePatron?u=4908963
