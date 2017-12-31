@@ -1,0 +1,6 @@
+--- alcn
+'*.html':
+  side_menu: true
+
+index.en.html:
+  side_menu: false

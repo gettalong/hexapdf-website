@@ -1,0 +1,12 @@
+---
+title: Benchmarks
+---
+
+## Benchmarks
+
+Here you will find various benchmarks of HexaPDF compared to other applications and libraries. The
+benchmark data includes the execution performance as well as the memory use and resulting file
+sizes.
+
+The benchmark scripts and supporting files can be found in the `benchmark/` directory of the
+HexaPDF distribution.

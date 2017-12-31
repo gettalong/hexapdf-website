@@ -1,0 +1,12 @@
+--- name:alcn
+changelog.*.html:
+  sort_info: 1
+
+hexapdf.*.html:
+  sort_info: 2
+
+benchmarks/:
+  side_menu: true
+  sort_info: 99
+
+

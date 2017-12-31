@@ -504,7 +504,7 @@
 			}
 
 			th {
-				font-weight: 600;
+				font-weight: bold;
 				padding: 0.5em 1em 0.5em 1em;
 				text-align: left;
 			}
@@ -1576,6 +1576,21 @@
 	}
 
 
+div.bmtable {
+  th, td {
+    padding: 2px;
+  }
+  th {
+    text-align: right;
+    font-weight: bold;
+  }
+  td:not(:first-child) {
+    text-align: right;
+  }
+  tbody {
+    border: 2px solid _palette(border);
+  }
+}
 
 div.highlighter-rouge {
   white-space: pre;
