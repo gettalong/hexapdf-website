@@ -1,49 +1,61 @@
 ---
 title: Raw Text
-modified_at: 2017-12-31 00:00:00
+modified_at: 2018-03-02 00:00:00
 --- name:data pipeline:
 |--------------------------------------------------------------------|
 |                              ||    Time |     Memory |   File size |
 |--------------------------------------------------------------------|
-| hexapdf     | 1x             |    623ms |  21,696KiB |     452,597 |
-| prawn       | 1x             |    609ms |  20,012KiB |     616,765 |
-| reportlab   | 1x             |    466ms |  22,440KiB |     474,578 |
-| reportlab/C | 1x             |    360ms |  24,264KiB |     474,578 |
-| tcpdf       | 1x             |  1,131ms |  33,068KiB |     627,863 |
-| PDF::API2   | 1x             |  1,137ms |  28,932KiB |     465,444 |
+| hexapdf     | 1x             |    600ms |  22,220KiB |     452,597 |
+| prawn       | 1x             |    601ms |  19,816KiB |     616,765 |
+| reportlab   | 1x             |    461ms |  22,224KiB |     474,578 |
+| reportlab/C | 1x             |    367ms |  24,216KiB |     474,578 |
+| jPDFWriter  | 1x             |    729ms | 112,124KiB |     569,421 |
+| tcpdf       | 1x             |  1,120ms |  32,996KiB |     626,715 |
+| PDF::API2   | 1x             |  1,026ms |  28,700KiB |     462,284 |
+| pdfkit      | 1x             |  2,549ms | 143,004KiB |     637,241 |
 |--------------------------------------------------------------------|
-| hexapdf     | 5x             |  2,613ms |  43,124KiB |   2,258,903 |
-| prawn       | 5x             |  2,509ms |  39,016KiB |   3,084,301 |
-| reportlab   | 5x             |  2,057ms |  46,420KiB |   2,372,300 |
-| reportlab/C | 5x             |  1,297ms |  42,232KiB |   2,372,300 |
-| tcpdf       | 5x             |  5,467ms |  44,900KiB |   3,118,068 |
-| PDF::API2   | 5x             |  5,868ms |  43,644KiB |   2,315,424 |
+| hexapdf     | 5x             |  2,443ms |  33,376KiB |   2,258,905 |
+| prawn       | 5x             |  2,383ms |  39,420KiB |   3,084,301 |
+| reportlab   | 5x             |  2,046ms |  46,128KiB |   2,372,300 |
+| reportlab/C | 5x             |  1,287ms |  42,252KiB |   2,372,300 |
+| jPDFWriter  | 5x             |  1,368ms | 159,648KiB |   2,849,342 |
+| tcpdf       | 5x             |  5,203ms |  44,572KiB |   3,112,310 |
+| PDF::API2   | 5x             |  5,443ms |  43,436KiB |   2,299,595 |
+| pdfkit      | 5x             | 11,477ms | 398,924KiB |   3,189,257 |
 |--------------------------------------------------------------------|
-| hexapdf     | 10x            |  5,155ms |  63,352KiB |   4,517,824 |
-| prawn       | 10x            |  4,868ms |  65,480KiB |   6,170,089 |
-| reportlab   | 10x            |  4,188ms |  75,340KiB |   4,745,623 |
-| reportlab/C | 10x            |  2,457ms |  65,504KiB |   4,745,623 |
-| tcpdf       | 10x            | 10,792ms |  62,296KiB |   6,232,463 |
-| PDF::API2   | 10x            | 14,419ms |  61,888KiB |   4,629,154 |
+| hexapdf     | 10x            |  4,759ms |  50,844KiB |   4,517,824 |
+| prawn       | 10x            |  4,646ms |  64,520KiB |   6,170,089 |
+| reportlab   | 10x            |  4,125ms |  74,800KiB |   4,745,623 |
+| reportlab/C | 10x            |  2,448ms |  65,520KiB |   4,745,623 |
+| jPDFWriter  | 10x            |  1,977ms | 230,096KiB |   5,700,015 |
+| tcpdf       | 10x            | 10,591ms |  62,180KiB |   6,220,935 |
+| PDF::API2   | 10x            | 13,335ms |  60,840KiB |   4,597,516 |
+| pdfkit      | 10x            | 21,501ms | 702,356KiB |   6,379,922 |
 |--------------------------------------------------------------------|
-| hexapdf     | 1x ttf         |    738ms |  23,652KiB |     549,513 |
-| prawn       | 1x ttf         |  1,431ms |  22,616KiB |     636,184 |
-| reportlab   | 1x ttf         |    790ms |  28,620KiB |     623,896 |
-| reportlab/C | 1x ttf         |    699ms |  29,476KiB |     623,896 |
-| tcpdf       | 1x ttf         |  1,385ms |  35,760KiB |     758,545 |
-| PDF::API2   | 1x ttf         |  9,643ms |  49,536KiB |     671,102 |
+| hexapdf     | 1x ttf         |    725ms |  21,620KiB |     549,520 |
+| prawn       | 1x ttf         |  1,440ms |  22,724KiB |     636,184 |
+| reportlab   | 1x ttf         |    786ms |  28,540KiB |     623,896 |
+| reportlab/C | 1x ttf         |    702ms |  29,156KiB |     623,896 |
+| ERR jPDFWriter  | 1x ttf     |      0ms |       0KiB |           0 |
+| tcpdf       | 1x ttf         |  1,412ms |  35,680KiB |     757,794 |
+| PDF::API2   | 1x ttf         |  9,732ms |  49,264KiB |     668,753 |
+| pdfkit      | 1x ttf         |  4,984ms | 173,780KiB |     725,810 |
 |--------------------------------------------------------------------|
-| hexapdf     | 5x ttf         |  3,147ms |  46,856KiB |   2,687,114 |
-| prawn       | 5x ttf         |  6,241ms |  43,356KiB |   3,098,210 |
-| reportlab   | 5x ttf         |  3,537ms |  59,840KiB |   3,038,079 |
-| reportlab/C | 5x ttf         |  2,920ms |  55,020KiB |   3,038,079 |
-| tcpdf       | 5x ttf         |  6,461ms |  53,380KiB |   3,577,186 |
-| PDF::API2   | 5x ttf         | 48,667ms |  74,064KiB |   3,095,613 |
+| hexapdf     | 5x ttf         |  2,981ms |  41,728KiB |   2,687,120 |
+| prawn       | 5x ttf         |  6,301ms |  43,972KiB |   3,098,210 |
+| reportlab   | 5x ttf         |  3,567ms |  59,264KiB |   3,038,079 |
+| reportlab/C | 5x ttf         |  2,883ms |  54,996KiB |   3,038,079 |
+| ERR jPDFWriter  | 5x ttf     |      0ms |       0KiB |           0 |
+| tcpdf       | 5x ttf         |  6,569ms |  53,368KiB |   3,573,446 |
+| PDF::API2   | 5x ttf         | 47,307ms |  73,548KiB |   3,083,923 |
+| pdfkit      | 5x ttf         | 13,217ms | 445,360KiB |   3,567,743 |
 |--------------------------------------------------------------------|
-| hexapdf     | 10x ttf        |  6,237ms |  72,948KiB |   5,360,939 |
-| prawn       | 10x ttf        | 12,956ms |  65,252KiB |   6,177,075 |
-| reportlab   | 10x ttf        |  7,138ms |  98,216KiB |   6,057,019 |
-| reportlab/C | 10x ttf        |  5,634ms |  87,388KiB |   6,057,019 |
-| tcpdf       | 10x ttf        | 12,902ms |  75,292KiB |   7,102,244 |
-| PDF::API2   | 10x ttf        | 99,233ms | 104,520KiB |   6,127,580 |
+| hexapdf     | 10x ttf        |  5,813ms |  60,044KiB |   5,360,944 |
+| prawn       | 10x ttf        | 12,114ms |  65,400KiB |   6,177,075 |
+| reportlab   | 10x ttf        |  7,201ms |  97,672KiB |   6,057,019 |
+| reportlab/C | 10x ttf        |  5,652ms |  87,344KiB |   6,057,019 |
+| ERR jPDFWriter  | 10x ttf    |      0ms |       0KiB |           0 |
+| tcpdf       | 10x ttf        | 12,832ms |  75,192KiB |   7,094,714 |
+| PDF::API2   | 10x ttf        | 97,140ms | 103,676KiB |   6,104,415 |
+| pdfkit      | 10x ttf        | 23,254ms | 772,348KiB |   7,120,423 |
 |--------------------------------------------------------------------|
