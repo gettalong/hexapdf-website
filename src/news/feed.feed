@@ -2,7 +2,7 @@
 title: HexaPDF News
 description: HexaPDf - A Versatile PDF Creation and Manipulation Library For Ruby
 author: Thomas Leitner
-author_url: http://hexapdf.gettalong.org
+author_url: https://hexapdf.gettalong.org
 entries: news
 versions:
   atom:
