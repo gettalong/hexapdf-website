@@ -1,4 +1,0 @@
---- paths
-main.scss:
-  pipeline: scss,rainpress
-  dest_path: <parent>main.css
