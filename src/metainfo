@@ -11,6 +11,12 @@
 '**/*.page':
   template: /templates/page.template
 
+[/**/*.js, /**/*.css]:
+  modified_at_in_dest_path: true
+
+/**/*.scss:
+  modified_at_in_dest_path: true
+
 --- name:alcn
 api/:
   title: API
@@ -38,3 +44,6 @@ documentation/:
 news/:
   main_menu: true
   sort_info: 10
+
+/**/*.css:
+  pipeline: scss,cssminify
