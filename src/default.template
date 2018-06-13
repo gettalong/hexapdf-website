@@ -31,6 +31,8 @@
           <ul class="menu">
             <li>&copy; <a href="https://gettalong.org">Thomas Leitner</a></li>
             <li><a href="https://github.com/gettalong/hexapdf" class="icon fa-github">&nbsp;gettalong/hexapdf</a></li>
+            <li><a href="https://gettalong.org/legal.html">Legal Notice</a></li>
+            <li><a href="https://gettalong.org/privacy.html">Privacy Policy</a></li>
             <li>Design based on Arcana by <a href="http://html5up.net">HTML5 UP</a></li>
           </ul>
         </div>
@@ -54,16 +56,20 @@
       });
     </script>
 
-    <!-- Start of StatCounter Code -->
-    <script type="text/javascript">
-      var sc_project=11134595;
-      var sc_invisible=1;
-      var sc_security="121d83e4";
-      var sc_client_storage="disabled";
-    </script>
-    <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async="async"></script>
-    <noscript><div class="statcounter"><a title="shopify site analytics" href="http://statcounter.com/shopify/" class="statcounter"><img class="statcounter" src="//c.statcounter.com/11134595/0/121d83e4/1/" alt="shopify site analytics" /></a></div></noscript>
-    <!-- End of StatCounter Code -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(["setDoNotTrack", true]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//stats.gettalong.org/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '3']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//stats.gettalong.org/piwik.php?idsite=3&amp;rec=1" style="border:0;" alt="" /></p></noscript>
 
   </body>
 </html>
