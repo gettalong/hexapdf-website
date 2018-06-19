@@ -46,4 +46,4 @@ news/:
   sort_info: 10
 
 /**/*.css:
-  pipeline: scss,cssminify
+  pipeline: scss,rainpress
