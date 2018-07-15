@@ -19,8 +19,11 @@ template: default.template
   <section id="cta" class="wrapper style3">
     <div class="container">
       <header>
-        <h2>Support HexaPDF development!</h2>
-        <a href="https://www.patreon.com/bePatron?u=4908963" class="button"><img height="15px" style="vertical-align: baseline" src="{relocatable: /assets/patreonpblack.png}" />&nbsp;&nbsp;Become a Patron!</a>
+        <h2>HexaPDF is AGPL Open Source, a Commercial License is Available</h2>
+
+        <a href="https://gettalong.at/hexapdf" class="button"><i class="icon
+        fa-arrow-circle-right"></i>&nbsp;Buy HexaPDF</a>
+
       </header>
     </div>
   </section>
@@ -113,11 +116,10 @@ template: default.template
             available under the AGPL. The same applies if your application is used over a
             network.</p>
 
-            <p>See {link: contributing.html} for more details.</p>
+            <p><b>If you want to use HexaPDF in a commercial setting, you need to <a
+            href="https://gettalong.at/hexapdf">purchase a commercial license</a>.</b></p>
 
-            <p>If you want to use HexaPDF in a commercial setting
-            please <a href="mailto:t_leitner@gmx.at">send me an e-mail</a>. Note that there is
-            currently no commercial license for HexaPDF available.</p>
+            <p>See {link: contributing.html} for more details.</p>
           </div>
         </section>
       </div>
