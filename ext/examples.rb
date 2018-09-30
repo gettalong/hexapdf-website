@@ -60,13 +60,16 @@ class Examples
       node = @website.ext.path_handler.create_secondary_nodes(path).first
       @website.ext.item_tracker.add(node, :file, file)
       intro << "\n\nResulting PDF:\n: [#{path.basename}.pdf](#{node.alcn})\n"
+      intro << "\nPreview:\n: <object " \
+        "data=\"<%= context.node.route_to(context.node.resolve('#{node.alcn}')) %>\" " \
+        "type=\"application/pdf\" width=\"100%\" height=\"1100px\"></object>"
     end
 
     content = "#{intro}\n\n## Code\n\n~~~ ruby\n#{code}\n~~~\n"
     title = content[/(?<=\A## ).*?(?=\n)/]
     path = Webgen::Path.new(name, 'handler' => 'page', 'modified_at' => parent_node['modified_at'],
                             'title' => title,
-                            'blocks' => {'defaults' => {'pipeline' => 'kramdown,fragments'}})
+                            'blocks' => {'defaults' => {'pipeline' => 'erb,kramdown,fragments'}})
     node = @website.ext.path_handler.create_secondary_nodes(path, content).first
     @website.ext.item_tracker.add(node, :file, file)
   end
