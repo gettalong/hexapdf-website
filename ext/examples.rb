@@ -11,7 +11,7 @@ class ExamplePDF
   def content(node)
     hexapdf_lib = File.expand_path(@website.config['path_handler.example_pdf.hexapdf_lib'])
     file = File.expand_path(node['file'])
-    pdf_name = File.basename(node['file'].sub(/\.rb$/, '.pdf'))
+    pdf_name = File.basename(node['file'].sub(/\.rb$/, '.pdf').sub(/\d+-([^\/]+)$/, '\1'))
     content = ''
 
     Dir.mktmpdir do |dir|
@@ -51,7 +51,7 @@ class Examples
   end
 
   def create_example_node(file, parent_node)
-    name = parent_node.alcn + File.basename(file, '.*') + '.page'
+    name = parent_node.alcn + File.basename(file, '.*').tr('-', '.') + '.page'
     intro, _match, code = File.read(file).partition(/\n\n/)
     intro.gsub!(/^# ?/, '')
     if intro !~ /^Usage:\s*\n.*INPUT\d*\.PDF/
