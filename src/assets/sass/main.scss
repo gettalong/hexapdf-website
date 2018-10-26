@@ -149,12 +149,12 @@
 	}
 
 	p, ul, ol, dl, table, blockquote {
-		margin: 0 0 2em 0;
+		margin: 0 0 1em 0;
 	}
 
     article {
       p:last-child, ul:last-child, ol:last-child, dl:last-child, table:last-child, blockquote:last-child {
-        margin-bottom: 2em;
+        margin-bottom: 1em;
       }
     }
 
@@ -961,6 +961,12 @@
         margin: 0;
         position: relative;
         padding-left: 5px;
+        border: none;
+
+        li {
+          padding-left: 0.5em;
+          text-indent: -0.5em;
+        }
 
         ul {
           margin: 0;
@@ -971,8 +977,8 @@
           content: '';
           left: 0;
           top: 5px;
-          width: 1px;
-          border-left: 1px dotted #eee;
+          width: 2px;
+          border-left: 1px dotted _palette(border);
           position: absolute;
           padding-right: 4px;
         }
@@ -980,9 +986,21 @@
     }
 
     .sidebar {
-      li {
-        padding-left: 1em;
-        text-indent: -1em;
+      ul {
+        border-left: 1px solid _palette(border);
+
+        ul {
+          margin-left: 1em;
+        }
+      }
+
+      li > a {
+        padding: 0.25em 0 0.25em 0.5em;
+        display: block;
+
+        &:hover {
+          background-color: _palette(border);
+        }
       }
     }
 
@@ -1023,7 +1041,6 @@
 
     .sidebar {
       h3 {
-        border-bottom: 1px solid _palette(border);
         margin-bottom: 0;
       }
 
