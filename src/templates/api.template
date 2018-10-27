@@ -52,7 +52,8 @@ cache = (context.website.cache.permanent[:api_names] ||= {})
 nested_list = lambda do |nodes, level|
   out = "<ul>"
   nodes.each do |node, children|
-    link_text = (cache[node.alcn] ||= node['title'].sub(/^.*::/, ''))
+    link_text = (cache[node.alcn] ||= node.proxy_node(context.dest_node.lang)['title'].
+                                        sub(/^(.*::)/, '<span style="display:none">\1</span>'))
     menu = (children ? nested_list.call(children, level + 1) : '')
     link = context.dest_node.link_to(node, context.content_node.lang, 'link_text' => link_text)
     out << "<li>#{link}"
