@@ -11,7 +11,7 @@ template: default.template
     <header>
       <h2><em>A Versatile PDF Creation and Manipulation Library for Ruby</em></h2>
       <pre><code>$ gem install hexapdf</code></pre>
-      <p>Latest version <b>0.7.0</b> released on <a href="{relocatable: /documentation/changelog.html}">2018-06-19</a></p>
+      <p>Latest version <b>0.8.0</b> released on <a href="{relocatable: /documentation/changelog.html}">2018-10-26</a></p>
     </header>
   </section>
 

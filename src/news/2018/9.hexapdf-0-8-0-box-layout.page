@@ -1,0 +1,88 @@
+---
+title: HexaPDF 0.8.0 - Box Layout
+created_at: 2018-10-26 19:54:00 +02:00
+---
+
+The last release, 0.7.0, was done to fix some issues and didn't include any of the major changes
+since 0.6.0. With the 0.8.0 release these major changes are now incorporated into HexaPDF and lay
+the groundwork for document layouting.
+
+**So what is new for HexaPDF?**
+
+The 0.6.0 release enhanced the base box layout class with many more styling properties but it still
+wasn't possible to easily position such boxes. So naturally the next step was to design how they
+would be layed out on a page.
+
+**In HexaPDF layout boxes represent all things that should be put on a page**, be it text (like
+headings and paragraphs), images or other content. Typically (at least with western languages), the
+boxes are layed out from top to bottom and left to right. So the easiest thing would be to define a
+"cursor" position that represents the vertical position to place the current box and after placing
+it, move the cursor downwards.
+
+However, with such a model you cannot easily do things like having a picture and flowing text around
+it. Or putting a box into the middle of the page and then flowing the boxes around this hole. Or
+having non-rectangular regions to put boxes in.
+
+Therefore I decided to do things differently:
+
+* **To layout boxes HexaPDF uses [frames][HexaPDF::Layout::Frame] where a frame is a set of
+  rectilinear polygons (i.e. only consisting of vertical and horizontal lines).**
+
+* When a box gets placed in a frame, the occupied region is subtracted from the frame's polygons,
+  resulting in new polygons for the frame.
+
+* Each frame knows how to find the position where the next box should be placed (the top-most,
+  left-most point) and how big the available rectangular region at that position is.
+
+* If a box doesn't fit, the frame also knows how to calculate the next possible position and region.
+
+Doing things in this way seems very complicated at first but it certainly makes some things very
+easy:
+
+* A frame can have any form and can contain holes. This is the reason a frame can potentially
+  consist of multiple polygons.
+
+* Boxes can be styled using the new [`position`][HexaPDF::Layout::Style#position] and
+  [`position_hint`][HexaPDF::Layout::Style#position_hint] style properties to remove the whole
+  vertical stripe in which they are in, imitating the basic cursor model.
+
+* And these style properties can also make a box "float" to the left or right, like blocks in HTML,
+  removing only their occupied region.
+
+I also hope that this design will make future additions straightforward (like, for example, multi
+column layout).
+
+**To make working with the frame's polygons easier, I created a new rubygem called [geom2d]**. There
+were some Ruby libraries available that define basic 2D geometric objects and some algorithms but
+none really fit the needs. The goal of geom2d was to provide a polygon class and an algorithm for
+intersecting two polygons. To this end I read several papers on boolean operations on polygons and
+then implemented [one of them][boolop].
+
+**The [HexaPDF::Layout::TextLayouter] class has been enhanced as well to allow placing text in an
+arbitrary polygon**. This is needed because otherwise placing text in a frame and flowing it
+according to the frame's polygon wouldn't be possible.
+
+So, now that I have bored you with the technical details, have a look at the new examples to see how
+this can be put to good use:
+
+* The [automatic box placement example][ex-automatic] shows how to use a frame to place multiple
+  boxes.
+
+* The [text flow example][ex-textflow] shows how text is automatically flown around floating boxes.
+
+Mind you that doing things like this is still not really "high level" since there are some essential
+things missing, like splitting a box if it doesn't fit (think of text at the bottom of a page), not
+to mention high level constructs like tables.
+
+The next step is to provide a class that abstracts the composition aspects so that one can say: Here
+are `N` styled boxes, here are the definitions of the frames that should be used (e.g. a special
+frame definition for the first page and a common definition for all other pages), lay out the boxes
+while creating pages as needed.
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+[geom2d]: https://github.com/gettalong/geom2d
+[boolop]: http://dl.acm.org/citation.cfm?id=2494701
+[ex-automatic]: ../../examples/frame_automatic_box_placement.html
+[ex-textflow]: ../../examples/frame_text_flow.html
+[changelog]: /documentation/changelog.html
