@@ -1,0 +1,78 @@
+---
+title: HexaPDF 0.9.0 - Document Layout
+created_at: 2018-12-31 10:00:00 +01:00
+---
+
+With the ground work for document layout management done in the 0.8.0 release the focus was shifted
+to the refinement of these features and to the actual document layout functionality.
+
+The major changes for this release are the document composition functionality, incremental PDF
+writing, a CLI command for splitting PDF files and compatibility with Ruby 2.6.
+
+### Document Composition
+
+One of the goals of HexaPDF is to provide high-level functionality for document composition. With
+this release the initial working version of this goal has been achieved with the new
+[HexaPDF::Composer] class.
+
+This class uses the functionality introduced in the last release (e.g. frames, text boxes, ...) to
+make creating a PDF document as easy as it is with other libraries, for example Prawn. Here is a
+simple example:
+
+~~~ ruby
+require 'hexapdf'
+
+HexaPDF::Composer.create('hello-world.pdf') do |pdf|
+  pdf.text("Hello World!", font_size: 50, align: :center, valign: :center)
+end
+~~~
+
+Text (or more generally every box) is layed out from top-to-bottom and can be flown around objects
+that have been placed on the page before. This makes it easy, for example, to flow text around
+images (see the new [composer example][cex]). Also, if some box doesn't fit on a page or can't be
+split, a new page is automatically created.
+
+Arbitrary drawing operations can still be performed by using the [HexaPDF::Content::Canvas] object
+that is provided by the composer.
+
+[cex]: /examples/composer.html
+
+
+### Incremental Writing
+
+Starting with this version HexaPDF supports incremental writing. Writing a PDF document in
+incremental mode means that the new or changed content is just appended to the original PDF. This is
+used, for example, if the original document was cryptographically signed so as to not invalidate the
+signature.
+
+Incremental writing in HexaPDF is not perfect in the sense that it doesn't completely minimize the
+amount of data that gets written. The reason for this is HexaPDF's automatic conversion of hash
+values. For example, PDF dates (which are stored as strings) are automatically converted to Ruby
+date objects on access, making the comparison fail even though there are no differences when
+serializing.
+
+
+### Splitting PDF Files
+
+The `hexapdf` command line application already has a command for merging files but the reverse was
+missing. So this version brings the `split` command that can do exactly that.
+
+As an example, consider the following: `hexapdf split input.pdf out_%02d.pdf`. This would split the
+`input.pdf` file page by page and generate files of the form `out_01.pdf`, `out_02.pdf` and so on.
+
+
+### Other Changes
+
+There were some other changes and bug fixes, the most noteworthy are:
+
+* Usage of some non-described stdlib behaviour was fixed to make HexaPDF compatible with Ruby 2.6.
+
+* Text boxes now respect width/height/padding/border when fitting.
+
+* Variable width line wrapping now correctly considers line spacing when determining line width.
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+And **Happy New Year!**
+
+[changelog]: /documentation/changelog.html
