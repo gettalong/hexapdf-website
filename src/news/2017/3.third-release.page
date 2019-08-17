@@ -12,7 +12,7 @@ enhancements.
 > are a company interested in the prospects of HexaPDF, you might want to sponsor HexaPDF because
 > **I intend to change the license to MIT once I reach a certain goal**!
 >
-> **So help me reach that goal ---** <a href="https://www.patreon.com/bePatron?u=4908963" class="button"><img height="15px" style="vertical-align: baseline" src="{relocatable: /assets/patreonpblack.png}" />&nbsp;&nbsp;Become a Patron!</a>
+> **So help me reach that goal ---** <a href="https://www.patreon.com/bePatron?u=4908963" class="button"><img height="15px" style="vertical-align: baseline" src="{relocatable: /assets/images/patreonpblack.png}" />&nbsp;&nbsp;Become a Patron!</a>
 > {: style="text-align: center"}
 
 With the introduction of TrueType font subsetting, PDF files using the [HexaPDF::Content::Canvas]

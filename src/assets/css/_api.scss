@@ -8,8 +8,6 @@
  *
  */
 
-@import 'libs/vars';
-
 .api-documentation {
 
   h1 span, h2 span, h3 span, h4 span, h5 span, h6 span {
@@ -61,10 +59,6 @@
   .description {
     font-size: 100%;
 
-    p {
-      margin: 1em 0;
-    }
-
     li p {
       margin: 0;
     }
@@ -82,13 +76,6 @@
     dt {
       font-family: monospace;
     }
-    dd {
-      margin: 0 20px 0 40px;
-    }
-  }
-
-  .note-list {
-    margin: 8px 0;
   }
 
   table.note-list {
@@ -110,17 +97,11 @@
     font-weight: bold;
     background: #eee;
   }
-  .note-list dd {
-    padding: 0 0 0 2em;
-  }
 
   .label-list dt {
     padding: 2px 4px;
     font-weight: bold;
     background: #eee;
-  }
-  .label-list dd {
-    padding: 2px 12px;
   }
   .label-list dd + dt,
   .note-list dd + dt {
@@ -185,10 +166,6 @@
   }
 
   table.class-details {
-    background: #eee;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-
     th {
       font-weight: bold;
       text-align: left;
@@ -221,8 +198,10 @@
   .method-heading {
     position: relative;
     padding: 2px 4px 0 20px;
-    font-size: 125%;
     font-weight: bold;
+    * {
+      font-family: monospace;
+    }
   }
   .method-heading :visited {
     color: inherit;
@@ -255,15 +234,6 @@
     font-style: italic;
     cursor: default;
   }
-  .method-description {
-    p {
-      margin-bottom: 0.75em;
-    }
-    ul {
-      margin-left: 1.5em;
-      margin-bottom: 0.75em;
-    }
-  }
 
   #attribute-method-details .method-detail:hover {
     cursor: default;
@@ -293,22 +263,13 @@
 
   /* @group Source Code */
 
-  pre {
-    overflow: auto;
-    background: #f8f8f8;
-    border: 1px solid #eee;
-    border-radius: 4px;
-    font-family: monospace;
-    font-size: 80%;
-    line-height: normal;
-    color: black;
-    padding: 0.5em;
-    margin: 0.5em 0;
-  }
-
   .description pre {
     margin: 0 0.4em;
   }
+}
+
+#filter_menu {
+  margin: var(--universal-margin);
 }
 
 .ruby-constant   { color: #008080; background: transparent; }
@@ -317,7 +278,7 @@
 .ruby-operator   { color: #007020; background: transparent; }
 .ruby-identifier { color: #000000; background: transparent; }
 .ruby-node       { color: #ffa07a; background: transparent; }
-.ruby-comment    { color: #999988; font-style: italic; background: transparent; }
+.ruby-comment    { color: #666688; font-style: italic; background: transparent; }
 .ruby-regexp     { color: #808000; background: transparent; }
 .ruby-value      { color: #009999; background: transparent; }
 

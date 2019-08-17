@@ -1,59 +1,49 @@
 --- name:content pipeline:erb
-<section class="wrapper style1">
-  <div class="container">
-    <div class="row">
-      <div class="3u 12u(narrower) sidebar api-menu">
-        <section>
-          <h3>Classes and Modules</h3>
+<div class="row wmax">
+  <div class="col-sm-12 col-md-4 sidebar api-menu">
+    <section>
+      <h3>Classes and Modules</h3>
 
-          <input type="text" id="filter_menu" onkeyup="filter()"  placeholder="Search..." style="height: 1.5em">
-          <script>
-            document.getElementById('filter_menu').focus();
-            function filter() {
-              var filter_value, li, a, i;
-              filter_value = document.getElementById('filter_menu').value.toLowerCase();
-              li = document.querySelectorAll('.api-menu li')
+      <input type="text" id="filter_menu" onkeyup="filter()"  placeholder="Search...">
+      <script>
+        document.getElementById('filter_menu').focus();
+        function filter() {
+          var filter_value, li, a, i;
+          filter_value = document.getElementById('filter_menu').value.toLowerCase();
+          li = document.querySelectorAll('.api-menu li')
 
-              for (i = 0; i < li.length; i++) {
-                a = li[i].getElementsByTagName("a")[0];
-                if (a.innerHTML.toLowerCase().indexOf(filter_value) > -1) {
-                  a.style.display = "";
-                } else {
-                  a.style.display = "none";
-                }
-              }
+          for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            if (a.innerHTML.toLowerCase().indexOf(filter_value) > -1) {
+              a.style.display = "";
+            } else {
+              a.style.display = "none";
             }
-          </script>
-<%
-rdoc_object = context.node.node_info[:rdoc_object]
-api = context.node.node_info[:api]
+          }
+        }
+      </script>
+      <nav>
+        <%= context.tag('menu', 'options' => {alcn: ['/api/**/*.html', '/api/HexaPDF/'], not: {alcn: ['/api/**/index.*.html', '/api/index.html']}}, 'template' => '') %>
+      </nav>
+    </section>
+  </div>
 
-opts = {alcn: ['/api/**/*.html', '/api/HexaPDF/'], not: {alcn: ['/api/**/index.*.html', '/api/index.html']}}
-%>
-<%= context.tag('menu', 'options' => opts, 'template' => '') %>
-        </section>
-      </div>
-
-      <div class="8u 12u(narrower) important(narrower)">
-        <div id="content">
-
-<%= context.render_block(name: "api", node: "current") %>
-
-        </div>
-      </div>
+  <div class="col-sm-12 col-md-8">
+    <div id="content">
+      <%= context.render_block(name: "api", node: "current") %>
     </div>
   </div>
-</section>
+</div>
 
 
 --- name:tag.menu pipeline:ruby --------------------------------------------------------------------
-cache = (context.website.cache.permanent[:api_names] ||= {})
+cache_name = (context.website.cache.volatile[:api_names] ||= {})
 
 nested_list = lambda do |nodes, level|
   out = "<ul>"
   nodes.each do |node, children|
-    link_text = (cache[node.alcn] ||= node.proxy_node(context.dest_node.lang)['title'].
-                                        sub(/^(.*::)/, '<span style="display:none">\1</span>'))
+    link_text = (cache_name[node.alcn] ||= node.proxy_node(context.dest_node.lang)['title'].
+                                           sub(/^(.*::)/, '<span class="api-class-parent">\1</span>'))
     menu = (children ? nested_list.call(children, level + 1) : '')
     link = context.dest_node.link_to(node, context.content_node.lang, 'link_text' => link_text)
     out << "<li>#{link}"
@@ -91,16 +81,16 @@ end
     <tr id="parent-class-section">
     <th>Parent</th>
     <% if klass.superclass and not String === klass.superclass then %>
-    <td class="link"><a href="<%= klass.aref_to klass.superclass.path %>"><%= klass.superclass.full_name %></a></td>
+    <td class="link" data-label="Parent"><a href="<%= klass.aref_to klass.superclass.path %>"><%= klass.superclass.full_name %></a></td>
     <% else %>
-    <td class="link"><%= klass.superclass %></td>
+    <td class="link" data-label="Parent"><%= klass.superclass %></td>
     <% end %>
     </tr>
   <% end %>
   <% unless klass.extends.empty? then %>
     <tr id="extends-section">
     <th>Extended With</th>
-    <td class="link-list">
+    <td class="link-list" data-label="Extended With">
       <% klass.each_extend do |ext| %>
       <% unless String === ext.module then %>
         <a class="extend" href="<%= klass.aref_to ext.module.path %>"><%= ext.module.full_name %></a><br />
@@ -113,7 +103,7 @@ end
   <% unless klass.includes.empty? then %>
     <tr id="includes-section">
     <th>Included Modules</th>
-    <td class="link-list">
+    <td class="link-list" data-label="Included Modules">
       <% klass.each_include do |inc| %>
       <% unless String === inc.module then %>
         <a class="include" href="<%= klass.aref_to inc.module.path %>"><%= inc.module.full_name %></a><br />

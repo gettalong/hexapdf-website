@@ -11,11 +11,3 @@ app.js:
 --- name:alcn
 jquery.min.js:
   sort_info: 1
-jquery.dropotron.min.js:
-  sort_info: 2
-skel.min.js:
-  sort_info: 3
-util.js:
-  sort_info: 4
-main.js:
-  sort_info: 5

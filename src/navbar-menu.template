@@ -1,0 +1,8 @@
+--- name:tag.menu pipeline:ruby
+result = ''
+context[:nodes].each do |node, children|
+  style, link = Webgen::Tag::Menu.menu_item_details(context.dest_node, node, context.content_node.lang, 0, !children.nil?, context[:config])
+  result << link.gsub(/href=/, 'class="button" href=')
+end
+
+context.content = result

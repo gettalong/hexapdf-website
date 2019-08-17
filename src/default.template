@@ -4,41 +4,38 @@
     <title>HexaPDF - {title:}</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="{relocatable: assets/sass/main.css}" />
+    <link rel="stylesheet" type="text/css" href="{relocatable: assets/css/site.css}" />
+    <link rel="icon shortcut" type="image/ico" href="{relocatable: /assets/images/favicon.ico}" />
   </head>
   <body>
-    <div id="page-wrapper">
 
-      <!-- Header -->
-      <div id="header">
-        <!-- Nav -->
-        <nav id="nav">
-          <div class="container">
-            <h1 id="logo"><a href="{relocatable: /}">HexaPDF</a></h1>
-            {menu: {css_class: mainmenu, options: {mi: {main_menu: true}, sort: true, absolute_levels: 1}}}
+    <header>
+      <div class="wmax row">
+        <a class="logo col-sm" href="{relocatable: /}"><img src="{relocatable: /assets/images/logo.svg}" alt="logo" />HexaPDF</a>
+        <div class="main-nav col-sm right col-md-8 col-lg-8">
+          <label for="drawer-control" class="drawer-toggle button"></label>
+          <input type="checkbox" id="drawer-control" class="drawer" />
+          <div>
+            <label for="drawer-control" class="drawer-close"></label>
+            <h2 class="center hidden-md hidden-lg">Menu</h2>
+            {menu: {template: /navbar-menu.template, options: {mi: {main_menu: true}, sort: true, absolute_levels: 1}}}
             <div id="search"><input type="text" placeholder="search" id="tipue_search_input" /></div>
           </div>
           <div id="tipue_search_content"></div>
-        </nav>
-      </div>
-
-      <webgen:block name="content" />
-
-      <!-- Footer -->
-      <div id="footer">
-        <!-- Copyright -->
-        <div class="copyright">
-          <ul class="menu">
-            <li>&copy; <a href="https://gettalong.org">Thomas Leitner</a></li>
-            <li><a href="https://github.com/gettalong/hexapdf" class="icon fa-github">&nbsp;gettalong/hexapdf</a></li>
-            <li><a href="https://gettalong.org/legal.html">Legal Notice</a></li>
-            <li><a href="https://gettalong.org/privacy.html">Privacy Policy</a></li>
-            <li>Design based on Arcana by <a href="http://html5up.net">HTML5 UP</a></li>
-          </ul>
         </div>
       </div>
+    </header>
 
-    </div>
+    <webgen:block name="content" />
+
+    <footer>
+      <div class="col-sm center">
+        &copy; <a href="https://gettalong.org">Thomas Leitner</a>
+        | <a href="https://github.com/gettalong/hexapdf" class="icon fa-github">&nbsp;gettalong/hexapdf</a>
+        | <a href="https://gettalong.org/legal.html">Legal Notice</a>
+        | <a href="https://gettalong.org/privacy.html">Privacy Policy</a>
+      </div>
+    </footer>
 
     <!-- Scripts -->
     <script src="{relocatable: assets/js/app.js}"></script>

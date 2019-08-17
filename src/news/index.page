@@ -1,5 +1,7 @@
 ---
 title: News
+toc_options:
+  levels: [100, 100]
 ---
 
 {menu: {template: <%= context.ref_node.alcn %>, options: {and: news, limit: 3, sort: sort_info, reverse: true}, tracking_style: content}}

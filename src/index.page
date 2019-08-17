@@ -4,135 +4,88 @@ main_menu: true
 sort_info: 1
 template: default.template
 ---
-
-<div id="content">
-  <!-- Banner -->
-  <section id="banner">
-    <header>
-      <h2><em>A Versatile PDF Creation and Manipulation Library for Ruby</em></h2>
-      <pre><code>$ gem install hexapdf</code></pre>
+<div class="row hero">
+  <div class="col-sm-12 wmax">
+    <div class="card fluid center">
+      <h1>Versatile PDF creation and manipulation library</h1>
+      <pre>$ gem install hexapdf</pre>
       <p>Latest version <b>0.9.3</b> released on <a href="{relocatable: /documentation/changelog.html}">2019-06-13</a></p>
-    </header>
-  </section>
-
-  <!-- CTA -->
-  <section id="cta" class="wrapper style3">
-    <div class="container">
-      <header>
-        <h2>HexaPDF is AGPL Open Source, a Commercial License is Available</h2>
-
-        <a href="https://gettalong.at/hexapdf" class="button"><i class="icon
-        fa-arrow-circle-right"></i>&nbsp;Buy HexaPDF</a>
-
-      </header>
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- Highlights -->
-  <section class="wrapper style1">
-    <div class="container">
-      <div class="row 200%">
-        <section class="4u 12u(narrower)">
-          <div class="box highlight">
-            <i class="icon major fa-paper-plane"></i>
-            <h3>PDF Creation</h3>
+<div class="row cta">
+  <div class="col-sm-12 wmax center">
+    <p>HexaPDF is AGPL Open Source, a commercial license is available
+    <a href="https://gettalong.at/hexapdf" class="button"><span class="icon-arrow-right-circle"></span>&nbsp;Buy HexaPDF</a></p>
+  </div>
+</div>
 
-            <p>HexaPDF includes facilities for creating PDF documents from scratch, using a canvas
-            object for drawing and outputting text.</p>
+<div class="row wmax">
+  <div class="col-md-4 col-sm-12 feature">
+    <h3><span class="hexagon"><span class="icon-plus inverse"></span></span>PDF Creation</h3>
 
-            </div>
-        </section>
-        <section class="4u 12u(narrower)">
-          <div class="box highlight">
-            <i class="icon major fa-pencil"></i>
-            <h3>PDF Manipulation</h3>
+    <p>HexaPDF includes facilities for creating PDF documents from scratch, using a canvas
+    object for drawing and outputting text.</p>
+  </div>
+  <div class="col-md-4 col-sm-12 feature">
+    <h3><span class="hexagon"><span class="icon-edit inverse"></span></span>PDF Manipulation</h3>
 
-            <p>HexaPDF can read existing documents and modify them in various ways, e.g. adding,
-            modifying or deleting pages, annotations, files, ...</p>
+    <p>HexaPDF can read existing documents and modify them in various ways, e.g. adding,
+    modifying or deleting pages, annotations, files, ...</p>
+  </div>
+  <div class="col-md-4 col-sm-12 feature">
+    <h3><span class="hexagon"><span class="icon-file-plus inverse"></span></span>PDF File Merging</h3>
 
-          </div>
-        </section>
-        <section class="4u 12u(narrower)">
-          <div class="box highlight">
-            <i class="icon major fa-wrench"></i>
-            <h3>PDF File Merging</h3>
+    <p>HexaPDF can be used to merge multiple PDF files together. Advanced merge facilities
+    can be built on the existing infrastructure.</p>
+  </div>
+</div>
+<div class="row wmax">
+  <div class="col-md-4 col-sm-12 feature">
+    <h3><span class="hexagon"><span class="icon-file-text inverse"></span></span>Content Extraction</h3>
 
-            <p>HexaPDF can be used to merge multiple PDF files together. Advanced merge facilities
-            can be built on the existing infrastructure.</p>
+    <p>HexaPDF allows extracting various parts of a PDF file, e.g. text from a page,
+    attached files, embedded images, ...</p>
+  </div>
+  <div class="col-md-4 col-sm-12 feature">
+    <h3><span class="hexagon"><span class="icon-lock inverse"></span></span>PDF Encryption</h3>
 
-          </div>
-        </section>
-      </div>
-      <div class="row 200%">
-        <section class="4u 12u(narrower)">
-          <div class="box highlight">
-            <i class="icon major fa-paper-plane"></i>
-            <h3>Content Extraction</h3>
+    <p>HexaPDF supports all password based encryption mechanisms, including AES 256bit, when
+    reading and writing PDF files.</p>
+  </div>
+  <div class="col-md-4 col-sm-12 feature">
+    <h3><span class="hexagon"><span class="icon-cog inverse"></span></span>PDF Optimization</h3>
 
-            <p>HexaPDF allows extracting various parts of a PDF file, e.g. text from a page,
-            attached files, embedded images, ...</p>
+    <p>HexaPDF writes output PDF files as compactly as possible. Additionally, it can
+    optimize existing PDF files to reduce their file size.</p>
+  </div>
+</div>
 
-          </div>
-        </section>
-        <section class="4u 12u(narrower)">
-          <div class="box highlight">
-            <i class="icon major fa-pencil"></i>
-            <h3>PDF Encryption</h3>
+<div class="row">
+  <div class="col-sm-12 wmax">
+      <h2>License</h2>
 
-            <p>HexaPDF supports all password based encryption mechanisms, including AES 256bit, when
-            reading and writing PDF files.</p>
+      <p>HexaPDF is licensed under
+      the <a href="https://github.com/gettalong/hexapdf/blob/master/LICENSE">GNU Affero
+      General Public License (AGPL)</a>, an open source license. It allows you to use HexaPDF for
+      free as long as you adhere to the license.</p>
 
-          </div>
-        </section>
-        <section class="4u 12u(narrower)">
-          <div class="box highlight">
-            <i class="icon major fa-wrench"></i>
-            <h3>PDF Optimization</h3>
+      <p>The AGPL puts some restrictions in place to make sure that the community benefits
+      from changes to the code. For example, if you use HexaPDF in an application and
+      distribute that application, you have to make the source code of the whole application
+      available under the AGPL. The same applies if your application is used over a
+      network.</p>
 
-            <p>HexaPDF writes output PDF files as compactly as possible. Additionally, it can
-            optimize existing PDF files to reduce their file size.</p>
+      <p><b>If you want to use HexaPDF in a commercial setting, you need to <a
+      href="https://gettalong.at/hexapdf">purchase a commercial license</a>.</b></p>
 
-          </div>
-        </section>
-      </div>
-    </div>
-  </section>
+      <p>See {link: contributing.html} for more details.</p>
+  </div>
+</div>
 
-  <section class="wrapper style2">
-    <div class="container">
-      <div class="row">
-        <section class="8u -2u 12u(narrower)">
-          <div class="box">
-            <h2>License</h2>
-
-            <p>HexaPDF is licensed under
-            the <a href="https://github.com/gettalong/hexapdf/blob/master/LICENSE">GNU Affero
-            General Public License (AGPL)</a>, an open source license. It allows you to use HexaPDF for
-            free as long as you adhere to the license.</p>
-
-            <p>The AGPL puts some restrictions in place to make sure that the community benefits
-            from changes to the code. For example, if you use HexaPDF in an application and
-            distribute that application, you have to make the source code of the whole application
-            available under the AGPL. The same applies if your application is used over a
-            network.</p>
-
-            <p><b>If you want to use HexaPDF in a commercial setting, you need to <a
-            href="https://gettalong.at/hexapdf">purchase a commercial license</a>.</b></p>
-
-            <p>See {link: contributing.html} for more details.</p>
-          </div>
-        </section>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section id="cta" class="wrapper style3">
-    <div class="container">
-      <header>
-        <h2>Ready to start with HexaPDF?</h2>
-        <a href="{relocatable: api/}" class="button"><i class="icon fa-book"></i>&nbsp;API Documentation</a>
-      </header>
-    </div>
-  </section>
+<div class="row cta">
+  <div class="col-sm-12 wmax center">
+    <p>Ready to start with HexaPDF? <a href="{relocatable: api/}" class="button"><span class="icon-book-open"></span>&nbsp;API Documentation</a></p>
+  </div>
 </div>

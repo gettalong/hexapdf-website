@@ -3,6 +3,8 @@ title: hexapdf(1) - Manual Page
 side_menu: true
 dest_path: <parent><basename>(-<version>)(.<lang>).1.html
 cn: <basename>(-<version>)(.<lang>).1.html
+toc_options:
+  levels: [3, 100]
 ---
 <div class="man" markdown="1">
 {include_file: {filename: ../hexapdf/man/man1/hexapdf.1.md, process_output: false, escape_html: false}}

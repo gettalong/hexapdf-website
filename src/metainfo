@@ -23,21 +23,20 @@ api/:
   main_menu: true
   sort_info: 5
 
-api/**/*.html:
-  link:
-    css: /assets/sass/api.css
-
 examples/:
   main_menu: true
   sort_info: 3
 
 examples/*.html:
   side_menu: true
+  toc_options: {levels: [100, 100]}
 
 examples/index.*.html:
   side_menu: false
 
 documentation/:
+  title: Docs
+  routed_title: Docs
   main_menu: true
   sort_info: 7
 
