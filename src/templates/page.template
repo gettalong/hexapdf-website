@@ -1,4 +1,10 @@
 --- name:content pipeline:erb
+<div class="row breadcrumb">
+  <div class="col-sm-12 wmax">
+    <%= context.tag('breadcrumb_trail', {'separator' => " &nbsp»&nbsp; ", "omit_dir_index" => true}) %>
+  </div>
+</div>
+
 <div class="row wmax main">
   <div class="col-sm-12 col-md-4 sidebar">
      <%= context.render_block(name: "sidebar-before", notfound: "ignore", node: "first") %>

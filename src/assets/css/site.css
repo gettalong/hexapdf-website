@@ -228,6 +228,16 @@ nav {
   }
 }
 
+.breadcrumb {
+  background-color: #eee;
+  > div {
+    padding: var(--universal-padding) var(--universal-padding);
+  }
+  * {
+    font-size: 1rem;
+  }
+}
+
 .feature {
   h3 {
     font-weight: 300;
