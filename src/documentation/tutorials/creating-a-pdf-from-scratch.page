@@ -1,0 +1,114 @@
+---
+title: Creating a PDF Document from Scratch
+output_pdf: hello-world.pdf
+---
+
+## {title:}
+
+In this tutorial you will create a simple PDF document from scratch with HexaPDF. It only assumes
+that you have the [Ruby interpreter](https://www.ruby-lang.org/) already installed.
+
+
+### Installing HexaPDF
+
+The first step is installing HexaPDF itself as a Rubygem:
+
+~~~ shell
+$ gem install hexapdf
+~~~
+
+This will install HexaPDF as well as its dependencies. Afterwards the HexaPDF library and the
+`hexapdf` command line tool are available.
+
+
+### Requiring HexaPDF
+
+If you want to use HexaPDF in a Ruby program, you need to include the following statement:
+
+~~~ ruby
+require 'hexapdf'
+~~~
+
+This will only require the base HexaPDF library parts but also sets everything up so that all
+functionality will be auto-loaded if needed.
+
+
+### Creating the PDF Document
+
+To create a PDF document you will first need an empty document instance:
+
+~~~ ruby
+doc = HexaPDF::Document.new
+~~~
+
+Now that you have that empty document, let's add a page:
+
+~~~ ruby
+page = doc.pages.add
+~~~
+
+In this simplest form an empty A4-sized page is created. Once the page is available, you can use
+HexaPDF's drawing API to put something on it. To access the drawing API you need the canvas:
+
+~~~ ruby
+canvas = page.canvas
+~~~
+
+The canvas provides many methods for drawing lines, rectangles, curves, text, ... and for changing
+drawing aspects like the stroke color. For now, you will just draw the text "Hello World" on it. Set
+the font and font size as well as the fill color like this:
+
+~~~ ruby
+canvas.font('Helvetica', size: 50).
+  fill_color(0, 128, 255)
+~~~
+
+Setting the stroke color can be done in various ways, here an RGB (red, green, blue) value is used.
+
+Before drawing the text onto the canvas you need to know two things:
+
+1. The coordinate system of a PDF page has its origin at the lower-left corner, positivie x-axis is
+   to the right, positive y-axis up, so just like the mathematical notation of the 2D space.
+
+2. Coordinates are specified in PDF points where 72 PDF points are one inch.
+
+Now you can draw the text in roughly the center of the page (A4 is 595x842 points):
+
+~~~ ruby
+canvas.text("Hello World", at: [150, 396])
+~~~
+
+The page has some contents now; the last thing to do is to write the PDF document to a file:
+
+~~~ ruby
+doc.write("hello-world.pdf")
+~~~
+
+The code is now complete and should look like this:
+
+~~~ ruby
+<%= context.node.blocks['code'].chomp %>
+~~~
+
+Save this Ruby file and run it. It will create the `hello-world.pdf` file with the "Hello World"
+page in it! If you followed the tutorial without having access to a computer, you can also [view the
+PDF file here](hello-world.pdf).
+
+You might wanna play around a bit with different [HexaPDF::Content::Canvas] methods, for example, to
+draw lines or bezier curvers with different line width and colors.
+
+When you are ready, head on to the next tutorial about [modifying a PDF
+document](modifying-a-pdf-document.html).
+
+
+
+--- name:code pipeline:
+require 'hexapdf'
+
+doc = HexaPDF::Document.new
+page = doc.pages.add
+canvas = page.canvas
+canvas.font('Helvetica', size: 50).
+  fill_color(0, 128, 255)
+canvas.text("Hello World", at: [150, 396])
+doc.write("hello-world.pdf")

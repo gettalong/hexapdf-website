@@ -1,0 +1,116 @@
+---
+title: Document Structure
+subtitle: How a PDF document is structured and the most important objects
+sort_info: 20
+---
+
+## PDF Document Structure
+
+The PDF specification defines a single entry point into the document structure, the file trailer
+dictionary, from which all other objects are referenced (n.b.: It is possible to store objects in a
+PDF file without any reference to them. However, no standard PDF reader would be able to use them).
+This means that the file trailer can be thought of as the root of a tree of PDF objects.
+
+Although HexaPDF provides abstractions and convenience methods for working with the most important
+PDF objects, basic knowledge of the structure of a PDF file helps a lot. For in-depth information or
+for information about parts that are not covered, please consult the relevant parts of the PDF
+specification.
+
+
+
+## File Trailer
+
+The file trailer dictionary (implemented by [HexaPDF::Type::Trailer]) is not really useful for the
+library user but for the PDF library itself because it contains all the information to properly
+parse a PDF file, for example, encryption information.
+
+Additionally, it provides access to the document catalog via the `/Root` key and to the information
+dictionary via the `/Info` key.
+
+If you need to access it, use [HexaPDF::Document#trailer].
+
+
+
+## Document Catalog
+
+Although the file trailer provides the entry point to all objects, the document catalog (see
+[HexaPDF::Type::Catalog]) is the real root of the document tree.
+
+It contains references to all the important parts of a PDF file, for example, the page tree, the
+objects for interactive form support and the outline.
+
+Additionally, it can be used to specify how the PDF document should be displayed through the keys
+`/ViewerPreferences`, `/PageLayout` and `/PageMode`.
+
+The document catalog can be accessed via [HexaPDF::Document#catalog].
+
+
+
+## Page Tree
+
+The page tree is a tree-like object structure that contains references to all the pages of a PDF
+document.
+
+The PDF specification could have used a simple array with references to the pages instead of the
+page tree. However, when a PDF document contains many pages and is viewed on a device with limited
+memory, a tree structure is better suited.
+
+Since the object structure contains several redundant fields to aid in quickly getting the right
+page object and since these fields need to be in sync, it is not advised to manually alter the
+structure by inserting or deleting pages. HexaPDF can recover from such modifications but only if
+explicitly told so through its validation feature.
+
+Because of this complexity the class [HexaPDF::Type::PageTreeNode] which implements nodes of the
+tree provides all the necessary convenience methods for adding, retrieving and deleting pages as
+well as getting the zero-based index of a page.
+
+To make it still easier to work with pages, HexaPDF provides a convenience wrapper
+[HexaPDF::Document::Pages] that can be accessed via [HexaPDF::Document#pages]. This wrapper allows
+you to use standard methods names like `#add`, `#delete` and `#[]` when working with pages. If you
+still want to access the page tree itself, use [HexaPDF::Type::Catalog#pages].
+
+
+
+## Page
+
+For each page in a PDF document exists one page object that holds all the needed information for
+displaying the page.
+
+The most important information is stored in the following keys:
+
+Media box (key `/MediaBox`)
+
+: Defines the size of the page.
+
+Content streams (key `/Contents`)
+
+: Holds references to one or more content streams that define the contents of page.
+
+Ressource dictionary (key `/Ressources`)
+
+: Contains reference to ressources that may be used by the page, like fonts or images.
+
+There are many other keys for specifying things like page transitions, annotations or actions.
+
+Page pbjects are represented by [HexaPDF::Type::Page]. This class provides all the necessary
+convenience methods to work with pages, for example:
+
+* The [HexaPDF::Type::Page#canvas] method gives you access to a [HexaPDF::Content::Canvas] object
+  for drawing on the page. You could manually assemble the content streams but this is error prone
+  and very tedious - better rely on the canvas object.
+
+* Use [HexaPDF::Type::Page#orientation] and [HexaPDF::Type::Page#rotate] methods to retrieve the
+  page orientation and to rotate a page.
+
+* The [HexaPDF::Type::Page#box] method allows you to view or change the various page boxes like the
+  media box.
+
+To access an existing page object you can use [HexaPDF::Document::Pages#[]] with a zero-based index;
+to add a new one use [HexaPDF::Document::Pages#add].
+
+
+---
+
+Outline
+
+AcroForm

@@ -1,0 +1,10 @@
+--- paths
+'**/*.page':
+  handler: tutorial_page
+  versions:
+    default:
+    pdf:
+
+index.page:
+  handler: page
+  version: ~

@@ -1,0 +1,12 @@
+---
+title: How-to Guides
+toc_options: {levels: [100, 100]}
+---
+
+## {title:}
+
+This section provides answers to "How do I...?" style questions. These how-to guides don't provide
+in-depth information on their topics (see the [key topics](../key-topics/) and
+[reference](../reference/) sections for that) but help you quickly accomplish common tasks.
+
+{menu: {options: {sort: true, siblings: true, not: {alcn: '**/index.*.html'}}}}

@@ -1,0 +1,21 @@
+---
+title: Key Topics
+toc_options: {levels: [100, 100]}
+---
+
+## Key Topics
+
+These articles provide background information and explanations of some of the key concepts of PDF
+and HexaPDF.
+
+{menu: {template: '', options: {siblings: true, sort: true, not: {alcn: 'index.*.html'}}}}
+
+--- name:tag.menu pipeline:ruby
+out = "<ul>"
+context[:nodes].each do |node, children|
+  link = context.dest_node.link_to(node, context.content_node.lang)
+  out << "<li><p>#{link}<br />#{node['subtitle']}</p></li>"
+end
+out << "</ul>"
+
+context.content = out

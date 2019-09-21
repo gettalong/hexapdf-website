@@ -1,12 +1,38 @@
 --- name:alcn
-changelog.*.html:
-  sort_info: 1
+'**/*.html':
+  side_menu: true
 
-hexapdf.*.html:
-  sort_info: 2
+['**/index.*.html', reference/api/**/*.html]:
+  side_menu: false
+
+tutorials/:
+  side_menu: true
+  sort_info: 10
+
+howtos/:
+  title: How-to Guides
+  side_menu: true
+  sort_info: 20
+
+key-topics/:
+  title: Key Topics
+  side_menu: true
+  sort_info: 30
+
+reference/:
+  side_menu: true
+  sort_info: 40
+
+reference/api/:
+  title: API
+  side_menu: true
 
 benchmarks/:
   side_menu: true
-  sort_info: 99
+  sort_info: 50
+
+changelog.*.html:
+  sort_info: 60
+
 
 
