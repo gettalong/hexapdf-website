@@ -7,4 +7,4 @@
 
 index.page:
   handler: page
-  version: ~
+  versions: ~
