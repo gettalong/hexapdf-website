@@ -39,10 +39,10 @@ the input file was such a hybrid-reference file.
 As always, have a look at the [changelog] for an overview of the changes.
 
 
-[hp-modify]: /documentation/hexapdf.1.html#modify
-[hp-merge]: /documentation/hexapdf.1.html#merge
-[hp-optimize]: /documentation/hexapdf.1.html#optimize
-[hp-files]: /documentation/hexapdf.1.html#files
-[hp-images]: /documentation/hexapdf.1.html#images
+[hp-modify]: /documentation/reference/hexapdf.1.html#modify
+[hp-merge]: /documentation/reference/hexapdf.1.html#merge
+[hp-optimize]: /documentation/reference/hexapdf.1.html#optimize
+[hp-files]: /documentation/reference/hexapdf.1.html#files
+[hp-images]: /documentation/reference/hexapdf.1.html#images
 [changelog]: /documentation/changelog.html
 [patreon]: https://patreon.com/gettalong

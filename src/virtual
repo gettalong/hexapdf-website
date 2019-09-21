@@ -1,5 +1,3 @@
-api/index.html:
-  dest_path: HexaPDF/index.html
 github:
   title: Code
   dest_path: https://github.com/gettalong/hexapdf

@@ -8,4 +8,4 @@ Here you will find some examples of how HexaPDF can be used as a library. All ex
 shipped with HexaPDF in the `example/` directory. Use the menu to display an example.
 
 If you are looking for examples on how to use the `hexapdf` application, have a look at the
-[examples section of its manual page](../documentation/hexapdf.1.html#examples).
+[examples section of its manual page](../documentation/reference/hexapdf.1.html#examples).

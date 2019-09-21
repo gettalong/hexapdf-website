@@ -18,10 +18,6 @@
   modified_at_in_dest_path: true
 
 --- name:alcn
-api/:
-  title: API
-  main_menu: true
-  sort_info: 5
 
 examples/:
   main_menu: true
