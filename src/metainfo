@@ -18,6 +18,9 @@
   modified_at_in_dest_path: true
 
 --- name:alcn
+/:
+  title: Home
+  routed_title: Home
 
 examples/:
   main_menu: true
