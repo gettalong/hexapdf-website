@@ -299,6 +299,197 @@ nav li {
 // other
 ///////////////////
 
+.highlighter-rouge .hll {
+ background-color:#ffc
+}
+.highlighter-rouge .c {
+ color:#998;
+ font-style:italic
+}
+.highlighter-rouge .err {
+ color:#a61717;
+ background-color:#e3d2d2
+}
+.highlighter-rouge .k {
+ font-weight:700
+}
+.highlighter-rouge .o {
+ font-weight:700
+}
+.highlighter-rouge .cm {
+ color:#998;
+ font-style:italic
+}
+.highlighter-rouge .cp {
+ color:#999;
+ font-weight:700
+}
+.highlighter-rouge .c1 {
+ color:#998;
+ font-style:italic
+}
+.highlighter-rouge .cs {
+ color:#999;
+ font-weight:700;
+ font-style:italic
+}
+.highlighter-rouge .gd {
+ color:#000;
+ background-color:#fdd
+}
+.highlighter-rouge .ge {
+ font-style:italic
+}
+.highlighter-rouge .gr {
+ color:#a00
+}
+.highlighter-rouge .gh {
+ color:#999
+}
+.highlighter-rouge .gi {
+ color:#000;
+ background-color:#dfd
+}
+.highlighter-rouge .go {
+ color:#888
+}
+.highlighter-rouge .gp {
+ color:#555
+}
+.highlighter-rouge .gs {
+ font-weight:700
+}
+.highlighter-rouge .gu {
+ color:#aaa
+}
+.highlighter-rouge .gt {
+ color:#a00
+}
+.highlighter-rouge .kc {
+ font-weight:700
+}
+.highlighter-rouge .kd {
+ font-weight:700
+}
+.highlighter-rouge .kn {
+ font-weight:700
+}
+.highlighter-rouge .kp {
+ font-weight:700
+}
+.highlighter-rouge .kr {
+ font-weight:700
+}
+.highlighter-rouge .kt {
+ color:#458;
+ font-weight:700
+}
+.highlighter-rouge .m {
+ color:#099
+}
+.highlighter-rouge .s {
+ color:#b84
+}
+.highlighter-rouge .na {
+ color:#008080
+}
+.highlighter-rouge .nb {
+ color:#999
+}
+.highlighter-rouge .nc {
+ color:#458;
+ font-weight:700
+}
+.highlighter-rouge .no {
+ color:#008080
+}
+.highlighter-rouge .ni {
+ color:#800080
+}
+.highlighter-rouge .ne {
+ color:#900;
+ font-weight:700
+}
+.highlighter-rouge .nf {
+ color:#900;
+ font-weight:700
+}
+.highlighter-rouge .nn {
+ color:#555
+}
+.highlighter-rouge .nt {
+ color:#000080
+}
+.highlighter-rouge .nv {
+ color:#008080
+}
+.highlighter-rouge .ow {
+ font-weight:700
+}
+.highlighter-rouge .w {
+ color:#bbb
+}
+.highlighter-rouge .mf {
+ color:#099
+}
+.highlighter-rouge .mh {
+ color:#099
+}
+.highlighter-rouge .mi {
+ color:#099
+}
+.highlighter-rouge .mo {
+ color:#099
+}
+.highlighter-rouge .sb {
+ color:#b84
+}
+.highlighter-rouge .sc {
+ color:#b84
+}
+.highlighter-rouge .sd {
+ color:#b84
+}
+.highlighter-rouge .s2 {
+ color:#b84
+}
+.highlighter-rouge .se {
+ color:#b84
+}
+.highlighter-rouge .sh {
+ color:#b84
+}
+.highlighter-rouge .si {
+ color:#b84
+}
+.highlighter-rouge .sx {
+ color:#b84
+}
+.highlighter-rouge .sr {
+ color:#808000
+}
+.highlighter-rouge .s1 {
+ color:#b84
+}
+.highlighter-rouge .ss {
+ color:#b84
+}
+.highlighter-rouge .bp {
+ color:#999
+}
+.highlighter-rouge .vc {
+ color:#008080
+}
+.highlighter-rouge .vg {
+ color:#008080
+}
+.highlighter-rouge .vi {
+ color:#008080
+}
+.highlighter-rouge .il {
+ color:#099
+}
+
 table.standard {
   max-height: inherit !important;
 
