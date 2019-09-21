@@ -40,6 +40,10 @@ documentation/:
   main_menu: true
   sort_info: 7
 
+github:
+  main_menu: true
+  sort_info: 9
+
 news/:
   main_menu: true
   sort_info: 10
