@@ -1,6 +1,7 @@
 ---
 title: Raw Text
 modified_at: 2018-12-31 00:00:00
+sort_info: 20
 --- name:data pipeline:
 |--------------------------------------------------------------------|
 |                              ||    Time |     Memory |   File size |

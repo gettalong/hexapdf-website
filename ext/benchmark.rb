@@ -14,7 +14,8 @@ class HexaPDFBenchmark
       set_blocks(node, blocks)
 
       page_path = Webgen::Path.new(path.alcn.sub(/\.svg$/, '.page'), 'handler' => 'page',
-                                  'title' => node['title'], 'modified_at' => node['modified_at'])
+                                  'title' => node['title'], 'modified_at' => node['modified_at'],
+                                  'sort_info' => node['sort_info'])
       name = path.basename
       readme = File.join(@website.config['path_handler.benchmark.base_dir'], name, 'README.md')
       readme = File.absolute_path(readme, @website.directory)
