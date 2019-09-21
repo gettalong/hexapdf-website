@@ -6,6 +6,7 @@ $nav-sublink-depth: 4;
 @import 'mini/layout';
 
 @include make-card-alt-size ('fluid', 100%);
+@include make-card-alt-color ('information', #D6E8DD);
 
 @import 'mini/input_control';
 
@@ -93,6 +94,13 @@ html, * {
 
 dl {
   margin: var(--universal-margin);
+}
+
+pre, pre * {
+  font-family: #{$code-font-family};
+  code {
+    font-size: .85rem;
+  }
 }
 
 .wmax {
