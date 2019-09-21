@@ -26,7 +26,7 @@ This will install HexaPDF as well as its dependencies. Afterwards the HexaPDF li
 If you want to use HexaPDF in a Ruby program, you need to include the following statement:
 
 ~~~ ruby
-require 'hexapdf'
+{code: 0}
 ~~~
 
 This will only require the base HexaPDF library parts but also sets everything up so that all
@@ -38,20 +38,20 @@ functionality will be auto-loaded if needed.
 To create a PDF document you will first need an empty document instance:
 
 ~~~ ruby
-doc = HexaPDF::Document.new
+{code: 2}
 ~~~
 
 Now that you have that empty document, let's add a page:
 
 ~~~ ruby
-page = doc.pages.add
+{code: 3}
 ~~~
 
 In this simplest form an empty A4-sized page is created. Once the page is available, you can use
 HexaPDF's drawing API to put something on it. To access the drawing API you need the canvas:
 
 ~~~ ruby
-canvas = page.canvas
+{code: 4}
 ~~~
 
 The canvas provides many methods for drawing lines, rectangles, curves, text, ... and for changing
@@ -59,8 +59,7 @@ drawing aspects like the stroke color. For now, you will just draw the text "Hel
 the font and font size as well as the fill color like this:
 
 ~~~ ruby
-canvas.font('Helvetica', size: 50).
-  fill_color(0, 128, 255)
+{code: {range: !ruby/range 5..6}}
 ~~~
 
 Setting the stroke color can be done in various ways, here an RGB (red, green, blue) value is used.
@@ -75,13 +74,13 @@ Before drawing the text onto the canvas you need to know two things:
 Now you can draw the text in roughly the center of the page (A4 is 595x842 points):
 
 ~~~ ruby
-canvas.text("Hello World", at: [150, 396])
+{code: 7}
 ~~~
 
 The page has some contents now; the last thing to do is to write the PDF document to a file:
 
 ~~~ ruby
-doc.write("hello-world.pdf")
+{code: 8}
 ~~~
 
 The code is now complete and should look like this:

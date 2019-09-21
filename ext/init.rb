@@ -14,3 +14,10 @@ website.ext.path_handler.register(HexaPDFBenchmark, patterns: ['**/*.benchmark']
 option('path_handler.benchmark.base_dir', '../hexapdf/benchmark')
 
 website.ext.path_handler.register(TutorialPage, insert_at: 4)
+website.ext.tag.register('code', config_prefix: 'tag.code',
+                         mandatory: ['range']) do |_tag, _body, context|
+  range = context[:config]['tag.code.range']
+  range = range..range if range.kind_of?(Numeric)
+  context.node.blocks['code'].split("\n")[range].join("\n")
+end
+website.config.define_option('tag.code.range', nil)
