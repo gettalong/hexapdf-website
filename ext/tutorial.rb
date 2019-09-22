@@ -2,7 +2,19 @@ class TutorialPage < Webgen::PathHandler::Page
 
   def create_nodes(path, blocks)
     if path['version'] == 'default'
-      super
+      page_node = super
+      page_node.blocks['content'] << <<~TEXT
+
+
+      ### The Complete Code and Result PDF
+
+      Here is the complete code generating [this result PDF](#{page_node['output_pdf']}):
+
+      ~~~ ruby
+      #{code(page_node)}
+      ~~~
+      TEXT
+      page_node
     else
       path['dest_path'] = "<parent>#{path['output_pdf']}"
       create_node(path) {|node| set_blocks(node, blocks) }
@@ -19,7 +31,7 @@ class TutorialPage < Webgen::PathHandler::Page
       code_file = pdf_file + '.rb'
 
       Dir.mkdir(tutorials_dir) unless File.directory?(tutorials_dir)
-      File.write(code_file, node.blocks['code'], mode: 'w+')
+      File.write(code_file, code(node), mode: 'w+')
       Dir.chdir(tutorials_dir) do
         unless system("ruby -I#{hexapdf_lib} #{File.basename(code_file)}")
           raise "Error creating tutorial PDF file from #{node.versions['default'].alcn}"
@@ -28,6 +40,10 @@ class TutorialPage < Webgen::PathHandler::Page
 
       File.read(pdf_file)
     end
+  end
+
+  def code(node)
+    node.blocks['content'].scan(/\n~~~ ruby\n(.*?)\n~~~/m).map(&:first).join("\n\n")
   end
 
 end
