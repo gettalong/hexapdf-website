@@ -1,0 +1,159 @@
+---
+title: Modifying a PDF Document
+output_pdf: modified.pdf
+toc_options: {levels: [3, 100]}
+---
+
+## {title:}
+
+In this tutorial you will learn how to open an existing PDF document and modify it by adding pages
+and changing existing pages. If you didn't do the [previous
+tutorial](creating-a-pdf-from-scratch.html), grab [this PDF file](hello-world.pdf) and save it in
+your working directory.
+
+
+### Opening an Existing Document
+
+Similar to `File.open` HexaPDF also provides an `#open` method to easily open local files:
+
+~~~ ruby
+require 'hexapdf'
+
+doc = HexaPDF::Document.open('hello-world.pdf')
+~~~
+
+The variable `doc` now contains a `HexaPDF::Document` instance with the data from `hello-world.pdf`.
+
+
+### Drawing onto an Existing Page
+
+Since PDF is a complex file format, HexaPDF provides convenience methods so that looking at the PDF
+specification is not necessary for many things. One of these methods is [HexaPDF::Document#pages]
+that allows you to access existing pages as well as add or delete them. Now we get the first page:
+
+~~~ ruby
+page1 = doc.pages[0]
+~~~
+
+The page class also provides convenience methods. We alrady uesd the `#canvas` method in the
+previous tutorial. Now we use it again to draw beneath and atop the existing page:
+
+~~~ ruby
+underlay_canvas = page1.canvas(type: :underlay)
+underlay_canvas.fill_color(50).
+  rectangle(0, 0, page1.box.width, page1.box.height).
+  fill
+~~~
+
+This draws a gray background. Note that this will only work if the page doesn't already have a
+background (as is the case with our sample PDF) because later drawing operations always draw over
+any existing drawings.
+
+We utilize this drawing order to also draw something atop the page:
+
+~~~ ruby
+overlay_canvas = page1.canvas(type: :overlay)
+overlay_canvas.fill_color(129, 192, 255).
+  font('Helvetica', size: 50).
+  save_graphics_state.
+  translate(170, 330).rotate(30).
+  text("Hello World", at: [0, 0]).
+  restore_graphics_state.
+  translate(170, 470).rotate(-30).
+  text("Hello World", at: [0, 0])
+~~~
+
+This code uses several methods of the canvas object to draw rotated versions of the text "Hello
+World". Note how we first translate and then rotate the canvas before drawing the text at the -- new
+-- origin.
+
+
+### Re-Using Content on Multiple Pages
+
+The PDF format has a mechanism for using the same content on multiple pages called "Form XObjects".
+Note that these form XObjects have nothing to do with interactive PDF forms!
+
+We will use such a form XObject to create the background layout of the content pages. First we
+create the needed form XObject and get its canvas object:
+
+~~~ ruby
+form = doc.add(Type: :XObject, Subtype: :Form, BBox: HexaPDF::Type::Page.media_box(:A4))
+form_canvas = form.canvas
+~~~
+
+In this case we create the form XObject directly by specifying all the properties; the returned
+object provides the appropriate convenience methods. Since the form XObject has the same size as the
+document's pages, we don't have to scale it later.
+
+Then we will use the canvas object to draw our background layout:
+
+~~~ ruby
+form_canvas.
+  fill_color(0, 102, 204).
+  rectangle(0, 0, form.width, 50).
+  rectangle(0, form.height - 50, form.width, 50).
+  fill.
+  fill_color(255).
+  font('Helvetica', size: 30, style: :italic).
+  text('Tutorial 2', at: [15, form.height - 35])
+~~~
+
+Note how we chained two drawing operations before calling `#fill`.
+
+Now that our form XObject is ready we use the underlay canvas to add it to the existing page:
+
+~~~ ruby
+underlay_canvas.xobject(form, at: [0, 0])
+~~~
+
+
+### Inserting New Pages
+
+Now that we have updated our existing page, it is time to add new pages. To insert a page at a
+specific (zero-based) page index, just use the `doc.pages.insert` method:
+
+~~~ ruby
+front_page = doc.pages.insert(0)
+front_page.canvas.
+  font('Helvetica', variant: :bold, size: 50).
+  text("Tutorial 2", at: [100, 600]).
+  font_size(30).text("Modifying a PDF Document", at: [100, 550]).
+  fill_color(0, 102, 204).
+  rectangle(0, front_page.box.height - 50, front_page.box.width, 50).
+  rectangle(0, 0, front_page.box.width, 50).
+  fill
+~~~
+
+This code inserts a title page as first page of the PDF document. Let's add some more pages with
+some simple content:
+
+~~~ ruby
+1.upto(10) do |number|
+  canvas = doc.pages.add.canvas
+  canvas.xobject(form, at: [0, 0])
+  canvas.translate(70, 700).rotate(-55).
+    fill_color(0, 128, 255).
+    font('Helvetica', size: 90).
+    text("Sample Page #{number}", at: [0, 0])
+end
+~~~
+
+
+### Writing the PDF and Experiments
+
+At last, we write the PDF document to a file:
+
+~~~ ruby
+doc.write('modified.pdf')
+~~~
+
+If you have followed the tutorial, you can now run the program to get the modified PDF.
+
+That is all for now but for further experiments you might wanna try:
+
+* Before writing the document delete pages 3 and 6 through 8 (hint: [HexaPDF::Document::Pages]).
+
+* Insert an additional, letter sized page and scale the form XObject appropriately (hint:
+  [HexaPDF::Content::Canvas#xobject]).
+
+* Modify the document meta information (hint: [HexaPDF::Type::Trailer#info]).
