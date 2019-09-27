@@ -7,7 +7,7 @@ toc_options: {levels: [100, 100]}
 
 If you are new to HexaPDF, read this material to get up and running quickly.
 
-{menu: {options: {sort: true, siblings: true, not: {alcn: '**/index.*.html'}}}}
+{menu: {options: {sort: true, siblings: true, alcn: '*.html', not: {alcn: '**/index.*.html'}}}}
 
 
 <div class="card fluid information" markdown="1">

@@ -8,7 +8,7 @@ toc_options: {levels: [100, 100]}
 These articles provide background information and explanations of some of the key concepts of PDF
 and HexaPDF.
 
-{menu: {template: '', options: {siblings: true, sort: true, not: {alcn: 'index.*.html'}}}}
+{menu: {template: '', options: {siblings: true, sort: true, alcn: '*.html', not: {alcn: 'index.*.html'}}}}
 
 --- name:tag.menu pipeline:ruby
 out = "<ul>"

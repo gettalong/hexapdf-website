@@ -9,4 +9,4 @@ This section provides answers to "How do I...?" style questions. These how-to gu
 in-depth information on their topics (see the [key topics](../key-topics/) and
 [reference](../reference/) sections for that) but help you quickly accomplish common tasks.
 
-{menu: {options: {sort: true, siblings: true, not: {alcn: '**/index.*.html'}}}}
+{menu: {options: {sort: true, siblings: true, alcn: '**/*.html', not: {alcn: '**/index.*.html'}}}}
