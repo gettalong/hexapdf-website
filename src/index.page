@@ -86,6 +86,6 @@ template: default.template
 
 <div class="row cta">
   <div class="col-sm-12 wmax center">
-    <p>Ready to start with HexaPDF? <a href="{relocatable: documentation/reference/api/}" class="button"><span class="icon-book-open"></span>&nbsp;API Documentation</a></p>
+    <p>Ready to start with HexaPDF? <a href="{relocatable: documentation/tutorials/}" class="button"><span class="icon-book-open"></span>&nbsp;Tutorials</a></p>
   </div>
 </div>
