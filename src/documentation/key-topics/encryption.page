@@ -1,0 +1,18 @@
+---
+title: Encryption
+subtitle: How encrypting PDFs works in general and how to use it with HexaPDF
+sort_info: 30
+draft: true
+---
+
+how encryption works (strings, streams encrypted, XMP meta data is not so that tools that parse the
+binary file can locate and extract it)
+
+user and owner password
+
+rights management (which rights are available, enforcement by application)
+
+available encryption algorithms
+
+difference between security handler and standard security handler
+
