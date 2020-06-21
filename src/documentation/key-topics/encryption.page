@@ -2,17 +2,59 @@
 title: Encryption
 subtitle: How encrypting PDFs works in general and how to use it with HexaPDF
 sort_info: 30
-draft: true
 ---
 
-how encryption works (strings, streams encrypted, XMP meta data is not so that tools that parse the
-binary file can locate and extract it)
+## Encryption
 
-user and owner password
+PDF documents have built-in support for securing them by encrypting the content and assigning usage
+rights. The main access point to this facility in HexaPDF is [HexaPDF::Document#encrypt].
 
-rights management (which rights are available, enforcement by application)
 
-available encryption algorithms
+## How the Encryption Works
 
-difference between security handler and standard security handler
+The PDF specification defines the algorithms that are used for encrypting, namely RC4 or AES, and
+how the encryption should be done.
 
+RC4 is an old and nowadays insecure algorithm and should be avoided. AES is much better. Both
+algorithms can be used with various key length: RC4 from 40bit to 128bit and AES 128bit and 256bit.
+The latter, AES 256bit, was only standardized with PDF 2.0. Prior to this it was an Adobe extension.
+So for now the best option is AES 128bit to get good security with the broadest compatibility. This
+is the default setting for HexaPDF.
+
+When a PDF is encrypted, all strings and byte streams (e.g. the page contents) are encrypted. Meta
+data streams in XMP format can be exempt from the encryption so that tools that parse the PDF file
+can still locate and extract them. This means that without the proper password viewing of the PDF is
+not possible.
+
+The encryption key itself is provided by a so called security handler (see [next
+section](#security-handlers)). This means that the "how", i.e. how the encryption is done, is always
+the same, only the derivation of the encryption key is different.
+
+
+## Security Handlers
+
+Security handlers provide the encryption key to the encryption facility and can specify additional
+information.
+
+The standard security handler as defined by the PDF specification needs to be implemented by every
+PDF reader application and calculates the encryption key from a password. Actually, one can define
+*two* passwords:
+
+* The **user password** is needed for opening the PDF document and is the one provided to users of
+  the PDF document.
+
+* The **owner password** also allows opening the PDF document but without any restrictions.
+
+In addition to deriving the encryption key from the passwords, the standard security handler
+provides a way to set usage rights, e.g. printing allowed, copying allowed, and so on. These usage
+rights should be enforced by a PDF reader application if the document was opened with the user
+password but not when opened with the owner password. See
+[HexaPDF::Encryption::StandardSecurityHandler::Permissions] for a list of all available permissions.
+
+It is also possible to just assign usage rights. Then the PDF document is still encrypted but a user
+doesn't need to enter a password for viewing the PDF document. However, the usage rights are still
+applied.
+
+In addition to the standard security handler there is also a security handler for creating the
+encryption key using certificates. However, this functionality is probably only used in enterprise
+settings where a certain PDF reader application is mandated.
