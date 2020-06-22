@@ -303,6 +303,19 @@ nav li {
   }
 }
 
+table.field-definitions {
+  max-height: inherit;
+
+  tr td:nth-child(1), tr th:nth-child(1) {
+    max-width: 10em;
+  }
+  tr td:nth-child(3), tr th:nth-child(3) {
+    max-width: 6em;
+  }
+  tr td:nth-child(4), tr th:nth-child(4) {
+    max-width: 10em;
+  }
+}
 
 ///////////////////
 // other
