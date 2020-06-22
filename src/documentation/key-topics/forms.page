@@ -1,0 +1,125 @@
+---
+title: Interactive Forms
+subtitle: Information on interactive PDF forms and how to use them with HexaPDF
+sort_info: 40
+---
+
+## Interactive Forms
+
+PDF is mainly used as format that provides consistent output regardless of the output device.
+However, it also provides various interactive features, one of them being support for forms.
+
+
+## AcroForm vs XFA Forms
+
+The PDF specification provides two different ways for representing forms: AcroForm and XFA forms:
+
+* **AcroForm**s are static forms where each form field is predefined with respect to its size,
+  possible values and so on. These types of forms have been in the PDF specification since PDF 1.2
+  and have broad support among PDF reader applications. When speaking of an interactive form we
+  always mean an AcroForm.
+
+* **XFA forms** (Adobe XML Forms Architecture) were introduce with PDF 1.5 and are much more
+  advanced. They allow, for example, that fields are dependent on other fields and that text fields
+  can vary in size, possibly adding pages to the document. XFA forms have been deprecated with PDF
+  2.0.
+
+XFA forms need much more functionality in a PDF reader application than AcroForm forms. Due to this
+support for XFA forms is only available in certain commercial software applications.
+
+Since XFA forms are already deprecated, HexaPDF only has support for interactive forms.
+
+
+## Interactive Forms (AcroForm)
+
+An interactive form consists of the main form dictionary, form fields and widget annotations.
+Together they define the structure and visible appearance of the form.
+
+The main form dictionary references the *root fields* which in turn can reference child fields. This
+allows one to build a hierarchy of fields and to inherit attributes from parent fields. Fields
+without child fields are called *terminal fields*.
+
+These terminal fields can have a visible appearance which is provided by a widget annotation. Each
+field can have zero, one or more associated widgets.
+
+
+### Main Interactive Form Dictionary
+
+The main form dictionary can be referenced from the document catalog via the `/AcroForm` key (see
+[HexaPDF::Type::Catalog#acro_form]). It is implemented by the [HexaPDF::Type::AcroForm::Form] class.
+
+It only provides a few entries, the most important of which are:
+
+* `/Fields` contains the array of root fields. See the various methods on the form class on how to
+  access and modify form fields.
+
+* `/NeedAppearances` defines whether appearances should be constructed by the PDF reader
+  application. This is useful for libraries/applications which can't do this due to the added
+  complexity. They just set this key to `true` and the reader application constructs all
+  appearances.
+
+* `/DR`/`/DA`: The former is a dictionary containing the default resources (like fonts, color
+  spaces, ...) that should be used when constructing appearances. The latter defines a "default
+  appearance string" that defines, at least, the font and font size to be used when creating text
+  field appearances. The two keys together allow a PDF reader application to convert text input by a
+  user into a proper PDF content stream.
+
+  See [#set_default_appearance_string][HexaPDF::Type::AcroForm::Form#set_default_appearance_string].
+
+The form dictionary object is the main entry point for handling interactive forms with HexaPDF. It
+allows you to list, modify, create and delete the form fields. By relying on the provided
+convenience methods all the tedious but needed book-keeping is done behind the scenes.
+
+
+### Form Fields
+
+A form field dictionary contains, among other things, the type of the field, its name and its value.
+
+There are four main types of fields which are further sub-divided:
+
+**Button fields**
+
+: These fields represent interactive controls that a user can manipulate with a mouse.
+
+  A button field may be a **push button** (something to click which produces a result immediately),
+  a **check box** (for toggling between two states) or a **radio button** (typically one button in a
+  set can be turned on).
+
+**Text fields**
+
+: These fields allow the user to input text from the keyboard.
+
+  The text can be entered into a single-line or multi-line field and there is also the possibility
+  for *rich text strings* which allow inline formatting of the text.
+
+  See [HexaPDF::Type::AcroForm::TextField].
+
+**Choice fields**
+
+: These fields contain several text items of which the use can select one or more.
+
+  A choice field may be presented as a scrollable **list box** or a **combo box**. The latter also
+  allows the user to input a value other than the predefined ones.
+
+**Signature fields**
+
+: These fields represent digital signatures and optional data for authenticating the signer name and
+  the document's contents.
+
+The visual appearance is defined by associated widget annotations. Each terminal field can have
+zero, one or more associated widgets. This is useful, for example, on a multi-page form where a name
+entered by the user should appear in a header or footer on every page.
+
+
+### Widget Annotations
+
+A widget annotation describes the visual appearance of a form field on a page. It is implemented by
+[HexaPDF::Type::Annotations::Widget].
+
+As with all other annotations the widgets placement on the page is specified by the `/Rect` key and
+the visual appearance by the `/AS` and `/AP` keys. Additionally, each widget can specify a
+background color and border style.
+
+When using HexaPDF you don't have to worry about the visual appearance. HexaPDF creates the needed
+appearance streams automatically using a default style similar to those found in popular PDF reader
+applications. You can naturally provide the appearance streams yourself if needed.
