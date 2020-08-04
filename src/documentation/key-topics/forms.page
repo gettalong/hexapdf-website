@@ -58,6 +58,8 @@ It only provides a few entries, the most important of which are:
   complexity. They just set this key to `true` and the reader application constructs all
   appearances.
 
+  See [#need_appearances!][HexaPDF::Type::AcroForm::Form#need_appearances!].
+
 * `/DR`/`/DA`: The former is a dictionary containing the default resources (like fonts, color
   spaces, ...) that should be used when constructing appearances. The latter defines a "default
   appearance string" that defines, at least, the font and font size to be used when creating text
@@ -85,6 +87,8 @@ There are four main types of fields which are further sub-divided:
   a **check box** (for toggling between two states) or a **radio button** (typically one button in a
   set can be turned on).
 
+  See [HexaPDF::Type::AcroForm::ButtonField].
+
 **Text fields**
 
 : These fields allow the user to input text from the keyboard.
@@ -96,10 +100,12 @@ There are four main types of fields which are further sub-divided:
 
 **Choice fields**
 
-: These fields contain several text items of which the use can select one or more.
+: These fields contain several text items of which the user can select one or more.
 
   A choice field may be presented as a scrollable **list box** or a **combo box**. The latter also
   allows the user to input a value other than the predefined ones.
+
+  See [HexaPDF::Type::AcroForm::ChoiceField].
 
 **Signature fields**
 
@@ -107,8 +113,9 @@ There are four main types of fields which are further sub-divided:
   the document's contents.
 
 The visual appearance is defined by associated widget annotations. Each terminal field can have
-zero, one or more associated widgets. This is useful, for example, on a multi-page form where a name
-entered by the user should appear in a header or footer on every page.
+zero, one or more associated widgets. For example, each widget annotation of a radio button field
+describes one possible selection value. Another use for multiple widget annotations is on a
+multi-page form where a name entered by the user should appear in a header or footer on every page.
 
 
 ### Widget Annotations
@@ -117,9 +124,17 @@ A widget annotation describes the visual appearance of a form field on a page. I
 [HexaPDF::Type::Annotations::Widget].
 
 As with all other annotations the widgets placement on the page is specified by the `/Rect` key and
-the visual appearance by the `/AS` and `/AP` keys. Additionally, each widget can specify a
-background color and border style.
+the visual appearance by the `/AS` and `/AP` keys.
+
+Additionally, each widget can specify a background color and border style and, depending on the type
+of the associated field, other properties.
 
 When using HexaPDF you don't have to worry about the visual appearance. HexaPDF creates the needed
 appearance streams automatically using a default style similar to those found in popular PDF reader
-applications. You can naturally provide the appearance streams yourself if needed.
+applications (see [HexaPDF::Type::AcroForm::AppearanceGenerator]). This is done by setting the
+needed widget annotation and field properties when the widget is created. Later these properties are
+used during the creation of the appearance (like some PDF readers would do when the
+`/NeedAppearances` key on the main form object is set).
+
+You can naturally provide the appearance streams yourself if needed since those are just Form
+XObjects.
