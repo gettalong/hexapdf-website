@@ -23,7 +23,7 @@ template: page.template
         }
       </script>
       <nav class="api-menu">
-        <%= context.tag('menu', 'options' => {alcn: ['/documentation/reference/api/**/*.html', '/documentation/reference/api/HexaPDF/'], not: {alcn: ['/documentation/reference/api/**/index.*.html', '/documentation/reference/api/index.html']}}, 'template' => '') %>
+        <%= context.tag('menu', 'options' => {alcn: ['/documentation/reference/api/**/*.html', '/documentation/reference/api/HexaPDF/'], not: {alcn: ['/documentation/reference/api/**/index.*.html', '/documentation/reference/api/index.html', '/documentation/reference/api/HexaPDF.html']}}, 'template' => '') %>
       </nav>
     </section>
 
