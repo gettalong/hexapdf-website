@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
   <head>
     <title>HexaPDF - {title:}</title>
     <meta charset="utf-8" />
@@ -11,15 +11,15 @@
 
     <header>
       <div class="wmax row">
-        <a class="logo col-sm" href="{relocatable: /}"><img src="{relocatable: /assets/images/logo.svg}" alt="logo" />HexaPDF</a>
+        <a class="logo col-sm" href="{relocatable: /}"><img src="{relocatable: /assets/images/logo.svg}" alt="HexaPDF logo" />HexaPDF</a>
         <div class="main-nav col-sm right col-md-8 col-lg-8">
           <label for="drawer-control" class="drawer-toggle button"></label>
-          <input type="checkbox" id="drawer-control" class="drawer" />
+          <input type="checkbox" id="drawer-control" class="drawer" title="Sidebar activator" />
           <div>
             <label for="drawer-control" class="drawer-close"></label>
             <h2 class="center hidden-md hidden-lg">Menu</h2>
             {menu: {template: /navbar-menu.template, options: {mi: {main_menu: true}, sort: true, absolute_levels: 1}}}
-            <div id="search"><input type="text" placeholder="search" id="tipue_search_input" /></div>
+            <div id="search"><input type="text" placeholder="search" id="tipue_search_input" title="Search the site" /></div>
           </div>
           <div id="tipue_search_content"></div>
         </div>

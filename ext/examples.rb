@@ -66,7 +66,7 @@ class Examples
     end
 
     content = "#{intro}\n\n## Code\n\n~~~ ruby\n#{code}\n~~~\n"
-    title = content[/(?<=\A## ).*?(?=\n)/]
+    title = content[/(?<=\A# ).*?(?=\n)/]
     path = Webgen::Path.new(name, 'handler' => 'page', 'modified_at' => parent_node['modified_at'],
                             'title' => title,
                             'blocks' => {'defaults' => {'pipeline' => 'erb,kramdown,fragments'}})

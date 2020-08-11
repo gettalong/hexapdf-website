@@ -65,8 +65,10 @@ $color-grey-extralight: lighten($color-grey, 90%);
   --color-primary-dark: #{$color-primary-dark};
   --color-grey: #{$color-grey};
   --color-grey-light: #{$color-grey-light};
-  --a-link-color: #{$color-primary};
-  --a-visited-color: #{$color-primary};
+  --a-link-color: #{$color-primary-dark};
+  --a-visited-color: #{$color-primary-dark};
+
+  --nav-link-color: #{$color-primary-dark};
 
   --header-fore-color: #{$color-grey-light};
   --header-back-color: #{$color-grey};

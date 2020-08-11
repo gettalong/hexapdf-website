@@ -4,7 +4,7 @@ subtitle: Information on interactive PDF forms and how to use them with HexaPDF
 sort_info: 40
 ---
 
-## Interactive Forms
+# Interactive Forms
 
 PDF is mainly used as format that provides consistent output regardless of the output device.
 However, it also provides various interactive features, one of them being support for forms.

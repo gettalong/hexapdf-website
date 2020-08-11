@@ -3,7 +3,7 @@ title: Analysing PDFs
 toc_options: {levels: [3, 100]}
 ---
 
-## {title:}
+# {title:}
 
 This how-to guide shows how to use the `hexapdf inspect` command to analyse PDF files.
 

@@ -4,7 +4,7 @@ template: page.template
     <section>
       <h3>Classes and Modules</h3>
 
-      <input type="text" id="filter_menu" onkeyup="filter()"  placeholder="Search...">
+      <input type="text" id="filter_menu" onkeyup="filter()"  placeholder="Search..." title="Filter API classes">
       <script>
         document.getElementById('filter_menu').focus();
         function filter() {
@@ -65,7 +65,7 @@ end
 --- name:klass pipeline:erb
 <% klass = context.node.node_info[:rdoc_object] %>
 <div class="api-documentation api-<%= klass.type %>">
-  <h2 class="<%= klass.type %>"><%= klass.type %> <%= klass.full_name %></h2>
+  <h1 class="<%= klass.type %>"><%= klass.type %> <%= klass.full_name %></h1>
 
   <% if klass.type == 'class' || !klass.includes.empty? || !klass.extends.empty? then %>
   <table class="class-details">
@@ -108,7 +108,7 @@ end
   </table>
   <% end %>
 
-  <div class="description">
+  <div id="top" class="description">
     <%= klass.description %>
   </div><!-- description -->
 
@@ -132,7 +132,7 @@ end
 
     <% unless constants.empty? then %>
     <!-- Constants -->
-    <section id="constants-list" class="section">
+    <section id="Constants" class="section">
       <h3 class="section-header">Constants</h3>
       <dl>
       <% constants.each do |const| %>
@@ -149,7 +149,7 @@ end
 
     <% unless attributes.empty? then %>
     <!-- Attributes -->
-    <section id="attribute-method-details" class="method-section section">
+    <section id="Attributes" class="method-section section">
       <h3 class="section-header">Attributes</h3>
 
       <% attributes.each do |attrib| %>
@@ -173,8 +173,9 @@ end
 
     <!-- Methods -->
     <% klass.methods_by_type(section).each do |type, visibilities|
-       next if visibilities.empty?
-       visibilities.each do |visibility, methods|
+       next if visibilities.empty? %>
+     <section id="<%= type.capitalize %>-Methods">
+    <% visibilities.each do |visibility, methods|
          next if methods.empty? %>
      <section id="<%= visibility %>-<%= type %>-<%= section.aref %>-method-details" class="method-section section">
       <h3 class="section-header"><%= visibility.to_s.capitalize %> <%= type.capitalize %> Methods</h3>
@@ -248,8 +249,9 @@ end
 
     <% end %>
     </section><!-- <%= visibility %>-<%= type %>-method-details -->
-  <% end
-     end %>
+  <% end %>
+    </section>
+   <%  end %>
   </section><!-- <%= section.aref %> -->
 <% end %>
 

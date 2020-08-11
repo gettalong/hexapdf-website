@@ -4,7 +4,7 @@ subtitle: How a PDF document is structured and the most important objects
 sort_info: 20
 ---
 
-## PDF Document Structure
+# PDF Document Structure
 
 The PDF specification defines a single entry point into the document structure, the file trailer
 dictionary, from which all other objects are referenced (n.b.: It is possible to store objects in a

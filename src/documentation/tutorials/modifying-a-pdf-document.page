@@ -4,7 +4,7 @@ output_pdf: modified.pdf
 toc_options: {levels: [3, 100]}
 ---
 
-## {title:}
+# {title:}
 
 In this tutorial you will learn how to open an existing PDF document and modify it by adding pages
 and changing existing pages. If you didn't do the [previous
@@ -12,7 +12,7 @@ tutorial](creating-a-pdf-from-scratch.html), grab [this PDF file](hello-world.pd
 your working directory.
 
 
-### Opening an Existing Document
+## Opening an Existing Document
 
 Similar to `File.open` HexaPDF also provides an `#open` method to easily open local files:
 
@@ -25,7 +25,7 @@ doc = HexaPDF::Document.open('hello-world.pdf')
 The variable `doc` now contains a `HexaPDF::Document` instance with the data from `hello-world.pdf`.
 
 
-### Drawing onto an Existing Page
+## Drawing onto an Existing Page
 
 Since PDF is a complex file format, HexaPDF provides convenience methods so that looking at the PDF
 specification is not necessary for many things. One of these methods is [HexaPDF::Document#pages]
@@ -68,7 +68,7 @@ World". Note how we first translate and then rotate the canvas before drawing th
 -- origin.
 
 
-### Re-Using Content on Multiple Pages
+## Re-Using Content on Multiple Pages
 
 The PDF format has a mechanism for using the same content on multiple pages called "Form XObjects".
 Note that these form XObjects have nothing to do with interactive PDF forms!
@@ -107,7 +107,7 @@ underlay_canvas.xobject(form, at: [0, 0])
 ~~~
 
 
-### Inserting New Pages
+## Inserting New Pages
 
 Now that we have updated our existing page, it is time to add new pages. To insert a page at a
 specific (zero-based) page index, just use the `doc.pages.insert` method:
@@ -139,7 +139,7 @@ end
 ~~~
 
 
-### Writing the PDF and Experiments
+## Writing the PDF and Experiments
 
 At last, we write the PDF document to a file:
 

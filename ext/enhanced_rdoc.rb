@@ -22,7 +22,7 @@ class RDoc::Store
       klass.ancestors.any? {|ancestor| !ancestor.kind_of?(String) && ancestor.full_name == 'HexaPDF::Dictionary' }
     end.each do |rdoc_class|
       klass = Object.const_get(rdoc_class.full_name)
-      docs = "<h3 class='section-header'>Field Definitions</h3>\n\n"
+      docs = "<h3 id='field-definitions' class='section-header'>Field Definitions</h3>\n\n"
       docs << "<table class='field-definitions striped hoverable'>"
       docs << "<thead><tr><th>Name</th><th>Type/Allowed Values</th><th>Required</th><th>Default Value</th></tr></thead>"
       klass.each_field do |name, field|

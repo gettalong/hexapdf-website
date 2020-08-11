@@ -4,7 +4,7 @@ subtitle: Information about the types of PDF objects and how they are represente
 sort_info: 10
 ---
 
-## PDF Objects
+# PDF Objects
 
 A PDF file essentially consists of PDF objects in serialized form; the additional information in the
 file is just needed to locate and load these objects.

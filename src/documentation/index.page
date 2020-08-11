@@ -4,7 +4,7 @@ toc_options:
   levels: [100, 100]
 ---
 
-## Documentation
+# Documentation
 
 HexaPDF has quite a lot of documentation and it is organized in the following way to make it easier
 for you to find what you need:
@@ -12,7 +12,7 @@ for you to find what you need:
 <div class="row">
   <div class="col-sm-6" markdown="1">
 
-### [Tutorials](tutorials/) - start here
+## [Tutorials](tutorials/) - start here
 
 Introductions to various parts of HexaPDF, like creating a PDF document.
 
@@ -20,7 +20,7 @@ Introductions to various parts of HexaPDF, like creating a PDF document.
 
 <div class="col-sm-6" markdown="1">
 
-### [How-to Guides](howtos/)
+## [How-to Guides](howtos/)
 
 Practial step-by-step instructions for the most common use-cases; they assume familiarity with
 HexaPDF.
@@ -32,7 +32,7 @@ HexaPDF.
 <div class="row">
   <div class="col-sm-6" markdown="1">
 
-### [Key Topics](key-topics)
+## [Key Topics](key-topics)
 
 Background information and explanations of some of the key concepts in HexaPDF.
 
@@ -40,7 +40,7 @@ Background information and explanations of some of the key concepts in HexaPDF.
 
 <div class="col-sm-6" markdown="1">
 
-### [Reference](reference/)
+## [Reference](reference/)
 
 Technical reference material, for API, CLI command and other aspects.
 

@@ -4,13 +4,13 @@ output_pdf: hello-world.pdf
 toc_options: {levels: [3, 100]}
 ---
 
-## {title:}
+# {title:}
 
 In this tutorial you will create a simple PDF document from scratch with HexaPDF. It only assumes
 that you have the [Ruby interpreter](https://www.ruby-lang.org/) already installed.
 
 
-### Installing HexaPDF
+## Installing HexaPDF
 
 The first step is installing HexaPDF itself as a Rubygem:
 
@@ -22,7 +22,7 @@ This will install HexaPDF as well as its dependencies. Afterwards the HexaPDF li
 `hexapdf` command line tool are available.
 
 
-### Requiring HexaPDF
+## Requiring HexaPDF
 
 If you want to use HexaPDF in a Ruby program, you need to include the following statement:
 
@@ -34,7 +34,7 @@ This will only require the base HexaPDF library parts but also sets everything u
 functionality will be auto-loaded if needed.
 
 
-### Creating the PDF Document
+## Creating the PDF Document
 
 To create a PDF document you will first need an empty document instance:
 
