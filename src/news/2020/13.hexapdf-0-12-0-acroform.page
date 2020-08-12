@@ -1,0 +1,43 @@
+---
+title: HexaPDF 0.12.0 - Interactive Forms
+created_at: 2020-08-12 09:40:00 +02:00
+---
+
+Following up on the basic AcroForm support of the 0.11.0 release, this release adds support for
+nearly all interactive form parts.
+
+It is now possible to easily create the main interactive form object using
+[HexaPDF::Document#acro_form]. This form object provides convenience methods for creating the
+individual fields. **There is full support, including the generation of the visual appearances, for
+check boxes, radio buttons, single line text fields and combo boxes.** This will cover many of the
+PDF forms out in the wild.
+
+Partial support, meaning without appearance generation, is available for push buttons and list
+boxes. Signature fields are not yet implemented.
+
+The default visual appearance tries to mimic what Adobe Acrobat does. It is close but there are
+still small differences. However, those should not be problematic.
+
+In addition there is a new `hexapdf form` command that allows listing form fields and filling out a
+form, either interactively or via a provided template file. You can see it here in action:
+
+![Interactive form screencast](assets/form.gif)
+
+If you find something missing or too hard to do with regards to interactive forms, please open [an
+issue][gh]. The plan is to add the missing interactive form parts for the next release and iron out
+problems.
+
+Aside from these code changes the HexaPDF website has seen some updates. The documentation for
+classes implementing PDF objects now provides an overview of the defined object fields, together
+with additional information like the supported field types and if the field is required. See
+[HexaPDF::Type::AcroForm::Field] for an example.
+
+And there are two new key topic pages: One on [how encryption works][kt-encryption] and one with
+[information on interactive forms][kt-forms].
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+[gh]: https://github.com/gettalong/hexapdf/issues
+[changelog]: /documentation/changelog.html
+[kt-encryption]: /documentation/key-topics/encryption.html
+[kt-forms]: /documentation/key-topics/forms.html
