@@ -1,0 +1,23 @@
+---
+title: HexaPDF 0.13.0 - Cross-reference Table Reconstruction
+created_at: 2020-11-15 00:15:00 +01:00
+---
+
+There are two big changes in this release. The more user-visible one is that HexaPDF gained the
+ability to **recover a damaged PDF by reconstructing the cross-reference table** (i.e. the part of a
+PDF which stores which objects are located at which offset in the file).
+
+This new feature together with the already existing recovery features allows HexaPDF to parse a wide
+variety of invalid and/or damaged PDF files. Repairing a damaged file is now as easy as executing
+`hexapdf modify damaged.pdf repaired.pdf`, making HexaPDF a good tool for PDF file recovery.
+
+The other big and **breaking change** is the **overhaul of the PDF document/object validation**
+feature. By making the interfaces more similar, it is now easier to use from an API perspective.
+Furthermore, the new internal structure allows reporting of mulitple validation problems in one go.
+
+In relation to these changes, the `hexapdf info` command also gained a new `--check` flag which
+points out parse and validation problems.
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+[changelog]: /documentation/changelog.html
