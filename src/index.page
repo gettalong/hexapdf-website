@@ -66,21 +66,22 @@ template: default.template
   <div class="col-sm-12 wmax">
       <h2>License</h2>
 
-      <p>HexaPDF is licensed under
-      the <a href="https://github.com/gettalong/hexapdf/blob/master/LICENSE">GNU Affero
-      General Public License (AGPL)</a>, an open source license. It allows you to use HexaPDF for
-      free as long as you adhere to the license.</p>
+      <p>HexaPDF is licensed under the <a
+      href="https://github.com/gettalong/hexapdf/blob/master/LICENSE">GNU Affero General Public
+      License (AGPL)</a>, an open source license. It allows you to use HexaPDF for free as long as
+      you adhere to the license. Additionally, there is also a commercial license.</p>
 
-      <p>The AGPL puts some restrictions in place to make sure that the community benefits
-      from changes to the code. For example, if you use HexaPDF in an application and
-      distribute that application, you have to make the source code of the whole application
-      available under the AGPL. The same applies if your application is used over a
-      network.</p>
+      <p>The AGPL puts some restrictions in place to make sure that the community benefits from <a
+      href="{relocatable: contributing.html}">changes to the code</a>. For example, if you use
+      HexaPDF in an application and distribute that application, you have to make the source code of
+      the whole application available under the AGPL. The same applies if your application is used
+      over a network. Please <a
+      href="https://github.com/gettalong/hexapdf/blob/master/LICENSE">refer to the license</a> for
+      details.</p>
 
-      <p><b>If you want to use HexaPDF in a commercial setting, you need to <a
+      <p><b>If you don't want to adhere to the AGPL or can't (e.g. because you can't make the code
+      that uses HexaPDF available under the AGPL), then you need to <a
       href="https://gettalong.at/hexapdf">purchase a commercial license</a>.</b></p>
-
-      <p>See {link: contributing.html} for more details.</p>
   </div>
 </div>
 
