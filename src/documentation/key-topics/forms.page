@@ -117,6 +117,22 @@ zero, one or more associated widgets. For example, each widget annotation of a r
 describes one possible selection value. Another use for multiple widget annotations is on a
 multi-page form where a name entered by the user should appear in a header or footer on every page.
 
+Text and choice fields are so called *variable text fields* whose visual appearance mainly consists
+of their text value. To create such an appearance it must be known what font and font size should be
+used. This is handled by the `/DA` dictionary field of the field or, if not set, by the `/DA`
+dictionary field of the main AcroForm dictionary. The value of the `/DA` key has to at least specify
+the font name and font size, with the font name being resolved to a font object through the `/DR`
+key of the main AcroForm dictionary.
+
+HexaPDF currently cannot handle variable text fields using an arbitrary font. The reason for this is
+that HexaPDF only uses the font information stored in the PDF itself and does not reference or load
+fonts stored on the host in case the font is not usable (e.g. because the character to glyph mapping
+was removed from the embedded font program).
+
+The standard PDF fonts Helvetica, Times and Courier work correctly and those are used in most
+interacctive forms. For all other fonts a fallback font configured through the
+'acro_form.fallback_font` configuration option will be used.
+
 
 ### Widget Annotations
 
@@ -138,3 +154,42 @@ used during the creation of the appearance (like some PDF readers would do when 
 
 You can naturally provide the appearance streams yourself if needed since those are just Form
 XObjects.
+
+It is also possible to force the creation of appearance streams even if there are existing ones.
+This is useful, for example, if an interactive form was filled out with a PDF reader that created
+bad or invalid visual appearances. Note that existing appearances for button fields are not deleted
+because they could potentially be reused somewhere.
+
+
+### General Sequence When Creating a Form
+
+If you want to create a PDF containing an interactive form, the general sequence of instructions is
+describe below. Whether you create the non-form parts of the pages before, during or after form
+creation is your choice. Most commenly, however, the form fields and their widgets are created
+together with the rest of the document because that makes it easier to get the needed information
+like the annotation rectangle.
+
+The sequence:
+
+* First you create the main form dictionary using `HexaPDF::Type::Catalog#acro_form(create: true)`.
+  Either store the form object somewhere or just use the same method call to retrieve it later.
+
+* Next, use one of the various `#create_<FIELD>` methods of the form object to create a field. Some
+  often needed properties can be set directly with this invocation. Set additionally needed field
+  properties using the various field methods.
+
+* Create a widget using the `#create_widget` method of the field. When creating a button field, some
+  properties are set by default to style the button field with a default appearance (otherwise it
+  would be invisible).
+
+  By using [HexaPDF::Type::Annotations::Widget#background_color],
+  [HexaPDF::Type::Annotations::Widget#border_style] and
+  [HexaPDF::Type::Annotations::Widget#marker_style] you can change the widget's appearance.
+
+* Set the field's value which will update all associated widgets to reflect that value.
+
+If you add additional widgets later, either manually call the field's `#update_widgets` method
+afterwards or rely on the validation pass when writing out the PDF.
+
+Note, however, that if you change the appearance settings of a widget later, you need to force the
+creation of new appearance streams as this is not done automatically.
