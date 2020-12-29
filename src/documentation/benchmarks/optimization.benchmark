@@ -1,73 +1,74 @@
 ---
 title: Optimization
-modified_at: 2018-12-31 00:00:00
+modified_at: 2020-12-27 00:00:00
 sort_info: 10
 --- name:data pipeline:
 |--------------------------------------------------------------------|
 |                              ||    Time |     Memory |   File size |
 |--------------------------------------------------------------------|
-| hexapdf     | a.pdf          |    159ms |  15.268KiB |      52.313 |
-| hexapdf C   | a.pdf          |    123ms |  15.244KiB |      52.289 |
-| hexapdf CS  | a.pdf          |    125ms |  15.824KiB |      49.152 |
-| hexapdf CSP | a.pdf          |    137ms |  15.884KiB |      48.223 |
-| origami     | a.pdf          |    184ms |  23.664KiB |      52.312 |
-| combinepdf  | a.pdf          |    106ms |  14.720KiB |      53.263 |
-| pdftk C?    | a.pdf          |    161ms |  38.528KiB |      53.144 |
-| qpdf C      | a.pdf          |      8ms |   4.968KiB |      53.179 |
-| qpdf CS     | a.pdf          |     11ms |   4.920KiB |      49.287 |
-| smpdf CSP   | a.pdf          |     17ms |   8.612KiB |      48.329 |
+| hexapdf     | a.pdf          |    209ms |  27.356KiB |      52.314 |
+| hexapdf C   | a.pdf          |    172ms |  27.564KiB |      52.291 |
+| hexapdf CS  | a.pdf          |    172ms |  27.696KiB |      49.152 |
+| hexapdf CSP | a.pdf          |    187ms |  28.012KiB |      48.223 |
+| origami     | a.pdf          |    253ms |  36.824KiB |      52.111 |
+| combinepdf  | a.pdf          |    136ms |  27.340KiB |      53.263 |
+| pdftk C?    | a.pdf          |    168ms |  38.824KiB |      53.144 |
+| qpdf C      | a.pdf          |     13ms |   7.992KiB |      53.179 |
+| qpdf CS     | a.pdf          |     15ms |   8.168KiB |      49.287 |
+| smpdf CSP   | a.pdf          |     21ms |   8.404KiB |      48.329 |
 |--------------------------------------------------------------------|
-| hexapdf     | b.pdf          |    555ms |  30.884KiB |  11.456.455 |
-| hexapdf C   | b.pdf          |    548ms |  26.924KiB |  11.406.391 |
-| hexapdf CS  | b.pdf          |    621ms |  37.384KiB |  11.045.145 |
-| hexapdf CSP | b.pdf          |  4.061ms |  42.328KiB |  11.027.010 |
-| origami     | b.pdf          |  1.332ms |  86.420KiB |  11.482.769 |
-| combinepdf  | b.pdf          |  3.606ms | 116.632KiB |  11.526.172 |
-| pdftk C?    | b.pdf          |    704ms |  96.532KiB |  11.501.669 |
-| qpdf C      | b.pdf          |    354ms |  21.112KiB |  11.500.308 |
-| qpdf CS     | b.pdf          |    439ms |  21.612KiB |  11.124.779 |
-| smpdf CSP   | b.pdf          |  2.341ms |  49.944KiB |  11.092.428 |
+| hexapdf     | b.pdf          |    672ms |  45.228KiB |  11.456.456 |
+| hexapdf C   | b.pdf          |    712ms |  45.692KiB |  11.406.392 |
+| hexapdf CS  | b.pdf          |    816ms |  48.276KiB |  11.045.146 |
+| hexapdf CSP | b.pdf          |  4.893ms |  58.784KiB |  11.027.010 |
+| origami     | b.pdf          |  1.585ms | 101.664KiB |  11.482.405 |
+| combinepdf  | b.pdf          |  3.393ms | 116.112KiB |  11.526.172 |
+| pdftk C?    | b.pdf          |    905ms |  97.452KiB |  11.501.669 |
+| qpdf C      | b.pdf          |    486ms |  26.956KiB |  11.500.308 |
+| qpdf CS     | b.pdf          |    585ms |  26.684KiB |  11.124.779 |
+| smpdf CSP   | b.pdf          |  2.579ms |  50.012KiB |  11.092.428 |
 |--------------------------------------------------------------------|
-| hexapdf     | c.pdf          |    983ms |  34.056KiB |  14.382.785 |
-| hexapdf C   | c.pdf          |  1.052ms |  36.880KiB |  14.347.139 |
-| hexapdf CS  | c.pdf          |  1.195ms |  39.616KiB |  13.180.381 |
-| hexapdf CSP | c.pdf          |  4.572ms |  55.588KiB |  13.101.708 |
-| origami     | c.pdf          |  4.736ms | 137.052KiB |  14.338.614 |
-| combinepdf  | c.pdf          |  1.573ms | 121.688KiB |  14.329.457 |
-| pdftk C?    | c.pdf          |  2.092ms | 139.756KiB |  14.439.011 |
-| qpdf C      | c.pdf          |  1.293ms |  93.496KiB |  14.432.647 |
-| qpdf CS     | c.pdf          |  1.743ms |  93.164KiB |  13.228.102 |
-| smpdf CSP   | c.pdf          |  2.345ms |  74.696KiB |  13.076.598 |
+| hexapdf     | c.pdf          |  1.278ms |  47.656KiB |  14.382.785 |
+| hexapdf C   | c.pdf          |  1.299ms |  49.568KiB |  14.347.142 |
+| hexapdf CS  | c.pdf          |  1.512ms |  51.900KiB |  13.180.384 |
+| hexapdf CSP | c.pdf          |  5.168ms |  66.008KiB |  13.101.710 |
+| origami     | c.pdf          |  5.603ms | 154.124KiB |  14.338.126 |
+| combinepdf  | c.pdf          |  1.721ms | 151.140KiB |  14.329.457 |
+| pdftk C?    | c.pdf          |  2.706ms | 139.712KiB |  14.439.011 |
+| qpdf C      | c.pdf          |  1.913ms | 132.088KiB |  14.432.647 |
+| qpdf CS     | c.pdf          |  2.623ms | 132.116KiB |  13.228.102 |
+| smpdf CSP   | c.pdf          |  2.568ms |  74.704KiB |  13.076.598 |
 |--------------------------------------------------------------------|
-| hexapdf     | d.pdf          |  2.574ms |  57.604KiB |   7.662.938 |
-| hexapdf C   | d.pdf          |  2.554ms |  56.492KiB |   6.924.699 |
-| hexapdf CS  | d.pdf          |  2.835ms |  59.048KiB |   6.418.438 |
-| hexapdf CSP | d.pdf          |  3.005ms |  84.748KiB |   5.476.431 |
-| origami     | d.pdf          |  5.625ms | 126.840KiB |   7.499.298 |
-| combinepdf  | d.pdf          |  3.376ms | 157.520KiB |   7.243.107 |
-| pdftk C?    | d.pdf          |  2.939ms | 145.432KiB |   7.279.035 |
-| qpdf C      | d.pdf          |  1.720ms |  78.084KiB |   7.209.305 |
-| qpdf CS     | d.pdf          |  1.794ms |  78.380KiB |   6.703.374 |
-| smpdf CSP   | d.pdf          |  2.101ms |  71.196KiB |   5.528.352 |
+| hexapdf     | d.pdf          |  2.890ms |  76.556KiB |   7.662.939 |
+| hexapdf C   | d.pdf          |  2.880ms |  73.948KiB |   6.924.700 |
+| hexapdf CS  | d.pdf          |  3.216ms |  74.508KiB |   6.418.439 |
+| hexapdf CSP | d.pdf          |  3.434ms |  87.980KiB |   5.476.431 |
+| origami     | d.pdf          |  6.880ms | 165.192KiB |   7.498.876 |
+| combinepdf  | d.pdf          |  3.924ms | 152.500KiB |   7.243.107 |
+| pdftk C?    | d.pdf          |  3.814ms | 150.692KiB |   7.279.035 |
+| qpdf C      | d.pdf          |  2.402ms |  87.344KiB |   7.209.305 |
+| qpdf CS     | d.pdf          |  2.542ms |  86.728KiB |   6.703.374 |
+| smpdf CSP   | d.pdf          |  2.318ms |  71.228KiB |   5.528.352 |
 |--------------------------------------------------------------------|
-| hexapdf     | e.pdf          |    512ms |  46.128KiB |  21.766.893 |
-| hexapdf C   | e.pdf          |    591ms |  81.364KiB |  21.832.849 |
-| hexapdf CS  | e.pdf          |    603ms |  79.140KiB |  21.751.115 |
-| hexapdf CSP | e.pdf          | 16.591ms | 163.108KiB |  21.186.356 |
+| hexapdf     | e.pdf          |    626ms |  55.548KiB |  21.766.894 |
+| hexapdf C   | e.pdf          |    715ms |  95.268KiB |  21.832.831 |
+| hexapdf CS  | e.pdf          |    761ms |  95.848KiB |  21.751.207 |
+| hexapdf CSP | e.pdf          | 19.666ms | 154.684KiB |  21.186.460 |
 | ERR origami     | e.pdf      |      0ms |       0KiB |           0 |
 | ERR combinepdf  | e.pdf      |      0ms |       0KiB |           0 |
-| ERR pdftk C?    | e.pdf      |      0ms |       0KiB |           0 |
-| qpdf C      | e.pdf          |    583ms |  30.180KiB |  21.802.439 |
-| qpdf CS     | e.pdf          |    556ms |  30.236KiB |  21.787.558 |
-| smpdf CSP   | e.pdf          | 28.837ms | 609.116KiB |  21.188.516 |
+| pdftk C?    | e.pdf          |    808ms | 136.056KiB |  21.874.883 |
+| qpdf C      | e.pdf          |    731ms |  34.168KiB |  21.802.439 |
+| qpdf CS     | e.pdf          |    711ms |  34.084KiB |  21.787.558 |
+| smpdf CSP   | e.pdf          | 32.107ms | 608.964KiB |  21.188.516 |
 |--------------------------------------------------------------------|
-| hexapdf     | f.pdf          | 30.714ms | 490.472KiB | 153.972.519 |
-| hexapdf C   | f.pdf          | 33.299ms | 526.688KiB | 153.844.795 |
-| hexapdf CS  | f.pdf          | 39.533ms | 612.468KiB | 117.545.254 |
+| hexapdf     | f.pdf          | 35.169ms | 472.228KiB | 153.972.520 |
+| hexapdf C   | f.pdf          | 40.082ms | 531.304KiB | 153.844.796 |
+| hexapdf CS  | f.pdf          | 45.294ms | 585.956KiB | 117.545.255 |
 | ERR hexapdf CSP | f.pdf      |      0ms |       0KiB |           0 |
-| ERR origami     | f.pdf      |      0ms |       0KiB |           0 |
+| origami     | f.pdf          | 92.667ms | 1.698.016KiB | 152.614.156 |
 | ERR combinepdf  | f.pdf      |      0ms |       0KiB |           0 |
-| qpdf C      | f.pdf          | 23.090ms | 917.592KiB | 157.723.936 |
-| qpdf CS     | f.pdf          | 29.309ms | 942.096KiB | 118.114.521 |
-| ERR smpdf CSP   | e.pdf      |      0ms |       0KiB |           0 |
+| pdftk C?    | f.pdf          | 44.340ms | 612.372KiB | 157.850.353 |
+| qpdf C      | f.pdf          | 31.821ms | 1.252.352KiB | 157.723.936 |
+| qpdf CS     | f.pdf          | 39.942ms | 1.269.532KiB | 118.114.521 |
+| ERR smpdf CSP   | f.pdf      |      0ms |       0KiB |           0 |
 |--------------------------------------------------------------------|
