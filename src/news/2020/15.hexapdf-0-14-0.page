@@ -1,0 +1,23 @@
+---
+title: HexaPDF 0.14.0 - Interactive Forms Improvements
+created_at: 2020-12-30 17:15:00 +01:00
+---
+
+This release mainly improves the already existing AcroForm support. Creating appearances for list
+boxes, multiline text fields and comb text fields is now supported. So only the appearance creation
+for push buttons is still missing.
+
+The AcroForm API was also improved to make it easier and simpler to create new form fields. Behind
+the scenes the automatic creation of appearances where needed was improved to avoid creating
+unnecessary PDF objects.
+
+There were also a few fixes and changes to improve the handling of damaged or invalid PDF files. So
+now a still wider range of those files can be processed successfully.
+
+And the `hexapdf split` command gained support for splitting by page size. Based on questions asked
+in online forums this functionality seems to be needed especially in the legal field to separate the
+pages of a PDF into one with only Letter and one with only Legal pages.
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+[changelog]: /documentation/changelog.html
