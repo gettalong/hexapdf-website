@@ -1,6 +1,7 @@
 $base-font-family: 'Lato, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Ubuntu, \"Helvetica Neue\", Helvetica, sans-serif';
 $nav-sublink-start: 2;
 $nav-sublink-depth: 4;
+$table-max-height: inherit;
 
 @import 'mini/core';
 @import 'mini/layout';
