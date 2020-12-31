@@ -31,8 +31,8 @@ benchmarks/:
   side_menu: true
   sort_info: 50
 
-changelog.*.html:
+implementation_status.*.html:
   sort_info: 60
 
-
-
+changelog.*.html:
+  sort_info: 70

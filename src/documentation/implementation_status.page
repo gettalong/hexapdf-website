@@ -1,0 +1,147 @@
+---
+title: Implementation Status
+side_menu: true
+toc_options:
+  levels: [100, 100]
+---
+# Implementation Status
+
+This page gives an overview of which features of PDF 1.7 are implemented in HexaPDF.
+
+At a glance: Reading and writing files with and without encryption works. Damaged files can also be
+recovered in many cases. Validation is available for all implemented dictionary types.
+
+
+| PDF 1.7 Feature | Status | Comment |
+|------|:------:|---|
+| 1 **Scope** |  | Just info |
+| 2 **Conformance** |  | Just info |
+| 3 **Normative references** |  | A list of reference docs |
+| 4 **Terms and definitions** |  | A list of PDF related terms |
+| 5 **Notation** |  | Just info |
+| 6 **Version Designations** |  | Just info |
+| 7 **Syntax** | | |
+| 7.1 General | ☑ | Just info |
+| 7.2 Lexical Conventions | ☑ | |
+| 7.3 Objects | ☑ | |
+| 7.4 **Filters** | | |
+| 7.4.1 General | ☑ | |
+| 7.4.2 ASCIIHexDecode Filter | ☑ | |
+| 7.4.3 ASCII85Decode Filter | ☑ | |
+| 7.4.4 LZWDecode and FlateDecode Filters | ☑ | Parameter "EarlyChange" is not supported |
+| 7.4.5 RunLengthDecode Filter | ☑ | |
+| 7.4.6 CCITTFaxDecode Filter | ☑ | Implemented as pass-through |
+| 7.4.7 JBIG2Decode Filter | ☑ | Implemented as pass-through |
+| 7.4.8 DCTDecode Filter | ☑ | Implemented as pass-through |
+| 7.4.9 JPXDecode Filter | ☑ | Implemented as pass-through |
+| 7.4.10 Crypt Filter | ☐ | |
+| 7.5 **File Structure** | | |
+| 7.5.1 General | ☑ | |
+| 7.5.2 File Header | ☑ | |
+| 7.5.3 Body | ☑ | |
+| 7.5.4 Cross-Reference Table | ☑ | |
+| 7.5.5 File Trailer | ☑ | |
+| 7.5.6 Incremental Updates | ☑ | Read only |
+| 7.5.7 Object Streams | ☑ | |
+| 7.5.8 Cross-Reference Streams | ☑ | |
+| 7.6 **Encryption** | | Followed PDF2.0 spec|
+| 7.6.1 General | ☑ | EFF is not supported |
+| 7.6.2 General Encryption Algorithm | ☑ | |
+| 7.6.3 Standard Security Handler | ☑ | |
+| 7.6.4 Public-Key Security Handler | ☐ | |
+| 7.6.4 Crypt Filters | ☐ | Don't seem to be used much |
+| 7.7 **Document Structure** | | |
+| 7.7.1 General | ☑ | Just info | 
+| 7.7.2 Document Catalog | ☑ | |
+| 7.7.3 Page Tree | ☑ | |
+| 7.7.4 Name Dictionary | ☑ | |
+| 7.8 **Content Streams and Resources** | | |
+| 7.8.1 General | ☑ | Just info |
+| 7.8.3 Resource Dictionaries | ☑ | |
+| 7.9 **Common Data Structures** | | |
+| 7.9.1 General | ☑ | Just info |
+| 7.9.2 String Object Types | ☑ | |
+| 7.9.3 Text Streams | ☑ | |
+| 7.9.4 Dates | ☑ | |
+| 7.9.5 Rectangles | ☑ | |
+| 7.9.6 Name Trees | ☑ | |
+| 7.9.7 Number Trees | ☑ | |
+| 7.10 Functions | ☐ | |
+| 7.11 File Specifications | ☑ | |
+| 7.12 Extensions Dictionary | ☐ | |
+| 8 **Graphics** | | |
+| 8.1 General | ☑ | Just info |
+| 8.2 Graphics Objects | ☐ | |
+| 8.3 Coordinate Systems | ☑ | |
+| 8.4 **Graphics State** | | |
+| 8.4.1 General | ☑ | Except device-dependent parameters |
+| 8.4.2 Graphics Stack State | ☑ | |
+| 8.4.3 Details of Graphics State Parameters | ☑ | |
+| 8.4.4 Graphics State Operators | ☑ | |
+| 8.4.5 Graphics State Parameter Dictionaries | ☑ | |
+| 8.6 **Colour Spaces** | | |
+| 8.6.1 General | ☑ | Just info |
+| 8.6.2 Colour Values | ☑ | |
+| 8.6.3 Colour Space Families | ☑ | |
+| 8.6.4 Device Colour Spaces | ☑ | |
+| 8.6.5 CIE-Based Colour Spaces | ☐ | |
+| 8.6.6 Special Colour Spaces | ☐ | |
+| 8.6.7 Overprint Control | ☑ | Not applicable |
+| 8.6.8 Colour Operators | ☑ | |
+| 8.7 **Patterns** | | |
+| 8.8 **External Objects** | | |
+| 8.8.1 General | ☑ | |
+| 8.8.2 PostScript XObjects | ☐ | Not really useful|
+| 8.9 **Images** | | |
+| 8.9.1 General | ☑ | Just info |
+| 8.9.2 Image Parameters | ☑ | |
+| 8.9.3 Sample Representation | ☑ | |
+| 8.9.4 Image Coordinate System | ☑ | |
+| 8.9.5 Image Dictionaries | ☑ | |
+| 8.9.6 Masked Images | ☐ | |
+| 8.9.7 Inline Images | ☐ | |
+| 9 **Text** | | No support for vertical writing |
+| 9.1 General | ☑ | Just info |
+| 9.2 Organization and Use of Fonts | ☑ | |
+| 9.3 Text State Parameters and Operators | ☑ | |
+| 9.4 Text Objects | ☑ | |
+| 9.5 Introduction to Font Data Structures | ☑ | |
+| 12 **Interactive Features** | | |
+| 12.1 General | ☑ | Just info |
+| 12.2 Viewer Preferences | ☑ | |
+| 12.3 Document-Level Navigation | | |
+| 12.4 Page-Level Navigation | | |
+| 12.5 Annotations | | |
+| 12.5.1 General | | |
+| 12.5.2 Annotation Dictionaries | ☑ | |
+| 12.5.3 Annotation Flags |  | Just manipulation, not used/respected yet |
+| 12.5.4 Border Styles | ☑ | Just for widgets |
+| 12.5.5 Appearance Streams | ☑ | Just for widgets |
+| 12.5.6 Annotation Types | | |
+| 12.5.6.1 General | ☑ | Just info |
+| 12.5.6.4 Text Annotation | ☑ | |
+| 12.5.6.5 Link Annotation | ☑ | |
+| 12.5.6.19 Widget Annotation | ☑ | |
+| 12.6 Actions | | |
+| 12.7 Interactive Forms | | |
+| 12.7.1 General | ☑ | Just info |
+| 12.7.2 Interactive Form Dictionary | ☑ |  |
+| 12.7.3 Field Dictionaries | |  |
+| 12.7.3.1 General | ☑ |  |
+| 12.7.3.2 Field Names | ☑ |  |
+| 12.7.3.3 Variable Text | ☑ |  |
+| 12.7.3.4 Rich Text Strings | |  |
+| 12.7.4 Field Types | |  |
+| 12.7.4.1 General | ☑ | Just info |
+| 12.7.4.2 Button Fields | ☑ | No appearance generation for push buttons |
+| 12.7.4.3 Text Fields | ☑ | |
+| 12.7.4.4 Choice Fields | ☑ | |
+| 12.7.4.5 Signature Fields | | |
+| 14 **Document Interchange** | | |
+| 14.1 General | ☑ | Just info |
+| 14.2 Procedure Sets | ☑ | |
+| 14.3.3 Document Information Dictionary | ☑ | |
+| 14.4 File Identifiers | ☑ | |
+| 14.6 Marked Content | ☑ | |
+| 14.11.2 Page Boundaries | ☑ | |
+
