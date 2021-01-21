@@ -1,0 +1,147 @@
+---
+title: HexaPDF 0.14.1 - Performance Work
+created_at: 2021-01-21 00:42:00 +01:00
+---
+
+This smaller release mostly contains performance enhancements. Due to them being especially
+benefical in long running processes that handle a lot of PDFs, updating is still very recommended.
+
+The following script was used to evaluate TrueType font and serialization related optimizations:
+
+~~~ ruby
+require 'hexapdf'
+
+font_path = '/usr/share/fonts/truetype/liberation/LiberationSans-BoldItalic.ttf'
+font_file = HexaPDF::Font::TrueType::Font.new(File.open(font_path, 'rb'))
+
+1000.times do
+  doc = HexaPDF::Document.new
+  font = doc.fonts.add(font_path)
+  doc.pages.add.canvas.
+    font(font, size: 10).
+    text("The quick brown fox jumps over the lazy dog", at: [200, 200])
+  doc.write('/tmp/out.pdf')
+end
+~~~
+
+In HexaPDF 0.14.0 this script allocated about 2.74 million objects and took 4.20 seconds to run.
+With this release object allocation was reduced by around 33% to 1.85 million and runtime by around
+23% to 3.21 seconds.
+
+These benefits are without any changes to existing code. By using the new font loader to load the
+TrueType font object only once (e.g. in the code above use `font_file` instead of `font_path`), we
+can further reduce the object allocation to 1.29 million and runtime to 2.41 seconds.
+
+Furthermore, the [HexaPDF::Importer] class has been modified to avoid problems with memory
+retention. If you have had problems with that, you should definitely try out this new version!
+
+Here is a before and after comparison for the "raw_text" benchmark:
+
+~~~
+|--------------------------------------------------------------------|
+|                              ||    Time |     Memory |   File size |
+|--------------------------------------------------------------------|
+| hexapdf     | 1x             |    558ms |  34.280KiB |     452.602 |
+|--------------------------------------------------------------------|
+| hexapdf     | 5x             |  1.859ms |  45.296KiB |   2.258.904 |
+|--------------------------------------------------------------------|
+| hexapdf     | 10x            |  3.553ms |  57.376KiB |   4.517.825 |
+|--------------------------------------------------------------------|
+| hexapdf     | 1x ttf         |    588ms |  33.288KiB |     549.526 |
+|--------------------------------------------------------------------|
+| hexapdf     | 5x ttf         |  2.305ms |  48.916KiB |   2.687.121 |
+|--------------------------------------------------------------------|
+| hexapdf     | 10x ttf        |  4.492ms |  63.636KiB |   5.360.945 |
+|--------------------------------------------------------------------|
+~~~
+
+vs.
+
+~~~
+|--------------------------------------------------------------------|
+|                              ||    Time |     Memory |   File size |
+|--------------------------------------------------------------------|
+| hexapdf     | 1x             |    562ms |  34.556KiB |     452.598 |
+|--------------------------------------------------------------------|
+| hexapdf     | 5x             |  1.883ms |  45.268KiB |   2.258.904 |
+|--------------------------------------------------------------------|
+| hexapdf     | 10x            |  3.634ms |  56.628KiB |   4.517.827 |
+|--------------------------------------------------------------------|
+| hexapdf     | 1x ttf         |    557ms |  33.392KiB |     546.390 |
+|--------------------------------------------------------------------|
+| hexapdf     | 5x ttf         |  2.113ms |  43.408KiB |   2.670.953 |
+|--------------------------------------------------------------------|
+| hexapdf     | 10x ttf        |  4.174ms |  63.360KiB |   5.328.382 |
+|--------------------------------------------------------------------|
+~~~
+
+And here the one for the "line_wrapping" benchmark:
+
+~~~
+|--------------------------------------------------------------------|
+|                              ||    Time |     Memory |   File size |
+|--------------------------------------------------------------------|
+| hexapdf L | 400              |  1.237ms | 101.112KiB |     361.690 |
+| hexapdf C | 400              |  1.387ms | 109.072KiB |     361.692 |
+|--------------------------------------------------------------------|
+| hexapdf L | 200              |  1.353ms |  94.572KiB |     408.710 |
+| hexapdf C | 200              |  1.565ms | 100.992KiB |     408.708 |
+|--------------------------------------------------------------------|
+| hexapdf L | 100              |  1.541ms |  89.644KiB |     464.256 |
+| hexapdf C | 100              |  1.847ms |  97.432KiB |     464.256 |
+|--------------------------------------------------------------------|
+| hexapdf L | 50               |  2.482ms | 200.512KiB |     569.798 |
+| hexapdf C | 50               |  3.004ms | 220.296KiB |     569.807 |
+|--------------------------------------------------------------------|
+| hexapdf L | 400 ttf          |  1.305ms |  89.352KiB |     445.395 |
+| hexapdf C | 400 ttf          |  1.468ms | 108.136KiB |     445.418 |
+|--------------------------------------------------------------------|
+| hexapdf L | 200 ttf          |  1.481ms |  84.948KiB |     508.007 |
+| hexapdf C | 200 ttf          |  1.701ms |  99.004KiB |     508.035 |
+|--------------------------------------------------------------------|
+| hexapdf L | 100 ttf          |  1.817ms |  91.772KiB |     611.460 |
+| hexapdf C | 100 ttf          |  2.163ms |  96.568KiB |     611.481 |
+|--------------------------------------------------------------------|
+| hexapdf L | 50 ttf           |  4.547ms | 260.596KiB |     772.065 |
+| hexapdf C | 50 ttf           |  5.392ms | 281.268KiB |     772.078 |
+|--------------------------------------------------------------------|
+~~~
+
+vs.
+
+~~~
+|--------------------------------------------------------------------|
+|                              ||    Time |     Memory |   File size |
+|--------------------------------------------------------------------|
+| hexapdf L | 400              |  1.274ms |  98.812KiB |     361.689 |
+| hexapdf C | 400              |  1.397ms | 108.092KiB |     361.689 |
+|--------------------------------------------------------------------|
+| hexapdf L | 200              |  1.349ms |  91.496KiB |     408.708 |
+| hexapdf C | 200              |  1.588ms | 100.076KiB |     408.708 |
+|--------------------------------------------------------------------|
+| hexapdf L | 100              |  1.520ms |  88.728KiB |     464.257 |
+| hexapdf C | 100              |  1.886ms |  96.052KiB |     464.255 |
+|--------------------------------------------------------------------|
+| hexapdf L | 50               |  2.563ms | 207.776KiB |     569.797 |
+| hexapdf C | 50               |  2.981ms | 221.416KiB |     569.807 |
+|--------------------------------------------------------------------|
+| hexapdf L | 400 ttf          |  1.317ms | 104.032KiB |     442.909 |
+| hexapdf C | 400 ttf          |  1.485ms | 104.380KiB |     442.931 |
+|--------------------------------------------------------------------|
+| hexapdf L | 200 ttf          |  1.439ms |  97.984KiB |     505.202 |
+| hexapdf C | 200 ttf          |  1.652ms |  95.064KiB |     505.224 |
+|--------------------------------------------------------------------|
+| hexapdf L | 100 ttf          |  1.766ms |  94.324KiB |     607.750 |
+| hexapdf C | 100 ttf          |  2.105ms |  92.756KiB |     607.768 |
+|--------------------------------------------------------------------|
+| hexapdf L | 50 ttf           |  4.413ms | 282.288KiB |     769.931 |
+| hexapdf C | 50 ttf           |  5.272ms | 283.920KiB |     769.952 |
+|--------------------------------------------------------------------|
+~~~
+
+The larger TrueType benchmarks are all between 3% and 7% faster than before.
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+[changelog]: /documentation/changelog.html
+
