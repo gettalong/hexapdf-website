@@ -1,0 +1,14 @@
+---
+title: HexaPDF 0.14.3
+created_at: 2021-02-16 15:25:00 +01:00
+---
+
+This release fixes a critical bug introduced in 0.14.2 which lead to invalid text output when using
+TrueType fonts. Updating **is highly recommended**!
+
+Aside from that there are several fixes for parsing and processing invalid PDF files.
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+[changelog]: /documentation/changelog.html
+
