@@ -9,7 +9,7 @@ template: default.template
     <div class="card fluid center">
       <h1>Versatile PDF creation and manipulation library</h1>
       <pre>$ gem install hexapdf</pre>
-      <p>Latest version <b>0.14.4</b> released on <a href="{relocatable: /documentation/changelog.html}">2021-02-27</a></p>
+      <p>Latest version <b>0.15.0</b> released on <a href="{relocatable: /documentation/changelog.html}">2021-04-12</a></p>
     </div>
   </div>
 </div>

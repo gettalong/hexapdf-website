@@ -1,0 +1,21 @@
+---
+title: HexaPDF 0.15.0
+created_at: 2021-04-12 15:25:00 +02:00
+---
+
+This release brings support for [flattening annotations][HexaPDF::Type::Page#flatten_annotations],
+i.e. making the appearances of annotations part of the page content itself.
+
+Since AcroForm fields also use annotations for their visual display, this functionality also allows
+[flattening of form fields][HexaPDF::Type::AcroForm::Form#flatten]. Form field flattening can now
+also be done with the `hexapdf form` CLI command.
+
+Additionally, basic support for the AcroForm signature field was added. However, this does not allow
+signing a PDF yet.
+
+There is also a **breaking change** with respect to how annotation appearances are accessed. The
+change simplifies getting the correct appearance stream.
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+[changelog]: /documentation/changelog.html
