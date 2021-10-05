@@ -5,6 +5,8 @@ require_relative 'examples'
 require_relative 'benchmark'
 require_relative 'tutorial'
 require_relative 'enhanced_rdoc'
+require_relative 'pdf_image'
+require_relative 'rdoc_pdf_images'
 
 website.ext.path_handler.register(Examples, patterns: ['**/*.examples'], insert_at: 4)
 
@@ -22,6 +24,8 @@ website.ext.tag.register('code', config_prefix: 'tag.code',
   context.node.blocks['code'].split("\n")[range].join("\n")
 end
 website.config.define_option('tag.code.range', nil)
+
+website.ext.path_handler.register(PDFImage, insert_at: 4, name: 'pdf_image')
 
 website.blackboard.add_listener(:website_initialized) do
   $:.unshift(File.expand_path(website.config['path_handler.example_pdf.hexapdf_lib']))

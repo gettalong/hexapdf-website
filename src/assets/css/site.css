@@ -569,3 +569,7 @@ table.standard {
 .right {
   text-align: right;
 }
+
+.pdf-image {
+  border-left: .25rem solid var(--pre-color);
+}
