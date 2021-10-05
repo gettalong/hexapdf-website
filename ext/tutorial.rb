@@ -10,10 +10,9 @@ class TutorialPage < Webgen::PathHandler::Page
 
       Here is the complete code generating [this result PDF](#{page_node['output_pdf']}):
 
-      ~~~ ruby
-      #{code(page_node)}
-      ~~~
+      <webgen:block name="code" />
       TEXT
+      page_node.blocks['code'] = "~~~ ruby\n#{code(page_node)}\n~~~\n"
       page_node
     else
       path['dest_path'] = "<parent>#{path['output_pdf']}"
@@ -43,7 +42,7 @@ class TutorialPage < Webgen::PathHandler::Page
   end
 
   def code(node)
-    node.blocks['content'].scan(/\n~~~ ruby\n(.*?)\n~~~/m).map(&:first).join("\n\n")
+    node.blocks['content'].scan(/\n~~~ ruby\n(.*?)\n~~~/m).map(&:first).join("\n\n").gsub(/\\\{/, '{')
   end
 
 end
