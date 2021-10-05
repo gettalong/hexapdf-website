@@ -49,7 +49,7 @@ class HexaPDFBenchmark
 
     src_file = '/tmp/plot.src'
     File.write(src_file, node.blocks['data'])
-    execute("cat #{src_file} | ruby generate_plot_data.rb > /tmp/plot_#{name}.data", bmdir)
+    execute("cat #{src_file} | ruby generate_plot_data.rb #{name} > /tmp/plot_#{name}.data", bmdir)
 
     cfg_file = '/tmp/plot.cfg'
     svg_file = '/tmp/plot.svg'
