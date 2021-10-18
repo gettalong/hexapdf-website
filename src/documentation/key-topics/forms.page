@@ -112,6 +112,14 @@ There are four main types of fields which are further sub-divided:
 : These fields represent digital signatures and optional data for authenticating the signer name and
   the document's contents.
 
+Each field has a unique full name consisting of all the partial names connected with dots, i.e.
+"parent.child.terminal". This is possible because fields may be nested and the leafs of this field
+tree are called terminal fields. All other fields are non-terminal fields.
+
+It is possible that two different field instances have the same full field name. In such a case
+those two field instances actually represent the same field. This is most often the case when the
+widget annotation is embedded in the field instances instead of using the `/Kids`.
+
 The visual appearance is defined by associated widget annotations. Each terminal field can have
 zero, one or more associated widgets. For example, each widget annotation of a radio button field
 describes one possible selection value. Another use for multiple widget annotations is on a
