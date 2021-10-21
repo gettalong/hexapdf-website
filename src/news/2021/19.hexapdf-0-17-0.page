@@ -1,0 +1,30 @@
+---
+title: HexaPDF 0.17.0
+created_at: 2021-10-21 22:57:00 +02:00
+---
+
+This release brings a **breaking change**, a variety of small updates as well as the new `hexapdf
+fonts` CLI command.
+
+Due to the way AcroForm check boxes were handled a breaking change was necessary to fully fix check
+box handling and support multiple check box widgets with different values.
+
+Aside from that breaking change there were many updates and bug fixes to the AcroForm implementation
+to make it more consistent and robust against invalid PDF files.
+
+The new `hexapdf fonts` command enables listing of the fonts used by a PDF file. It can list either
+all fonts in a PDF or just those used on specific pages.
+
+On the documentation side of things I started updating the API documentation and providing more
+examples. By hooking into RDoc and using HexaPDF itself most of these examples are now also executed
+during the generation of the API documentation. What this means is that you will find an image of
+the resulting PDF as well as a link to the PDF underneath the example code!
+
+The [HexaPDF::Content::Canvas] class was a natural place to start this documentation update. See
+[HexaPDF::Content::Canvas#polygon] or [HexaPDF::Content::GraphicObject::Arc#cy] for how this makes
+the documentation better. I will update the rest of the classes in the coming months, so expect more
+changes in this regard.
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+[changelog]: /documentation/changelog.html
