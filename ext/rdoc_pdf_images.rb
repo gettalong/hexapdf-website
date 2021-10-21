@@ -78,6 +78,7 @@ module RDocPDFImages
       end
     end
     klass.method_list.each(&block)
+    klass.attributes.each(&block)
     klass.constants.each(&block)
 
     node
