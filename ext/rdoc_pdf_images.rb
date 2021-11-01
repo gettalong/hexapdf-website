@@ -3,6 +3,7 @@ module RDocPDFImages
   TEMPLATES = {
     'canvas' => <<~SOURCE_CODE,
       require 'hexapdf'
+      require 'geom2d'
       doc = HexaPDF::Document.new
       hp_path = '%s'
       machu_picchu = File.join(hp_path, "examples", "machupicchu.jpg")
@@ -18,6 +19,7 @@ module RDocPDFImages
     SOURCE_CODE
     'center' => <<~SOURCE_CODE,
       require 'hexapdf'
+      require 'geom2d'
       doc = HexaPDF::Document.new
       hp_path = '%s'
       machu_picchu = File.join(hp_path, "examples", "machupicchu.jpg")
@@ -34,6 +36,7 @@ module RDocPDFImages
     SOURCE_CODE
     'big' => <<~SOURCE_CODE,
       require 'hexapdf'
+      require 'geom2d'
       doc = HexaPDF::Document.new
       hp_path = '%s'
       machu_picchu = File.join(hp_path, "examples", "machupicchu.jpg")
