@@ -58,28 +58,47 @@ module RDocPDFImages
     hexapdf_path = File.join(@website.config['path_handler.example_pdf.hexapdf_lib'], '..')
 
     block = lambda do |code_object|
-      code_object.comment = code_object.comment.parse if code_object.comment.kind_of?(RDoc::Comment)
-      list = []
+      if code_object.kind_of?(RDoc::ClassModule)
+        code_object.instance_variable_set(:@comment, RDoc::Comment.new(code_object.comment).parse)
+      elsif code_object.comment.kind_of?(RDoc::Comment)
+        code_object.comment = code_object.comment.parse
+      end
       file_name = code_object.full_name.gsub(/:|#/, '_')
-      code_object.comment.each_with_index do |part, index|
-        next unless part.kind_of?(RDoc::Markup::Verbatim)
-        if part.text.match?(/#>pdf/)
-          template = TEMPLATES[part.text.scan(/(?<=#>pdf-).*/).first] || TEMPLATES["canvas"]
-          part.parts[0].sub!(/\A.*?\n/, '')
-          code = format(template, hexapdf_path, part.text)
-          path = Webgen::Path.new(node.parent.alcn + "#{file_name}#{index}.png",
-                                  'handler' => 'pdf_image', 'file_base' => "#{file_name}#{index}")
-          @website.ext.path_handler.create_secondary_nodes(path, code).first
-          list << index
+      counter = 0
+
+      process_markup = lambda do |markup|
+        list = []
+
+        markup.parts.each_with_index do |part, index|
+          if part.kind_of?(RDoc::Markup::List)
+            part.items.each {|list_item| process_markup.call(list_item) }
+          elsif part.kind_of?(RDoc::Markup::Document)
+            process_markup.call(part)
+          end
+          next unless part.kind_of?(RDoc::Markup::Verbatim)
+
+          if part.text.match?(/#>pdf/)
+            template = TEMPLATES[part.text.scan(/(?<=#>pdf-).*/).first] || TEMPLATES["canvas"]
+            part.parts[0].sub!(/\A.*?\n/, '')
+            code = format(template, hexapdf_path, part.text)
+            path = Webgen::Path.new(node.parent.alcn + "#{file_name}#{counter}.png",
+                                    'handler' => 'pdf_image', 'file_base' => "#{file_name}#{counter}")
+            @website.ext.path_handler.create_secondary_nodes(path, code).first
+            list << [counter, index]
+            counter += 1
+          end
+        end
+        list.reverse_each do |counter, index|
+          part = RDoc::Markup::Raw.new("<p>Output (click the image to view the PDF with embedded " \
+                                       "source file):</p><p><a href='#{file_name}#{counter}.pdf'>" \
+                                       "<img class='pdf-image' src='#{file_name}#{counter}.png' /></a></p>")
+          markup.parts.insert(index + 1, part)
         end
       end
-      list.reverse_each do |index|
-        part = RDoc::Markup::Raw.new("<p>Output (click the image to view the PDF with embedded " \
-                                     "source file):</p><p><a href='#{file_name}#{index}.pdf'>" \
-                                     "<img class='pdf-image' src='#{file_name}#{index}.png' /></a></p>")
-        code_object.comment.parts.insert(index + 1, part)
-      end
+
+      process_markup.call(code_object.comment)
     end
+    block.call(klass)
     klass.method_list.each(&block)
     klass.attributes.each(&block)
     klass.constants.each(&block)
