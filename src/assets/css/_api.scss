@@ -59,8 +59,9 @@
   .description {
     font-size: 100%;
 
-    li p {
-      margin: 0;
+    li p, li pre {
+      margin-left: 0;
+      margin-right: 0;
     }
 
     ol, ul {
@@ -263,9 +264,6 @@
 
   /* @group Source Code */
 
-  .description pre {
-    margin: 0 0.4em;
-  }
 }
 
 #filter_menu {
