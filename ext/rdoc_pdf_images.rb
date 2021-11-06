@@ -94,21 +94,26 @@ module RDocPDFImages
           next unless part.kind_of?(RDoc::Markup::Verbatim)
 
           if part.text.match?(/#>pdf/)
-            template = TEMPLATES[part.text.scan(/(?<=#>pdf-).*/).first] || TEMPLATES["canvas"]
+            template_name, modifier = part.text.scan(/(?<=#>pdf-).*/).first.to_s.split('-')
+            template = TEMPLATES[template_name] || TEMPLATES["canvas"]
             part.parts[0].sub!(/\A.*?\n/, '')
             code = format(template, hexapdf_path, part.text)
             path = Webgen::Path.new(node.parent.alcn + "#{file_name}#{counter}.png",
                                     'handler' => 'pdf_image', 'file_base' => "#{file_name}#{counter}")
             @website.ext.path_handler.create_secondary_nodes(path, code).first
-            list << [counter, index]
+            list << [counter, index, modifier]
             counter += 1
           end
         end
-        list.reverse_each do |counter, index|
           part = RDoc::Markup::Raw.new("<p>Output (click the image to view the PDF with embedded " \
                                        "source file):</p><p><a href='#{file_name}#{counter}.pdf'>" \
+        list.reverse_each do |counter, index, modifier|
                                        "<img class='pdf-image' src='#{file_name}#{counter}.png' /></a></p>")
-          markup.parts.insert(index + 1, part)
+          if modifier == 'hide'
+            markup.parts[index] = part
+          else
+            markup.parts.insert(index + 1, part)
+          end
         end
       end
 
