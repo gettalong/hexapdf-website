@@ -105,9 +105,8 @@ module RDocPDFImages
             counter += 1
           end
         end
-          part = RDoc::Markup::Raw.new("<p>Output (click the image to view the PDF with embedded " \
-                                       "source file):</p><p><a href='#{file_name}#{counter}.pdf'>" \
         list.reverse_each do |counter, index, modifier|
+          part = RDoc::Markup::Raw.new("<p class='pdf-#{modifier}'><a href='#{file_name}#{counter}.pdf'>" \
                                        "<img class='pdf-image' src='#{file_name}#{counter}.png' /></a></p>")
           if modifier == 'hide'
             markup.parts[index] = part
