@@ -50,6 +50,22 @@ module RDocPDFImages
 
       doc.write(ARGV[0] || 'out.pdf')
     SOURCE_CODE
+    'small' => <<~SOURCE_CODE,
+      require 'hexapdf'
+      require 'geom2d'
+      doc = HexaPDF::Document.new
+      hp_path = '%s'
+      machu_picchu = File.join(hp_path, "examples", "machupicchu.jpg")
+      canvas = doc.pages.add([0, 0, 100, 100]).canvas
+      canvas.save_graphics_state do
+        canvas.line_width(2).line_dash_pattern(1).stroke_color("lightgray").
+          line(0, 0, 100, 0).line(0, 100, 0, 0).stroke
+      end
+
+      %s
+
+      doc.write(ARGV[0] || 'out.pdf')
+    SOURCE_CODE
   }
 
 
