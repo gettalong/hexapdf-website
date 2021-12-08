@@ -21,7 +21,7 @@ template: default.template
   </div>
 </div>
 
-<div class="row wmax">
+<div class="row wmax features">
   <div class="col-md-4 col-sm-12 feature">
     <h3><span class="hexagon"><span class="icon-plus inverse"></span></span>PDF Creation</h3>
 
@@ -40,8 +40,6 @@ template: default.template
     <p>HexaPDF can be used to merge multiple PDF files together. Advanced merge facilities
     can be built on the existing infrastructure.</p>
   </div>
-</div>
-<div class="row wmax">
   <div class="col-md-4 col-sm-12 feature">
     <h3><span class="hexagon"><span class="icon-file-text inverse"></span></span>Content Extraction</h3>
 
@@ -62,8 +60,14 @@ template: default.template
   </div>
 </div>
 
-<div class="row">
-  <div class="col-sm-12 wmax">
+<div class="row cta">
+  <div class="col-sm-12 wmax center">
+    <p>Ready to start with HexaPDF? <a href="{relocatable: documentation/tutorials/}" class="button"><span class="icon-book-open"></span>&nbsp;Tutorials</a></p>
+  </div>
+</div>
+
+<div class="row wmax">
+  <div class="col-sm-12 col-lg-6 col-md-8 col-lg-offset-3 col-md-offset-2">
       <h2>License</h2>
 
       <p>HexaPDF is licensed under the <a
@@ -82,11 +86,5 @@ template: default.template
       <p><b>If you don't want to adhere to the AGPL or can't (e.g. because you can't make the code
       that uses HexaPDF available under the AGPL), then you need to <a
       href="https://gettalong.at/hexapdf">purchase a commercial license</a>.</b></p>
-  </div>
-</div>
-
-<div class="row cta">
-  <div class="col-sm-12 wmax center">
-    <p>Ready to start with HexaPDF? <a href="{relocatable: documentation/tutorials/}" class="button"><span class="icon-book-open"></span>&nbsp;Tutorials</a></p>
   </div>
 </div>
