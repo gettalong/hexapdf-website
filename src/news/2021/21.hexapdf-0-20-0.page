@@ -1,0 +1,26 @@
+---
+title: HexaPDF 0.20.0 - Digital Signatures
+created_at: 2021-12-30 23:20:00 +01:00
+---
+
+The big, new feature of this release is the support for **digital signatures**! Signing a document
+is now as easy as invoking [HexaPDF::Document#sign] and providing the few necessary arguments like
+the certificate and private key. Also have a look at the [Signing PDFs] howto guide for getting
+started!
+
+In addition to adding one or more digital signatures to a PDF document, reading and validating - in
+a very basic way - of signatures is also supported. And information about digital signatures is
+shown when invoking the `hexapdf info` command on a PDF.
+
+Aside from digital signatures there were some improvements when working with interactive forms and
+annotations, like a convenience method for creating an appearance.
+
+Since working with digital signatures involves stressing the incremental writing facilities, some
+bugs were fixed and the output optimized (i.e. the number of objects needed for the added revision
+was further reduced). There was one bug that led to creating invalid PDF files when using
+incremental writing together with the `optimize: true` option; so updating is recommended!
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+[changelog]: /documentation/changelog.html
+[Signing PDFs]: /documentation/howtos/signing-pdfs.html

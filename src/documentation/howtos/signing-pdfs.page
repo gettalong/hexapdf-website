@@ -1,0 +1,134 @@
+---
+title: Signing PDFs
+toc_options: {levels: [3, 100]}
+---
+
+# {title:}
+
+This how-to guide provides information and code samples for applying digital signatures to PDF
+files. It is assumed that you are familiar with digital signatures, if not, have a look at the
+[Digital Signatures](../key-topics/digital-signatures.html) key topic.
+
+All the examples use the demo certificates that are included with the HexaPDF distribution. For real
+world usage you have to provide your own signing certificate!
+
+
+## Applying a Single Signature {#single}
+
+A digital signature can be applied to an existing document or to a new one. The steps for applying
+the digital signature are the same and must be done after everything else.
+
+When applying a signature to an existing document, the document itself won't be changed but a new
+revision with the signature will be added by default. However, if needed it is also possible to
+include the digital signature in the original file by setting the `incremental: false` write option.
+
+In this sample code we are using a local signing certificate and the default signing handler to add
+a non-visual signature. Everything needed for a correct signature (AcroForm signature field and
+signature object) is automatically created with default values.
+
+~~~ ruby
+require 'hexapdf'
+require HexaPDF.data_dir + '/cert/demo_cert.rb'
+
+doc = HexaPDF::Document.open(ARGV[0])
+doc.sign("signed.pdf", reason: 'Some reason',
+                       certificate: HexaPDF.demo_cert.cert,
+                       key: HexaPDF.demo_cert.key,
+                       certificate_chain: [HexaPDF.demo_cert.sub_ca,
+                                           HexaPDF.demo_cert.root_ca]
+~~~
+
+
+## Adding a Visual Appearance {#visual}
+
+If a visual signature is needed, we need to create it before signing the document. It *is* generally
+possible to construct the document in a way to modify the visual appearance after signing. However,
+this is a bit more involved and the signature might not show correctly in all viewers.
+
+The visual appearance needs to be set on the signature field associated with the signature. This
+means we need to create the signature field beforehand and create its appearance stream; and then
+pass the field to the signing method.
+
+The following code is nearly the same as the [one for applying a single signature](#single), we just
+add the necessary appearance creation.
+
+~~~ ruby
+require 'hexapdf'
+require HexaPDF.data_dir + '/cert/demo_cert.rb'
+
+doc = HexaPDF::Document.open(ARGV[0])
+
+sig_field = doc.acro_form(create: true).create_signature_field('signature')
+widget = sig_field.create_widget(doc.pages[0], Rect: [20, 500, 120, 600])
+widget.create_appearance.canvas.
+  stroke_color("red").rectangle(1, 1, 99, 99).stroke.
+  font("Helvetica", size: 10).
+  text("Certified by signer", at: [10, 10])
+
+doc.sign("signed.pdf", signature: sig_field,
+                       reason: 'Some reason',
+                       certificate: HexaPDF.demo_cert.cert,
+                       key: HexaPDF.demo_cert.key,
+                       certificate_chain: [HexaPDF.demo_cert.sub_ca,
+                                           HexaPDF.demo_cert.root_ca])
+~~~
+
+
+## Applying Multiple Signatures {#multiple}
+
+Applying multiple signatures to a PDF requires performing the same signing steps just multiple
+times. And the PDF's permissions set with the first signature must allow such changes so that all
+prior signatures stay valid.
+
+Since the document must be written each time a signature is applied, it has to be reloaded for each
+additional signature.
+
+The following code signs the input document three times with the same signature. One might also use
+existing signature fields for the signatures if necessary.
+
+~~~ ruby
+require 'hexapdf'
+require 'stringio'
+require HexaPDF.data_dir + '/cert/demo_cert.rb'
+
+in_io = StringIO.new(File.binread(ARGV[0]))
+
+3.times do |i|
+  doc = HexaPDF::Document.new(io: in_io)
+  out_io = StringIO.new(''.b)
+  doc.sign(out_io, reason: "Some reason #{i}",
+                   certificate: HexaPDF.demo_cert.cert,
+                   key: HexaPDF.demo_cert.key,
+                   certificate_chain: [HexaPDF.demo_cert.sub_ca,
+                                       HexaPDF.demo_cert.root_ca])
+  in_io = out_io
+end
+
+File.write('signed.pdf', in_io.string)
+~~~
+
+
+## Finalizing a PDF vs Allowing Some Modifications
+
+When applying the first signature it is possible to finalize the PDF so that no or only some
+modifications are allowed. This is called creating a certification signature.
+
+It is possible to set the following permissions:
+
+1. No changes.
+2. Filling in forms and signing.
+3. Filling in forms, signing and annotation creation, deletion and modification.
+
+The following code creates a signed document that allows no modifications:
+
+~~~ ruby
+require 'hexapdf'
+require HexaPDF.data_dir + '/cert/demo_cert.rb'
+
+doc = HexaPDF::Document.open(ARGV[0])
+doc.sign("signed.pdf", doc_mdp_permissions: :no_changes,
+                       certificate: HexaPDF.demo_cert.cert,
+                       key: HexaPDF.demo_cert.key,
+                       certificate_chain: [HexaPDF.demo_cert.sub_ca,
+                                           HexaPDF.demo_cert.root_ca])
+~~~

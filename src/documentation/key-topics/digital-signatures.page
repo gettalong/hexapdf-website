@@ -1,0 +1,95 @@
+---
+title: Digital Signatures
+subtitle: Information about digital signatures with respect to PDF
+sort_info: 50
+---
+
+# Digital Signatures
+
+Digital signatures are used to authenticate the content of PDF files and of users. When a digital
+signature is applied, it stores the state of the document at the signing time as well as information
+about the signer. The signer is identified by their X.509 certificate and private key.
+
+
+## How Signing Works
+
+The digital signature and associated information is stored in a [signature
+dictionary][HexaPDF::Type::Signature]. And that signature dictionary is the value of a [signature
+form field][HexaPDF::Type::AcroForm::SignatureField].
+
+So to sign a PDF document there must either be an existing signature field to fill in or a new one
+must be created. Since a signature is associated with a form field, it is possible to visually
+represent the signature with an appearance stream.
+
+When a PDF file is signed, the signature dictionary is filled with all the necessary information,
+like the signing time, the signing reason or whether the signed document should allow further
+changes.
+
+Then the PDF file is written but it is still incomplete. If there are no existing signatures, one
+has the choice to either save the complete file or just append a new revision by using the
+incremental writing feature. Once there are existing signatures only incremental writing may be done
+because otherwise the existing signatures would be invalidated.
+
+The written file is analysed and the offset and length of the placeholder for the actual
+cryptographic signature is determined. This information is filled back into the written file into
+the appropriate field of the signature dictionary.
+
+Afterwards a digest over the whole file minus the placeholder is taken and this digest is then
+signed with the provided certificate and private key (or sent to an external signing provider). The
+resulting signature structure is embedded into the written file and now the PDF file is properly
+finished.
+
+Since the PDF document needs to be written to be properly signed, no changes to it can be made
+afterwards. So to work with the signed document, one has to load it again.
+
+
+## Types of Signatures
+
+The PDF specifications defines different types of signatures:
+
+* **Certification signature** (aka author signature)
+
+  There can be only *one* certification signature on a PDF document and it has to be the first one.
+  This type of signature allows the author of a PDF document to define what kind of changes may be
+  applied to the signed document so that the signature is not invalidated. See the [next
+  section](#docmdp) for details.
+
+* **Approval signatures** (aka recipient signatures)
+
+  These are the standard type of signatures and what is normally done when signing an existing
+  document. Such a signature basically says that the signer approves of the signed document. For
+  example, when digitally signing a contract both (or more) parties sign the document, thereby
+  agreeing to it.
+
+* **Time stamp signatures**
+
+  These signatures were introduced with PDF 2.0 and are used when the time of signing is important.
+  They use a trusted time stamp server to receive a signed time-stamp token.
+
+
+## Restricting Changes to a Signed Document {#docmdp}
+
+When using a certification signature, it is possible to restrict the changes so that any unallowed
+change invalidates the signature.
+
+This is done via the so called DocMDP transformation method set on the signature dictionary which
+defines a set of permissions that have to be followed. The following three types of permissions are
+available:
+
+1. No changes.
+2. Filling in forms and signing.
+3. Filling in forms, signing and annotation creation, deletion and modification.
+
+Preventing any modifications with option 1 is useful, for example, when creating signed invoices.
+Any and all modifications will be flagged by PDF readers.
+
+Option 2 is the default if nothing is specified and allows users to fill out the form fields and
+sign the PDF.
+
+Option 3 allows in addition to the permitted changes of option 2 the creation, deletion and
+modification of annotations. Note that in this case. it might be possible to change the document in
+a way that it still validates but misleads the recipients (see the [PDF Insecurity
+website](https://pdf-insecurity.org/).
+
+The default signing handler supports this feature via the
+[HexaPDF::Document::Signatures::DefaultHandler#doc_mdp_permissions=] method.
