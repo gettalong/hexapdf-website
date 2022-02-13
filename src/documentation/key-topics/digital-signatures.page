@@ -39,8 +39,8 @@ signed with the provided certificate and private key (or sent to an external sig
 resulting signature structure is embedded into the written file and now the PDF file is properly
 finished.
 
-Since the PDF document needs to be written to be properly signed, no changes to it can be made
-afterwards. So to work with the signed document, one has to load it again.
+**Note**: Since the PDF document needs to be written to be properly signed, no changes to it can be
+made afterwards. So to work with the signed document, one has to load it again.
 
 
 ## Types of Signatures
