@@ -66,6 +66,20 @@ module RDocPDFImages
 
       doc.write(ARGV[0] || 'out.pdf')
     SOURCE_CODE
+    'composer' => <<~SOURCE_CODE,
+      require 'hexapdf'
+      require 'geom2d'
+      composer = HexaPDF::Composer.new(page_size: [0, 0, 200, 200], margin: 10)
+      hp_path = '%s'
+      machu_picchu = File.join(hp_path, "examples", "machupicchu.jpg")
+      composer.canvas.line_width(1).line_dash_pattern(1).
+        stroke_color("lightgray").
+        rectangle(10, 10, 180, 180).stroke
+
+      %s
+
+      composer.write(ARGV[0] || 'out.pdf')
+    SOURCE_CODE
   }
 
 
