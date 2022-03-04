@@ -36,8 +36,8 @@
 
 @font-face {
     font-family: 'Lato';
-    src: url('lato/LatoLatin-Thin.woff2') format('woff2'), /* Modern Browsers */
-         url('lato/LatoLatin-Thin.woff') format('woff');
+    src: url('lato/LatoLatin-Light.woff2') format('woff2'), /* Modern Browsers */
+         url('lato/LatoLatin-Light.woff') format('woff');
     font-style: normal;
     font-weight: 300;
     text-rendering: optimizeLegibility;
@@ -45,8 +45,8 @@
 
 @font-face {
     font-family: 'LatoLatinWebThin';
-    src: url('lato/LatoLatin-ThinItalic.woff2') format('woff2'), /* Modern Browsers */
-         url('lato/LatoLatin-ThinItalic.woff') format('woff');
+    src: url('lato/LatoLatin-LightItalic.woff2') format('woff2'), /* Modern Browsers */
+         url('lato/LatoLatin-LightItalic.woff') format('woff');
     font-style: italic;
     font-weight: 300;
     text-rendering: optimizeLegibility;
