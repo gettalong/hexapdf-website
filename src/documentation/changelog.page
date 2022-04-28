@@ -4,5 +4,8 @@ side_menu: true
 toc_options:
   levels: [2, 2]
 ---
-{include_file: {filename: ../hexapdf/CHANGELOG.md, process_output: false, escape_html: false}}
-
+<%=
+result = context.tag(:include_file, "filename" => "../hexapdf/CHANGELOG.md", "process_output" => false, "escape_html" => false)
+result.gsub!(/^## (\d+\.\d+\.\d+).*?$/) { $& + " {#v" + $1.tr('.', '-') + "}" }
+result
+%>
