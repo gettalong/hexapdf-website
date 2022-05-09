@@ -65,7 +65,7 @@ end
 --- name:klass pipeline:erb
 <% klass = context.node.node_info[:rdoc_object] %>
 <div class="api-documentation api-<%= klass.type %>">
-  <h1 class="<%= klass.type %>"><%= klass.type %> <%= klass.full_name %></h1>
+  <h1 class="<%= klass.type %>"><%= klass.type %> <%= klass.full_name.gsub('::', '::<wbr />') %></h1>
 
   <% if klass.type == 'class' || !klass.includes.empty? || !klass.extends.empty? then %>
   <table class="class-details">
