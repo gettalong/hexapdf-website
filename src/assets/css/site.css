@@ -101,6 +101,10 @@ dl {
   margin: var(--universal-margin);
 }
 
+dt {
+  font-weight: 700;
+}
+
 pre, pre * {
   font-family: #{$code-font-family};
   code {
