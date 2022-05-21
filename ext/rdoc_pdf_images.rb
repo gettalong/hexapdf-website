@@ -69,12 +69,42 @@ module RDocPDFImages
     'composer' => <<~SOURCE_CODE,
       require 'hexapdf'
       require 'geom2d'
-      composer = HexaPDF::Composer.new(page_size: [0, 0, 200, 200], margin: 10)
+
+      def draw_current_frame_shape(color = "black")
+        $c.canvas.line_width(1).line_dash_pattern(0).
+          stroke_color(color).draw(:geom2d, object: $c.frame.shape)
+      end
+
+      composer = $c = HexaPDF::Composer.new(page_size: [0, 0, 200, 200], margin: 10)
       hp_path = '%s'
       machu_picchu = File.join(hp_path, "examples", "machupicchu.jpg")
-      composer.canvas.line_width(1).line_dash_pattern(1).
+      composer.canvas.save_graphics_state.
+        line_width(1).line_dash_pattern(1).
         stroke_color("lightgray").
-        rectangle(10, 10, 180, 180).stroke
+        rectangle(10, 10, 180, 180).stroke.
+        restore_graphics_state
+
+      %s
+
+      composer.write(ARGV[0] || 'out.pdf')
+    SOURCE_CODE
+    'composer100' => <<~SOURCE_CODE,
+      require 'hexapdf'
+      require 'geom2d'
+
+      def draw_current_frame_shape(color = "black")
+        $c.canvas.line_width(1).line_dash_pattern(0).
+          stroke_color(color).draw(:geom2d, object: $c.frame.shape)
+      end
+
+      composer = $c = HexaPDF::Composer.new(page_size: [0, 0, 200, 100], margin: 10)
+      hp_path = '%s'
+      machu_picchu = File.join(hp_path, "examples", "machupicchu.jpg")
+      composer.canvas.save_graphics_state.
+        line_width(1).line_dash_pattern(1).
+        stroke_color("lightgray").
+        rectangle(10, 10, 180, 80).stroke.
+        restore_graphics_state
 
       %s
 
