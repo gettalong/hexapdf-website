@@ -1,0 +1,567 @@
+---
+title: Migrating from Prawn
+toc_options: {levels: [3, 100]}
+---
+
+# {title:}
+
+This how-to guide provides information and code samples for Prawn users to get familiar with
+HexaPDF. While Prawn and HexaPDF are different in their respective capabilities, HexaPDF can do many
+of the things that Prawn can do and can often be used instead of Prawn.
+
+Throughout this guide the following variables are consistently used:
+
+`doc`
+: The Prawn document instance.
+
+`document`
+: The HexaPDF [document][HexaPDF::Document] instance.
+
+`composer`
+: The HexaPDF [composer][HexaPDF::Composer] instance.
+
+`canvas`
+: The HexaPDF [canvas][HexaPDF::Content::Canvas] instance of a page.
+
+
+## Code Comparison Example
+
+The following example shows the same document, a very simple invoice, being created in Prawn and in
+HexaPDF. It doesn't use all available functionality in both libraries but shows general usage. A
+short comparison of the two code samples can be found after them.
+
+Here is the Prawn example, generating [this result](invoice-prawn.pdf):
+
+~~~ ruby
+require 'prawn'
+require 'prawn/table'
+
+doc = Prawn::Document.new(page_size: "A4", margin: [72, 72, 72, 72], compress: true)
+
+doc.font("Helvetica")
+doc.font_size(12)
+
+doc.save_graphics_state do
+  doc.canvas do
+    doc.fill_color("77C3EC")
+    doc.fill_rectangle([0, 50], doc.bounds.right, 50)
+    doc.fill_rectangle([0, doc.bounds.top], doc.bounds.right, 50)
+    doc.fill_color("000000")
+  end
+end
+
+doc.float do
+  doc.bounding_box([doc.bounds.right - 150, doc.cursor], width: 150, height: 100) do
+    doc.stroke_bounds
+    doc.text_box("Prawn Example Inc.\nGarnish Street 3a\n4567 New South East\nWorld",
+                 at: [5, doc.bounds.top - 5], width: 140, height: 90)
+  end
+end
+
+doc.bounding_box([0, doc.cursor], width: 150, height: 100) do
+  doc.stroke_bounds
+  doc.text_box("Customer Here\nAvailability Arcarde 1\n 8901 Old North West\nMoon",
+               at: [5, doc.bounds.top - 5], width: 140, height: 90)
+end
+
+doc.move_down(40)
+
+doc.font_size(24) do
+  doc.text("Invoice 1234")
+end
+
+doc.move_down(40)
+
+invoice_data = [
+  ["Item", "Amount", "Total Price"],
+]
+1.upto(10) do |i|
+  invoice_data << ["Super Dooper #{i}", i, "$ #{10*i}"]
+end
+invoice_data << ["", "", "$ 450"]
+
+doc.table(invoice_data, width: doc.bounds.width,
+          cell_style: \{padding: 5, height: 25}, column_widths: [250, 80]) do |table|
+  table.row(0).font_style = :bold
+  table.row(0).background_color = "EEEEEE"
+  table.row(-1).font_style = :bold
+  table.row(-1).background_color = "EEEEEE"
+  table.column(-2..-1).align = :right
+end
+
+doc.move_down(40)
+
+doc.formatted_text(
+  [\{text: "Please transfer the money to the following bank account:\n"},
+   \{text: "IBAN: ", styles: [:bold]},
+   \{text: "AT65 1234 1234 5678 9012 3456, "},
+   \{text: "BIC: ", styles: [:bold]},
+   \{text: "ABCDAT12345\n"},
+   \{text: "Thank you for choosing us!", styles: [:italic], size: 8}],
+  align: :center
+)
+
+doc.render_file("invoice-prawn.pdf")
+~~~
+
+And here is the HexaPDF code with [its result](invoice-hexapdf.pdf):
+
+~~~ ruby
+require 'hexapdf'
+
+composer = HexaPDF::Composer.new(page_size: :A4, margin: 72)
+
+composer.style(:base, font: "Helvetica", font_size: 12, line_spacing: 1.2)
+
+box = composer.page.box(:media)
+composer.canvas.
+  fill_color("77C3EC").
+  rectangle(0, 0, box.width, 50).
+  rectangle(0, box.height - 50, box.width, 50).
+  fill
+
+composer.text("HexaPDF Example Inc.\nGarnish Street 3a\n4567 New South East\nWorld",
+              width: 150, height: 100, padding: 5, border: \{width: 1},
+              position: :float, position_hint: :right)
+
+composer.text("Customer Here\nAvailability Arcarde 1\n 8901 Old North West\nMoon",
+              width: 150, height: 100, padding: 5, border: \{width: 1})
+
+composer.text("Invoice 1234", font_size: 24, margin: [40, 0])
+
+invoice_data = [
+  ["Item", "Amount", "Total Price"],
+]
+1.upto(10) do |i|
+  invoice_data << ["Super Dooper #{i}", i, "$ #{10*i}"]
+end
+invoice_data << ["", "", "$ 450"]
+
+invoice_data.each_with_index do |row, rindex|
+  row.each_with_index do |content, cindex|
+    style = \{height: 25, padding: 5, border: {width: 1}, margin: [0, -1, -1, 0], valign: :center}
+    if rindex == 0 || rindex == invoice_data.length - 1
+      style.update(\{font: ["Helvetica", variant: :bold], background_color: "EEE"})
+    end
+    case cindex
+    when 0 then style.update(width: 250, position: :float)
+    when 1 then style.update(width: 80, position: :float, align: :right)
+    when 2 then style.update(align: :right)
+    end
+    composer.text(content.to_s, **style, )
+  end
+end
+
+composer.draw_box(HexaPDF::Layout::Box.new(height: 40))
+
+composer.formatted_text(
+  ["Please transfer the money to the following bank account:\n",
+   \{text: "IBAN: ", font: ["Helvetica", variant: :bold]},
+   "AT65 1234 1234 5678 9012 3456, ",
+   \{text: "BIC: ", font: ["Helvetica", variant: :bold]},
+   "ABCDAT12345\n",
+   \{text: "Thank you for choosing us!", font: ["Helvetica", variant: :italic], font_size: 8}],
+  align: :center
+)
+
+composer.write("invoice-hexapdf.pdf", optimize: true)
+~~~
+
+Short comparison:
+
+* The use of the [HexaPDF::Composer#text] method makes creating the text boxes with styling for the
+  sender and recipient rather easy. Prawn's bounding boxes are more versatile but also more verbose
+  when doing this task.
+
+* HexaPDF doesn't yet have a table implementation, so the table has to be created manually. This is
+  doable but more verbose and error prone than the Prawn version.
+
+* Use of the `#formatted_text` methods in Prawn and HexaPDF is quite similar which is no coincidence
+  since the idea was taken from Prawn. What HexaPDF doesn't allow but Prawn does is using HTML-like
+  inline formatting.
+
+* Both examples use the default method for optimizing the size of the output file. The PDF file
+  created by HexaPDF is about 12% smaller than the one from Prawn.
+
+
+## Creating a Document
+
+Document creation in Prawn and HexaPDF is very similar. The usual flow is to create a document
+instance at the beginning and to write the result at the end:
+
+~~~ ruby
+# Prawn
+doc = Prawn::Document.new
+doc.text("Hello World")    # Do something
+doc.render_file("hello-prawn.pdf")
+
+# HexaPDF
+document = HexaPDF::Document.new
+document.pages.add.canvas.
+  font("Helvetica", size: 10).
+  text("Hello World", at: [100, 500])    # Do something
+document.write("hello-hexapdf.pdf")
+
+# HexaPDF composer
+composer = HexaPDF::Composer.new
+composer.text("Hello World")    # Do something
+composer.write("hello-composer.pdf")
+~~~
+
+With HexaPDF there are two possible ways when creating a document:
+
+* The first one shown creates a new document instance and is intended for small scale creation task.
+  The reason for this is that it doesn't really provide convenient document creation facilities out
+  of the box.
+
+* The second one uses the [HexaPDF::Composer] class which is similar to Prawn's document class in
+  that it provides convenience methods for creating the contents of a document. Since one can access
+  the document instance, it is also possible to do low-level stuff when needed. This is what one
+  would usually use.
+
+Additionally, there is also the possibility to use a block form when creating a document:
+
+~~~ ruby
+# Prawn
+Prawn::Document.generate("hello-prawn.pdf") do |doc|
+  # Do something with the document
+end
+
+# HexaPDF composer
+HexaPDF::Composer.create("hello-composer.pdf") do |composer|
+  # Do something with the composer
+end
+~~~
+
+
+## Working with Graphics and Text
+
+When working with **Prawn** one is really mostly working with the `Prawn::Document` instance which
+is the catch-all object doing everything. It also provides the graphics methods that directly map to
+PDF operators as well as some convenience methods for more complex tasks, like drawing circles.
+
+When these methods are invoked, they are applied to the content stream of the current page. Once the
+page is changed to a new page, new invocations apply to the new page.
+
+Another thing to take into account is the default use of a document bounding box in Prawn that
+influences the position of these operations. To explicitly disable this bounding box one needs to
+use the `Prawn::Document#canvas` method.
+
+**HexaPDF** has an explicit [canvas][HexaPDF::Content::Canvas] class that is associated with a page.
+Any operation on such a canvas instance will only ever apply to that single page. And there is no
+bounding box whatsoever; so all coordinates are relative to the page's origin at the bottom left.
+The canvas methods are intentionally low-level as this class should just be a thin layer of
+convenience methods above the respective PDF operators.
+
+The **HexaPDF composer** class provides some high-level methods for working with text and images and
+is more in line with what one would expect coming from Prawn. The current canvas object can be
+accessed via [HexaPDF::Composer#canvas] and through this all graphical operations are available.
+
+The following lists show the HexaPDF equivalents of common operations:
+
+
+Basic path construction methods directly supported by PDF
+
+: `doc.move_to`, `doc.line_to`, `doc.curve_to`, `doc.rectangle`
+
+  [`canvas.move_to`][HexaPDF::Content::Canvas#move_to],
+  [`canvas.line_to`][HexaPDF::Content::Canvas#line_to],
+  [`canvas.curve_to`][HexaPDF::Content::Canvas#curve_to],
+  [`canvas.rectangle`][HexaPDF::Content::Canvas#rectangle]
+  [`canvas.close_subpath`][HexaPDF::Content::Canvas#close_subpath]
+  [`canvas.end_path`][HexaPDF::Content::Canvas#end_path]
+
+  These methods are basically the same in Prawn and HexaPDF but have slightly different interfaces.
+  E.g. `doc.curve_to` uses a `:bounds` argument where as `canvas.curve_to` allows specifying either
+  of the two bezier points `:p1` and/or `:p2`, for a complete mapping to PDF operators.
+
+
+Additional path construction methods
+
+: `doc.line`, `doc.vertical_line`, `doc.horizontal_line`, `doc.curve`, `doc.rounded_rectangle`,
+  `doc.polygon`, `doc.rounded_polygon`, `doc.circle`, `doc.ellipse`
+
+  [`canvas.line`][HexaPDF::Content::Canvas#line],
+  [`canvas.polyline`][HexaPDF::Content::Canvas#polyline],
+  [`canvas.polygon`][HexaPDF::Content::Canvas#polygon],
+  [`canvas.circle`][HexaPDF::Content::Canvas#circle],
+  [`canvas.ellipse`][HexaPDF::Content::Canvas#ellipse],
+  [`canvas.arc`][HexaPDF::Content::Canvas#arc]
+  [`canvas.graphic_object`][HexaPDF::Content::Canvas#graphic_object]
+  [`canvas.draw`][HexaPDF::Content::Canvas#draw]
+
+  HexaPDF also supports rounded variants of rectangles and polygons, just provide the `radius`
+  argument to the methods.
+
+  The `#arc` method works similar to `#curve_to` but is actually implemented in a separate class as
+  a so called [graphic object][HexaPDF::Content::GraphicObject]. These graphic objects provide an
+  easy way to extend the available shapes. Built-in are, for example, implementations for arcs in
+  [center][HexaPDF::Content::GraphicObject::Arc] and
+  [endpoint][HexaPDF::Content::GraphicObject::EndpointArc] parameterizations as well as an
+  implementation of [solid arcs][HexaPDF::Content::GraphicObject::SolidArc].
+
+
+Path painting methods
+
+: `doc.fill`, `doc.stroke`, `doc.fill_and_stroke`, `doc.close_and_stroke`
+
+  [`canvas.fill`][HexaPDF::Content::Canvas#fill],
+  [`canvas.stroke`][HexaPDF::Content::Canvas#stroke],
+  [`canvas.fill_stroke`][HexaPDF::Content::Canvas#fill_stroke],
+  [`canvas.close_stroke`][HexaPDF::Content::Canvas#close_stroke],
+  [`canvas.close_fill_stroke`][HexaPDF::Content::Canvas#close_fill_stroke],
+  [`canvas.clip_path`][HexaPDF::Content::Canvas#clip_path]
+
+  The methods practically work the same in Prawn and HexaPDF. Note that Prawn doesn't have an
+  explicit method for defining a clipping path.
+
+  In addition to these methods that directly map to a PDF operator, Prawn also defines helper
+  methods for applying filling or stroking operations to a single shape, like a rectangle. Since
+  HexaPDF doesn't define such methods, one needs to invoke the appropriate path painting method
+  *after* drawing the shape(s):
+
+  ~~~ ruby
+  doc.fill_rectangle([100, 100], 200, 50)   # Prawn
+  canvas.rectangle(100, 100, 200, 50).fill  # HexaPDF
+  ~~~
+
+
+Path property methods
+
+: `doc.line_width=`, `doc.cap_style=`, `doc.join_style=`, `doc.dash`
+
+  [`canvas.line_width`][HexaPDF::Content::Canvas#line_width],
+  [`canvas.line_cap_style`][HexaPDF::Content::Canvas#line_cap_style],
+  [`canvas.line_join_style`][HexaPDF::Content::Canvas#line_join_style],
+  [`canvas.line_dash_pattern`][HexaPDF::Content::Canvas#line_dash_pattern],
+  [`canvas.miter_limit`][HexaPDF::Content::Canvas#miter_limit]
+
+
+Color methods
+
+: `doc.fill_color`, `doc.stroke_color`
+
+  [`canvas.fill_color`][HexaPDF::Content::Canvas#fill_color],
+  [`canvas.stroke_color`][HexaPDF::Content::Canvas#stroke_color]
+
+  Prawn supports setting an RGB color using a hex color string and a CMYK color using four values.
+
+  HexaPDF supports those two methods as well as color strings of the form 'RGB' (in addition to of
+  'RRGGBB'), three values for an RGB color, CSS Color Module Level 3 color names and one value for
+  grayscale colors.
+
+
+Canvas transformation methods
+
+: `doc.translate`, `doc.rotate`, `doc.scale`
+
+  [`canvas.transform`][HexaPDF::Content::Canvas#transform],
+  [`canvas.translate`][HexaPDF::Content::Canvas#translate],
+  [`canvas.scale`][HexaPDF::Content::Canvas#scale],
+  [`canvas.rotate`][HexaPDF::Content::Canvas#rotate],
+  [`canvas.skew`][HexaPDF::Content::Canvas#skew]
+
+
+Text drawing and positioning methods
+
+: `doc.cursor`, `doc.move_cursor_to`, `doc.move_down`, `doc.move_up`, `doc.pad_top`,
+  `doc.pad_bottom`, `doc.draw_text`, `doc.text`, `doc.text_box`, `doc.formatted_text`,
+  `doc.formatted_text_box`
+
+  [`canvas.begin_text`][HexaPDF::Content::Canvas#begin_text],
+  [`canvas.end_text`][HexaPDF::Content::Canvas#end_text],
+  [`canvas.text`][HexaPDF::Content::Canvas#text],
+  [`canvas.show_glyphs`][HexaPDF::Content::Canvas#show_glyphs],
+  [`canvas.show_glyphs_only`][HexaPDF::Content::Canvas#show_glyphs_only],
+  [`canvas.text_cursor`][HexaPDF::Content::Canvas#text_cursor],
+  [`canvas.move_text_cursor`][HexaPDF::Content::Canvas#move_text_cursor],
+  [`canvas.text_matrix`][HexaPDF::Content::Canvas#text_matrix]
+
+  [`composer.x`][HexaPDF::Composer#x],
+  [`composer.y`][HexaPDF::Composer#y],
+  [`composer.text`][HexaPDF::Composer#text],
+  [`composer.formatted_text`][HexaPDF::Composer#formatted_text]
+
+  Prawn has the notion of a cursor which is the current vertical position on a page. Most operations
+  will be done at the current cursor position, with the horizontal position being the left side of
+  the current bounding box. HexaPDF's canvas object has no notion of a cursor but the composer has
+  something similar, exposed through the `composer.x` and `composer.y` methods. These coordinates
+  indicate the position of the next box placement.
+
+  Most of the text drawing methods of Prawn support various options like `:character_spacing` to
+  style the text itself. It is also possible to use HTML-like inline formatting tags. The only real
+  low-level method for text output is `doc.draw_text`.
+
+  HexaPDF canvas' methods are intentionally low-level to allow the full spectrum of PDF
+  functionality. One would normally only use `canvas.text` or the high-level facilities provided by
+  the composer and its associated classes.
+
+
+Text property methods
+
+: `doc.font`, `doc.font_size`, `doc.default_leading`, `doc.text_rendering_mode`
+
+  [`canvas.font`][HexaPDF::Content::Canvas#font],
+  [`canvas.font_size`][HexaPDF::Content::Canvas#font_size],
+  [`canvas.character_spacing`][HexaPDF::Content::Canvas#character_spacing],
+  [`canvas.horizontal_scaling`][HexaPDF::Content::Canvas#horizontal_scaling],
+  [`canvas.text_rise`][HexaPDF::Content::Canvas#text_rise],
+  [`canvas.word_spacing`][HexaPDF::Content::Canvas#word_spacing],
+  [`canvas.leading`][HexaPDF::Content::Canvas#leading],
+  [`canvas.text_rendering_mode`][HexaPDF::Content::Canvas#text_rendering_mode]
+
+  While HexaPDF supports text properties on the canvas class using dedicated methods, Prawn mostly
+  supports them through options passed to e.g. `doc.text`. This way kerning, character spacing,
+  leading and text color can be specified.
+
+  When using the [HexaPDF::Composer] class and its box system, styling of text works through an
+  explicit style object of class [HexaPDF::Layout::Style]. Such a style object can be applied to a
+  whole text box (e.g. for text alignment, padding, margin, border, ...) as well as to text
+  fragments (e.g. for font, text color, character spacing, ...).
+
+
+Other methods
+
+: `doc.save_graphics_state`, `doc.restore_graphics_state`, `doc.transparency`, `doc.image`
+
+  [`canvas.save_graphics_state`][HexaPDF::Content::Canvas#save_graphics_state],
+  [`canvas.restore_graphics_state`][HexaPDF::Content::Canvas#restore_graphics_state],
+  [`canvas.opacity`][HexaPDF::Content::Canvas#opacity],
+  [`canvas.rendering_intent`][HexaPDF::Content::Canvas#rendering_intent],
+  [`canvas.image`][HexaPDF::Content::Canvas#image],
+  [`canvas.xobject`][HexaPDF::Content::Canvas#xobject],
+  [`canvas.marked_content_point`][HexaPDF::Content::Canvas#marked_content_point],
+  [`canvas.marked_content_sequence`][HexaPDF::Content::Canvas#marked_content_sequence],
+  [`canvas.end_marked_content_sequence`][HexaPDF::Content::Canvas#end_marked_content_sequence]
+
+  [`composer.image`][HexaPDF::Composer#image]
+
+
+## Other Prawn Functionality
+
+Repeatable content (`doc.repeat`)
+
+: This can be done in HexaPDF by iterating over the pages, getting their canvas objects and drawing
+  on them:
+
+  ~~~ ruby
+  # Prawn
+  doc.repeat(:all) do
+    doc.draw_text("All pages", at: [0, 0])
+  end
+
+  # HexaPDF
+  document.pages.each do |page|
+    page.canvas.text("All pages", at: [0, 0])
+  end
+  ~~~
+
+  Granted, this doesn't look as nice but it allows for more flexibility. Want to put that repeated
+  content into the background? Use the underlay canvas.
+
+
+Stamps (`doc.create_stamp`, `doc.stamp`, `doc.stamp_at`)
+
+: These are just Form XObjects and those are directly supported by HexaPDF:
+
+  ~~~ ruby
+  # Prawn
+  doc.create_stamp("pdf") do
+    doc.draw_text("PDF software", at: [50, 0])
+  end
+  doc.stamp_at("pdf", [200, 100])
+
+  # HexaPDF
+  stamp = document.add(\{Type: :XObject, Subtype: :Form, BBox: [0, 0, 100, 50]})
+  stamp.canvas.text("PDF software", at: [0, 0])
+  canvas.xobject(stamp, at: [200, 100])
+
+  # HexaPDF Composer
+  stamp = composer.create_stamp(100, 50) do |canvas|
+    canvas.text("PDF software", at: [0, 0])
+  end
+  composer.image(stamp)
+  ~~~
+
+  There will be a [HexaPDF::Composer] convenience method for creating such Form XObjects to make it
+  easier.
+
+
+Document encryption
+
+: Encrypting a document in Prawn (`doc.encrypt_document`) is possible but should not be done. The
+  reason for this is that it only allows for a very weak encryption scheme (40bit RC4).
+
+  In contrast, HexaPDF supports all standard encryption schemes, up to the latest one from PDF 2.0
+  (AES 256bit):
+
+  ~~~ ruby
+  # Prawn
+  doc.encrypt_document(user_password: 'foo')
+
+  # HexaPDF
+  document.encrypt(user_password: 'foo')
+  ~~~
+
+
+## Prawn functionality not yet supported in HexaPDF
+
+There are some things that are not yet supported in HexaPDF via convenience methods:
+
+* Bounding boxes (`doc.bounding_box`, `doc.span`, `doc.column_box`, `doc.indent`). This
+  functionality will most probably not be incorporated into HexaPDF in this way due to a different
+  approach in document layouting using the [HexaPDF::Composer] class and the box system.
+
+* Gradients (`doc.fill_gradient`, `doc.stroke_gradient`)
+
+* Soft masks (`doc.soft_mask`)
+
+* Grids (`doc.define_grid`, `doc.grid`)
+
+* Outlines (`doc.outline`). There is currently no convenience support for outlines in HexaPDF but it
+  could be done manually.
+
+* Tables (Prawn uses the official `prawn-table` gem for this)
+
+
+## HexaPDF functionality not supported in Prawn
+
+Since HexaPDF is a full-blown PDF library, it can do many more things than just creating a document,
+for example:
+
+Existing PDF file as template
+
+: Granted, there is `prawn-template` but it is very restricted in which files it can load/work with.
+  Since HexaPDF is a fully-featured PDF library it can load any PDF file (even most damaged ones) as
+  template and add content.
+
+
+Advanced file compression
+
+: HexaPDF is built to create small files by default. The additional `optimize: true` option when
+  writing a document activates some more features to achieve even better results.
+
+  Compared to Prawn the PDF files created by HexaPDF are about 15% to 25% smaller.
+
+
+Interactive forms
+
+: HexaPDF integrates functionality for the creation and pre-rendering of interactive forms a.k.a.
+  AcroForms. This functionality is not yet integrated into the composer but can manually be combined
+  with it.
+
+  See the key topic ["Interactive Forms"][forms] and the [interactive form
+  example](/examples/acro_form.html) for what's possible.
+
+
+Digital signatures
+
+: HexaPDF supports adding one or more digital signatures to a document. Such signed documents will
+  be visually flagged in supported PDF readers.
+
+  See the key topic ["Digital Signatures"][sig] and [HexaPDF::Document::Signatures#add] for more
+  information on this.
+
+
+[forms]: /documentation/key-topics/forms.html
+[sig]: /documentation/key-topics/digital-signatures.html
