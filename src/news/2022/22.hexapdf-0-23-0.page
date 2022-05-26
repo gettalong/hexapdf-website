@@ -1,0 +1,29 @@
+---
+title: HexaPDF 0.23.0
+created_at: 2022-05-26 23:20:00 +02:00
+---
+
+This release contains changes and additions across many different parts of HexaPDF. It also includes
+**breaking changes** with respect to the main [HexaPDF::Document] class as well as for
+[HexaPDF::Layout::TextBox]:
+
+* During the reworking of the revision handling it became clear that a breaking change for the main
+  document class was necessary so as to make it harder to create an invalid PDF document.
+
+* The text box now uses the whole available width/height when aligning to the center or
+  right/bottom. If this was not done, the text would not appear to be correctly aligned.
+
+Among the other changes are the new ability of `hexapdf modify` to remove or flatten annotations and
+a new convenience class for creating and working with destination objects (think: in-document links).
+
+The documentation side saw the addition of a **howto page on [migrating from Prawn]**. This howto
+shows, among other things, a full example in Prawn and HexaPDF and a mapping from Prawn methods to
+equivalent HexaPDF methods.
+
+And also with respect to the documentation the [HexaPDF::Layout::Style] documentation has been
+updated to include visual examples.
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+[changelog]: /documentation/changelog.html
+[migrating from Prawn]: /documentation/howtos/migrating-from-prawn.html
