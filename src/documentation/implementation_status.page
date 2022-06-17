@@ -137,6 +137,15 @@ recovered in many cases. Validation is available for all implemented dictionary 
 | 12.7.4.3 Text Fields | ☑ | |
 | 12.7.4.4 Choice Fields | ☑ | |
 | 12.7.4.5 Signature Fields | | |
+| 12.8 Digital Signatures | | |
+| 12.8.1 General | ☑ | Just info |
+| 12.8.2 Transform Methods | | |
+| 12.8.2.1 General | ☑ | Just info |
+| 12.8.2.2 DocMDP | ☑ | |
+| 12.8.3 Signature Interoperability | | |
+| 12.8.3.1 General | ☑ | Just info |
+| 12.8.3.2 PKCS#1 Signatures | ☑ | |
+| 12.8.3.3 PKCS#7 Signatures as used in ISO 32000 | ☑ | |
 | 14 **Document Interchange** | | |
 | 14.1 General | ☑ | Just info |
 | 14.2 Procedure Sets | ☑ | |
