@@ -22,41 +22,99 @@ template: default.template
 </div>
 
 <div class="row wmax features">
-  <div class="col-md-4 col-sm-12 feature">
+  <div class="col-md-5 col-md-offset-1 col-sm-12 feature"><div>
     <h3><span class="hexagon"><span class="icon-plus inverse"></span></span>PDF Creation</h3>
 
-    <p>HexaPDF includes facilities for creating PDF documents from scratch, using a canvas
-    object for drawing and outputting text.</p>
+    <p>HexaPDF includes facilities for creating PDF documents from scratch. Use the <a
+    href="{relocatable: /documentation/reference/api/HexaPDF/Content/Canvas.html}">low-level canvas
+    API</a> for drawing graphics and outputting text if you want full control over every aspect. Or
+    use the built-in <a href="{relocatable:
+    /documentation/reference/api/HexaPDF/Composer.html}">document layout engine</a> that provides a
+    convenient, word-processor like way of creating complex documents, including automatically
+    flowing text around other content.</p>
+
+  </div></div>
+  <div class="col-md-6 col-sm-12 feature"><div>
+    <pre>require 'hexapdf'
+doc = HexaPDF::Document.new
+doc.pages.add.<a href="{relocatable: /documentation/reference/api/HexaPDF/Content/Canvas.html}">canvas</a>.
+  font("Times", size: 30).
+  text("Hello World", at: [200, 300])
+doc.write("hello-world.pdf")</pre>
+    <pre>require 'hexapdf'
+<a href="{relocatable: /documentation/reference/api/HexaPDF/Composer.html}">HexaPDF::Composer</a>.create("hello-world.pdf") do |composer|
+  composer.text("Hello World", font_size: 30,
+                align: :center, valign: :center)
+end</pre>
+  </div></div>
+</div>
+
+<div class="row wmax features">
+  <div class="col-md-6 col-sm-12 col-md-first col-sm-last feature" style="justify-content: right">
+    <img src="{relocatable: /assets/images/encrypt.svg}" style="height: 200px"/>
   </div>
-  <div class="col-md-4 col-sm-12 feature">
+  <div class="col-md-5 col-sm-12 feature"><div>
+    <h3><span class="hexagon"><span class="icon-lock inverse"></span></span>PDF Encryption and Digital Signatures</h3>
+
+    <p>HexaPDF supports all password based encryption mechanisms, including AES 256bit, when reading
+    and writing PDF files.</p>
+
+    <p>There is also support for digitally signing a PDF using a certificate and for verifying
+    digital signatures.</p>
+
+  </div></div>
+</div>
+
+<div class="row wmax features">
+  <div class="col-md-5 col-md-offset-1 col-sm-12 feature"><div>
     <h3><span class="hexagon"><span class="icon-edit inverse"></span></span>PDF Manipulation</h3>
 
-    <p>HexaPDF can read existing documents and modify them in various ways, e.g. adding,
-    modifying or deleting pages, annotations, files, ...</p>
-  </div>
-  <div class="col-md-4 col-sm-12 feature">
-    <h3><span class="hexagon"><span class="icon-file-plus inverse"></span></span>PDF File Merging</h3>
+    <p>HexaPDF can read existing documents and modify them in various ways. It supports</p>
+    <ul>
+      <li>adding, modifying, re-ordering, or deleting <a href="{relocatable: /documentation/reference/api/HexaPDF/Document/Pages.html}">pages</a>,</li>
+      <li>handling annotations including adding new ones,</li>
+      <li>creating <a href="{relocatable: /documentation/key-topics/forms.html}">interactive forms</a> or filling them out,</li>
+      <li>attaching or extracting files,</li>
+    </ul>
+    <p>and much more!</p>
+  </div></div>
+  <div class="col-md-6 col-sm-12 feature"><div class="cycle">
+    <pre class="cycle1">require 'hexapdf'
+doc = HexaPDF::Document.open(input_file)
+doc.pages.move(3, 5)
+doc.pages.delete_at(2)
+new_page = doc.pages.insert(-2)
+new_page.canvas.circle(200, 200, 30).fill
+doc.write(output_file)</pre>
+    <pre class="cycle2">require 'hexapdf'
+doc = HexaPDF::Document.open(input_file)
+doc.acro_form.field_by_name('firstname').value = 'Thomas'
+doc.acro_form.field_by_name('city').value = 'Vienna'
+doc.write(output_file)</pre>
+  </div></div>
+</div>
 
-    <p>HexaPDF can be used to merge multiple PDF files together. Advanced merge facilities
-    can be built on the existing infrastructure.</p>
+<div class="row wmax features">
+  <div class="col-md-6 col-sm-12 col-md-first col-sm-last feature" style="justify-content: right;">
+    <img src="{relocatable: /assets/images/extraction.svg}" style="height: 200px"/>
   </div>
-  <div class="col-md-4 col-sm-12 feature">
+  <div class="col-md-5 col-sm-12 feature"><div>
     <h3><span class="hexagon"><span class="icon-file-text inverse"></span></span>Content Extraction</h3>
 
-    <p>HexaPDF allows extracting various parts of a PDF file, e.g. text from a page,
-    attached files, embedded images, ...</p>
-  </div>
-  <div class="col-md-4 col-sm-12 feature">
-    <h3><span class="hexagon"><span class="icon-lock inverse"></span></span>PDF Encryption</h3>
+    <p>HexaPDF allows extracting various parts of a PDF file, for example text from a page, attached
+    files, embedded images, ...</p>
+</div></div>
+</div>
 
-    <p>HexaPDF supports all password based encryption mechanisms, including AES 256bit, when
-    reading and writing PDF files.</p>
-  </div>
-  <div class="col-md-4 col-sm-12 feature">
+<div class="row wmax features">
+  <div class="col-md-5 col-md-offset-1 col-sm-12 feature"><div>
     <h3><span class="hexagon"><span class="icon-cog inverse"></span></span>PDF Optimization</h3>
 
-    <p>HexaPDF writes output PDF files as compactly as possible. Additionally, it can
+    <p>HexaPDF writes output PDF files as compactly as possible. Additionally, it can lossleesly
     optimize existing PDF files to reduce their file size.</p>
+  </div></div>
+  <div class="col-md-6 col-sm-12 feature">
+    <img src="{relocatable: /assets/images/optimization.gif}" />
   </div>
 </div>
 
