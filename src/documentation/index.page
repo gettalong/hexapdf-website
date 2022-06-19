@@ -12,7 +12,7 @@ for you to find what you need:
 <div class="row">
   <div class="col-sm-6" markdown="1">
 
-## [Tutorials](tutorials/) - start here
+## [<span class="icon-book-open"></span> Tutorials](tutorials/) - start here
 
 Introductions to various parts of HexaPDF, like creating a PDF document.
 
@@ -20,7 +20,7 @@ Introductions to various parts of HexaPDF, like creating a PDF document.
 
 <div class="col-sm-6" markdown="1">
 
-## [How-to Guides](howtos/)
+## [<span class="icon-compass"></span> How-to Guides](howtos/)
 
 Practial step-by-step instructions for the most common use-cases; they assume familiarity with
 HexaPDF.
@@ -32,7 +32,7 @@ HexaPDF.
 <div class="row">
   <div class="col-sm-6" markdown="1">
 
-## [Key Topics](key-topics)
+## [<span class="icon-key"></span> Key Topics](key-topics)
 
 Background information and explanations of some of the key concepts in HexaPDF.
 
@@ -40,7 +40,7 @@ Background information and explanations of some of the key concepts in HexaPDF.
 
 <div class="col-sm-6" markdown="1">
 
-## [Reference](reference/)
+## [<span class="icon-database"></span> Reference](reference/)
 
 Technical reference material, for API, CLI command and other aspects.
 

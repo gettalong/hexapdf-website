@@ -6,20 +6,22 @@
   side_menu: false
 
 tutorials/:
+  title: <span class="icon-book-open"></span> Tutorials
   side_menu: true
   sort_info: 10
 
 howtos/:
-  title: How-to Guides
+  title: <span class="icon-compass"></span> How-to Guides
   side_menu: true
   sort_info: 20
 
 key-topics/:
-  title: Key Topics
+  title: <span class="icon-key"></span> Key Topics
   side_menu: true
   sort_info: 30
 
 reference/:
+  title: <span class="icon-database"></span> Reference
   side_menu: true
   sort_info: 40
 
