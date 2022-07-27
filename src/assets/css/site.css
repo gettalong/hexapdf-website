@@ -99,6 +99,8 @@ $color-grey-extralight: lighten($color-grey, 90%);
   --universal-margin: 1rem;
 
   --pre-color: #{$color-primary-dark};
+
+  --blockquote-color: #{$color-primary};
 }
 
 
@@ -607,9 +609,9 @@ table.standard {
 
 @keyframes hide-show {
     0% { opacity:100; }
-   45% { opacity:100; }
+   48% { opacity:100; }
    50% { opacity: 50; }
-   55% { opacity: 0; }
+   52% { opacity: 0; }
   100% { opacity: 0; }
 }
 .cycle {
@@ -625,7 +627,6 @@ table.standard {
   animation:5s infinite alternate hide-show;
 }
 .cycle2 {
-  position: absolute;
   width: calc(100% - 5 * var(--universal-padding));
   animation:5s infinite alternate-reverse hide-show;
 }

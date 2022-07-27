@@ -21,6 +21,37 @@ template: default.template
   </div>
 </div>
 
+<div class="row" style="background-color: #eee">
+  <div class="col-sm-12 wmax row">
+    <div class="col-sm-12 col-md-6" style="display: flex; align-items: center; justify-content: center; gap: 5rem">
+       <img src="{relocatable: /assets/images/logo-daisybill.png}" style="height: 3rem;" />
+       <img src="{relocatable: /assets/images/logo-signwell.png}" style="height: 3rem;" />
+    </div>
+    <div class="col-sm-12 col-md-6"><div class="cycle">
+      <blockquote class="cycle1" style="animation-duration: 15s" cite="Ruben Gamez, Founder, Signwell">
+
+        "HexaPDF is invaluable for our business. It helps us quickly and efficiently manipulate
+        hundreds of thousands of PDFs. Support for HexaPDF is always responsive, helpful, and easily
+        the best support we've received from any of the software vendors we've worked with.<br /><br />
+
+        <b>I highly recommend HexaPDF to any business that needs a fast and rock solid way to work with
+        PDFs.</b>"
+      </blockquote>
+      <blockquote class="cycle2" style="animation-duration: 15s" cite="Christopher O'Donnell, Senior Software Engineer, DaisyBill">
+
+        "The daisyBill platform processes tens of thousands of PDF files a week. Before HexaPDF,
+        malformed PDF files required several approaches to fix. When we introduced HexaPDF, it
+        already did way better then some of our other tools. Over the course of a few months, we
+        worked with HexaPDF's author to improve HexaPDF's ability to process and repair malformed
+        PDFs; this drastically streamlined our PDF tool kit.<br /><br/>
+
+        <b>When it comes to repairing malformed PDF files I highly recommend HexaPDF, plus it's in Ruby
+        so the code is easy to write!</b>"
+      </blockquote>
+    </div></div>
+  </div>
+</div>
+
 <div class="row wmax features">
   <div class="col-md-5 col-md-offset-1 col-sm-12 feature"><div>
     <h3><span class="hexagon"><span class="icon-plus inverse"></span></span>PDF Creation</h3>
