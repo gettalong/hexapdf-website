@@ -1,0 +1,247 @@
+---
+title: Document Layout
+subtitle: Information about HexaPDF's automatic document layout feature
+sort_info: 60
+---
+
+# Document Layout
+
+The automatic document layout feature of HexaPDF allows one to easily create complex documents. It
+works by first defining the area where the content should be placed and then adding content boxes.
+The layout engine places the boxes into the area according to the their position information and
+allows, for example, for flowing text around other content.
+
+
+## Overview
+
+Defining the contents of a PDF document works a bit differently than what one is used to from word
+processors like LibreOffice Writer.
+
+Word processors usually store the contents, being text, images, graphics or other things, as is
+together with styling information like font, font size, position information, border style and so
+on. The word processor itself is responsible for laying out the content according to this
+information when a file is opened. This is also the reason why different word processor applications
+might display files differently, for example, if they are not 100% compatible with the used file
+format.
+
+In contrast to this, the contents of a PDF document is stored **already layed out**. For example,
+text is not stored as Unicode text but as glyph identifiers together with the exact position for
+each glyph. A PDF viewer takes this information and just renders this content, without doing any
+layouting at all. This is still quite a complex task but it ensures -- generally -- that the display
+of a PDF document is the same across different PDF viewers.
+
+Due to this difference layouting of PDF content is the responsibility of the PDF creation software.
+
+Every PDF creation software can do the easy graphics and text operations that map directly to PDF
+operators, like showing text at a certain position. More complex document layout needs additional
+work like line wrapping algorithms, hyphenation algorithms, flowing text around other content and
+more.
+
+HexaPDF is naturally able to do the basic document creation tasks. These can be done using the
+[HexaPDF::Content::Canvas] class which also provides basic text output. The complex tasks are
+handled by the classes in the [HexaPDF::Layout] module.
+
+Most classes in the [HexaPDF::Layout] module are completely decoupled from the PDF-specific parts of
+HexaPDF. This is because the PDF parts only come into play once text and graphics have been properly
+laid out and need to be drawn on a canvas.
+
+
+### Main Layout Classes
+
+The main classes used by the layout engine are
+
+* [HexaPDF::Layout::Box] and its subclasses for encapsulating content and defining how to fit, split
+  and draw that content,
+
+* [HexaPDF::Layout::Style] for encapsulating all the styling information for boxes (and some other
+  classes),
+
+* [HexaPDF::Layout::Frame] for providing the area where to place the boxes, and
+
+* [HexaPDF::Layout::BoxFitter] for fitting boxes into one or more frames using their style
+  information.
+
+These classes can either be used directly or through [HexaPDF::Document::Layout] which provides a
+convenience interface for working with them. However, they are most commonly used through
+[HexaPDF::Composer] which ties them neatly together and provides the easiest interface for users.
+
+
+The inner workings and main features of the mentioned classes are discussed below.
+
+
+## Boxes
+
+Boxes encapsulate content and know how to fit the content into a frame, how to optionally split the
+content and how to draw the content.
+
+Examples of box classes that directly encapsulate content are [HexaPDF::Layout::TextBox] for drawing
+text and [HexaPDF::Layout::ImageBox] for drawing an image. Additionally, there are box classes that
+act as containers like [HexaPDF::Layout::ListBox] and [HexaPDF::Layout::ColumnBox]. Those container
+classes internally use Frame and BoxFitter objects to do the actual layouting.
+
+Each box has at least the following attributes:
+
+`width`, `height`
+
+: They define the width and height the box should have. A value of zero means that the value of the
+  attribute is determined during the layouting process. For example, if an image box has a set width
+  but a height of zero, the height will be calculated so that the aspect ratio of the image
+  persists.
+
+`style`
+
+: The style of a box is an instance of [HexaPDF::Layout::Style] and encapsulates all the style
+  information for that box. Examples of style attributes are `position` (describing how to place the
+  box in the frame) and `font_size`.
+
+The base class [HexaPDF::Layout::Box] already provides some useful properties for all box classes,
+for example the ability to draw a background and border.
+
+By encapsulating content into a box class and *not* drawing it directly onto the canvas, the drawing
+logic becomes easily re-usable. Additionally, the box instances can be used together with frames for
+automatic positioning.
+
+Therefore it is best to create new box subclasses whenever something needs to be drawn, even if only
+one time.
+
+
+## Frames
+
+A **[HexaPDF::Layout::Frame]** defines the area where content boxes can be placed and provides the
+methods to place them. Once placed their occupied space (which is different for different types of
+positions) is removed from the available area, making the frame ready for the next box placement.
+Note that placing a box in a frame doesn't necessarily mean actually drawing the box, e.g. when
+frames are used inside container boxes.
+
+
+### Frame Shape
+
+The **shape** of a frame is initially rectangular. Once boxes are fitted and drawn inside the frame,
+its available area gets reduced. Due to this the shape of a frame may be a polygon set consisting of
+arbitrary rectilinear polygons. For example, if a box is placed using absolute coordinates, a hole
+in the shape may appear.
+
+The frame's shape is used to determine the current placement position (available through the
+[HexaPDF::Layout::Frame#x] and [HexaPDF::Layout::Frame#y] attributes). Together with the
+[HexaPDF::Layout::Frame#available_width] and [HexaPDF::Layout::Frame#available_height] attributes
+they define a rectangular area inside which the next box is placed.
+
+There is one exception though: If the to-be-placed box is to be flown around content (style property
+position=:flow), this rectangular area is ignored and the frame's shape is directly used to
+determine where to place the box's content.
+
+
+### Box Placement
+
+The general work flow for placing a box in a frame is like this:
+
+Fitting the box
+
+: The first step is fitting the box using the [HexaPDF::Layout::Frame#fit] method. This method in
+  turn calls [HexaPDF::Layout::Box#fit] and lets the box decide whether it fits or not. The result
+  of Frame#fit is a [HexaPDF::Layout::Frame::FitResult] object, holding the information about
+  whether fitting was successful, where the box in the frame is placed and which area needs to be
+  removed from the frame.
+
+  If the box fits at the current position, it can either be drawn directly afterwards or the fit
+  result stored for later use.
+
+Handling a negative fit result
+
+: There are two reasons for a box not fitting at the current position:
+
+  1. The box is too big to completely fit but a part fits.
+  2. The box doesn't fit at all.
+
+  To determine whether it is 1. or 2. the [HexaPDF::Layout::Frame#split] method needs to be called.
+  The result is an array where the first item is the current box or `nil` and the second item is the
+  split-off box or `nil`.
+
+  If the first item is not `nil`, it means that at least a part fits and that the box can be drawn
+  with the already available fit result object. The second item is then `nil` if the box fit
+  completely (and a call to `#split` was not really necessary) or another box containing the content
+  that didn't fit.
+
+  In case the first item is `nil`, the box didn't fit at all and is returned as the second item. In
+  this case the [HexaPDF::Layout::Frame#find_next_region] method may be called to determine a new
+  region for fitting the box and the process is repeated from the top.
+
+Drawing the result and/or removing the box's area
+
+: Once a successful fit result has been obtained, the [HexaPDF::Layout::Frame#draw] method can be
+  called to draw the box and remove the area of the box from the frame's shape.
+
+  Alternatively, the [HexaPDF::Layout::Frame#remove_area] method is called to just remove the box's
+  area from the frame's shape without drawing the box. This is useful, for example, when boxes are
+  fitted into a temporary frame inside a container box.
+
+To have the most control over this process, one can use the frame class directly. However, in most
+cases it is easier to use the BoxFitter class.
+
+
+## Box Fitter
+
+The [HexaPDF::Layout::BoxFitter] class encapsulates the default logic for laying out boxes into one
+or more frames. Due to this it is used by container boxes like the [HexaPDF::Layout::ColumnBox] for
+doing the actual layouting work.
+
+All one needs to do is to provide the frames and then use the `#fit` method to fit the boxes, one
+after the other. The logic for placing the boxes uses the flow described [above](#box-placement),
+adjusted for use with multiple frames:
+
+* Fit the box into the current position of the current frame.
+
+* If it fits, the area occupied by the box is removed from the frame and the fit result stored.
+
+* If it doesn't fit, the box is split.
+
+* If a part now fits, its area is removed from the frame and the fit result stored. If there is a
+  remaining box, the process is started with it again. Otherwise all is done.
+
+* If no part of the box fits, a new region of the frame is determined and the process started again.
+
+* If no space is left on the current frame, the next frame is selected and the process started
+  again. However, it there is no next frame, the box (and any other after it) can't be fitted
+  anymore and is stored separately from the fit results.
+
+After the `#fit` method is called for every box, the stored fit results can be used to draw the
+boxes. And the stored remaining boxes can be used during a box splitting operation.
+
+
+## Convenience Interface for Layout Classes
+
+Though the layout classes can be used directly, it is easier to use the convenience interface
+provided by [HexaPDF::Document::Layout]. It can be accessed through [HexaPDF::Document#layout].
+
+This interface provides a central store for styles. Through them it is easy to define document wide
+styles for paragraphs, headings, and so on. Those styles can then be assigned to boxes created
+through the interface.
+
+There are a few special methods for creating boxes, like [HexaPDF::Document::Layout#text_box], and a
+general method [HexaPDF::Document::Layout#box]. The latter one uses the configuration option
+`layout.boxes.map` to create box instances based on registered box names. This feature allows one to
+create and register custom box classes and use them like the built-in ones.
+
+
+## The Composer
+
+All the classes discussed above focus on special aspects of the layouting work. The
+[HexaPDF::Composer] class now ties all the classes together to provide a very easy to use interface
+for creating whole documents:
+
+~~~ ruby
+require 'hexapdf'
+
+HexaPDF::Composer.create('output.pdf') do |composer|
+  composer.text("Hello World", font_size: 20)
+  composer.image("some image.jpg", align: :center, width: 300)
+end
+~~~
+
+The composer uses the central style store provided by [HexaPDF::Document::Layout] and also delegates
+the box creation to that class.
+
+In addition to automatically laying out the given boxes and drawing them, it creates new pages when
+needed. This allows one to just add all the boxes without too much thinking about how and where the
+boxes will fit.
+
