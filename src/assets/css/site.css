@@ -116,6 +116,10 @@ dt {
   font-weight: 700;
 }
 
+b a, strong a {
+  font-weight: $bold-font-weight;
+}
+
 pre, pre * {
   font-family: #{$code-font-family};
   code {
