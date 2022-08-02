@@ -1,0 +1,83 @@
+---
+title: HexaPDF 0.24.0 - Document Layout Update
+created_at: 2022-08-01 23:40:00 +02:00
+---
+
+The focus of this release was to provide a **major improvement in document layout and creation**.
+Nearly all classes in [HexaPDF::Layout] were adapted or refactored which also resulted in some
+breaking changes.
+
+
+### Column and List Boxes
+
+The most user visible changes are the addition of [HexaPDF::Layout::ColumnBox] for laying out boxes
+in columns and [HexaPDF::Layout::ListBox] for creating ordered or unordered lists:
+
+![ColumBox in action](assets/column_box.png){: style="border: 1px solid black; display: block; margin: 0 auto"}
+![ListBox in action](assets/list_box.png){: style="border: 1px solid black; display: block; margin: 0 auto"}
+
+These two new box classes represent a major step forward since they are *container boxes*, i.e.
+boxes that contain other boxes. For such classes to work flawlessly with the rest of the layout
+engine, the class **[HexaPDF::Layout::BoxFitter]** was introduced. It allows fitting multiple boxes
+into one or more (temporary) frames and storing the results for later use; exactly what is needed
+for container boxes.
+
+The container boxes can be used like any other box which means they can also be split. And they can
+be nested in one another, like having a column box inside a list box inside a column box:
+
+![Container boxes used together](assets/container_boxes.png){: style="border: 1px solid black; display: block; margin: 0 auto"}
+
+Since the container boxes internally rely on the same layout engine that is used everywhere else,
+they can also recognize and flow around cut-outs, like the black box in the image above.
+
+One of the nice advantages of having this system of individual box classes which represent certain
+parts of a document is that it allows for adding additional information later on. For example,
+adding support for tagged PDF (i.e. providing accessibility related information) should not be much
+of a problem in the future.
+
+
+### More Convenient Box and Document Creation
+
+There was also much work done to improve the document layout API to make it easier to use.
+
+The new **[HexaPDF::Document::Layout] class, accessible through [HexaPDF::Document#layout]**, is now
+the central hub for creating box objects. It allows for the easy instantiation of all built-in box
+classes as well as user-provided ones.
+
+Additionally, that class contains a central style registry which allows one to associate names to
+specific box styles and reference those styles later by their given name.
+
+The [HexaPDF::Composer] class from which most of the methods in [HexaPDF::Document::Layout] came
+from, uses this new class and can now concentrate on the special behaviour needed when creating
+whole documents. It is now also possible to easily define the children of container boxes:
+
+~~~ ruby
+require 'hexapdf'
+
+HexaPDF::Composer.create("list.pdf") do |composer|
+  composer.text("Hello World!", font_size: 30, align: :center, padding: [0, 0, 20])
+  composer.box(:list, item_spacing: 20) do |list|
+    list.lorem_ipsum_box
+    list.image('examples/machupicchu.jpg', height: 100)
+    list.box(:list, item_type: :decimal) do |sub_list|
+      sub_list.text("Item 1")
+      sub_list.text("Another item")
+    end
+  end
+end
+~~~
+
+![Example composer document](assets/composer.png){: style="border: 1px solid black; display: block; margin: 0 auto"}
+
+
+### Other Changes
+
+The code base and test suite have been adapted so that all tests now pass on Linux, macOS and
+Windows using Ruby versions 2.6, 2.7, 3.0, 3.1 and the current Ruby head version.
+
+There were also some other, smaller changes, like the ability to move pages around in a document.
+And as usual there were several bug fixes
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+[changelog]: /documentation/changelog.html
