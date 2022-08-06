@@ -117,6 +117,9 @@ module RDocPDFImages
     node = super
     hexapdf_path = File.join(@website.config['path_handler.example_pdf.hexapdf_lib'], '..')
 
+    dir = @website.tmpdir("rdoc_pdf_images")
+    FileUtils.mkdir_p(dir)
+
     block = lambda do |code_object|
       if code_object.kind_of?(RDoc::ClassModule)
         code_object.instance_variable_set(:@comment, RDoc::Comment.new(code_object.comment).parse)
@@ -142,8 +145,14 @@ module RDocPDFImages
             template = TEMPLATES[template_name] || TEMPLATES["canvas"]
             part.parts[0].sub!(/\A.*?\n/, '')
             code = format(template, hexapdf_path, part.text)
+            file_base = File.join(dir, "#{file_name}#{counter}")
+            source_file = "#{file_base}.rb"
+            if !File.exist?(source_file) || File.read(source_file) != code
+              File.write(source_file, code)
+            end
             path = Webgen::Path.new(node.parent.alcn + "#{file_name}#{counter}.png",
-                                    'handler' => 'pdf_image', 'file_base' => "#{file_name}#{counter}")
+                                    'modified_at' => File.mtime(source_file),
+                                    'handler' => 'pdf_image', 'file_base' => file_base)
             @website.ext.path_handler.create_secondary_nodes(path, code).first
             list << [counter, index, modifier]
             counter += 1
