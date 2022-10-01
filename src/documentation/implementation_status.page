@@ -110,6 +110,11 @@ recovered in many cases. Validation is available for all implemented dictionary 
 | 12.1 General | ☑ | Just info |
 | 12.2 Viewer Preferences | ☑ | |
 | 12.3 Document-Level Navigation | | |
+| 12.3.1 General | | Just info |
+| 12.3.2 Destinations | ☑ | |
+| 12.3.3 Document Outline | ☑ | |
+| 12.3.4 Thumbnail Images | ☑ | |
+| 12.3.5 Collections | | |
 | 12.4 Page-Level Navigation | | |
 | 12.5 Annotations | | |
 | 12.5.1 General | | |
