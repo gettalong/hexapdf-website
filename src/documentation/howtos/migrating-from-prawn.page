@@ -504,6 +504,39 @@ Document encryption
   ~~~
 
 
+Document outline
+
+: Prawn supports defining a document outline (a.k.a. bookmarks) for a document.
+
+  This can also be done by HexaPDF. Additionally, it supports setting the text color for an outline
+  item as well as whether the text should appear in bold and/or italic, and actions instead of
+  destinations are also supported.
+
+  ~~~ ruby
+  # Prawn
+  5.times { doc.start_new_page }
+  doc.outline.define do
+    section("Section 1", destination: 1) do
+      page(title: "Page 2", destination: 2)
+      page(title: "Page 3", destination: 3)
+      section("Section 1.1") do
+        page(title: "Page 3", destination: 4)
+      end
+    end
+  end
+
+  # HexaPDF
+  5.times { document.pages.add }
+  document.outline.add_item("Section 1", destination: 0) do |sec1|
+    sec1.add_item("Page 2", destination: document.pages[1])
+    sec1.add_item("Page 3", destination: 2)
+    sec1.add_item("Section 1.1", text_color: "red", flags: [:bold]) do |sec11|
+      sec11.add_item("Page 4", destination: 3)
+    end
+  end
+  ~~~
+
+
 ## Prawn functionality not yet supported in HexaPDF
 
 There are some things that are not yet supported in HexaPDF via convenience methods:
@@ -517,9 +550,6 @@ There are some things that are not yet supported in HexaPDF via convenience meth
 * Soft masks (`doc.soft_mask`)
 
 * Grids (`doc.define_grid`, `doc.grid`)
-
-* Outlines (`doc.outline`). There is currently no convenience support for outlines in HexaPDF but it
-  could be done manually.
 
 * Tables (Prawn uses the official `prawn-table` gem for this)
 
