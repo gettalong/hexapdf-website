@@ -132,3 +132,107 @@ doc.sign("signed.pdf", doc_mdp_permissions: :no_changes,
                        certificate_chain: [HexaPDF.demo_cert.sub_ca,
                                            HexaPDF.demo_cert.root_ca])
 ~~~
+
+
+## Using an External Mechanism for Signing {#external}
+
+Sometimes the built-in mechanism for signing cannot be used because the certificate and private key
+are not readily available. Such situations often arise when a hardware security module (HSM) is used
+for signing since it doesn't allow extracting the private key.
+
+In such cases signing itself has to be done by the application using HexaPDF. And since HexaPDF
+doesn't know anything about the signature, one also has to tell HexaPDF the signature size so that
+enough space is reserved.
+
+The following code uses the demo certificates together with the external signing mechanism to
+achieve the same result as one would get when using the standard signing mechanism:
+
+~~~ ruby
+require 'hexapdf'
+require HexaPDF.data_dir + '/cert/demo_cert.rb'
+
+doc = HexaPDF::Document.open(ARGV[0])
+signing_mechanism = lambda do |io, byte_range|
+  # Read the bytes to be signed
+  io.pos = byte_range[0]
+  data = io.read(byte_range[1])
+  io.pos = byte_range[2]
+  data << io.read(byte_range[3])
+
+  # Create the DER encoded PKCS#7 signed-data structure
+  OpenSSL::PKCS7.sign(HexaPDF.demo_cert.cert, HexaPDF.demo_cert.key,
+                      data, [HexaPDF.demo_cert.sub_ca, HexaPDF.demo_cert.root_ca],
+                      OpenSSL::PKCS7::DETACHED | OpenSSL::PKCS7::BINARY).to_der
+end
+doc.sign("signed.pdf", signature_size: 10_000, external_signing: signing_mechanism)
+~~~
+
+
+## Asynchronous External Signing {#asynchron}
+
+There are some situations where between the creation of the prepared to-be-signed document and the
+creation of the digital signature itself lies some time. This might happen in a web application
+where users can sign PDF documents using a client-local mechanism, for example, by using some
+citizen ID signature system.
+
+In such cases a variant of the external signing mechanism can be used:
+
+* Pretend to sign the document using the external signing mechanism but really just return an empty
+  string. The written document now contains everything but the actual digital signature.
+
+* Create the digital signature based on the information (IO object and byte range array) provided to
+  the external signing mechanism.
+
+* Embed the digital signature into the prepared document, getting the final document.
+
+The following code does exactly this:
+
+~~~ ruby
+require 'hexapdf'
+require HexaPDF.data_dir + '/cert/demo_cert.rb'
+
+doc = HexaPDF::Document.open(ARGV[0])
+
+# Prepare the document for embedding of the digital signature
+data = nil # Used for storing the to-be-signed data
+signing_mechanism = lambda do |io, byte_range|
+  # Store the to-be-signed data in the local variable data
+  io.pos = byte_range[0]
+  data = io.read(byte_range[1])
+  io.pos = byte_range[2]
+  data << io.read(byte_range[3])
+  ""
+end
+doc.sign("signed.pdf", signature_size: 10_000, external_signing: signing_mechanism)
+
+# Create the signature
+signature = OpenSSL::PKCS7.sign(HexaPDF.demo_cert.cert, HexaPDF.demo_cert.key, data,
+                                [HexaPDF.demo_cert.sub_ca, HexaPDF.demo_cert.root_ca],
+                                OpenSSL::PKCS7::DETACHED | OpenSSL::PKCS7::BINARY).to_der
+
+# Embed the signature
+HexaPDF::Document::Signatures.embed_signature(File.open('signed.pdf', 'rb+'), signature)
+~~~
+
+
+## Adding a Timestamp Signature {#timestamp}
+
+Timestamp signatures are similar to standard signatures in that they use the same signing
+infrastructure. The differences lie in some signature dictionary field values and the structure of
+the digital signature itself. Therefore it is only necessary to use a special signing handler for
+creating timestamp signatures.
+
+It is mandatory to provide at least the URL of the timestamp authority server (TSA), everything else
+is optional and uses default values. Note that the server will be contacted twice if you don't
+specify the signature size!
+
+The following code use the timestamp service from <https://freeTSA.org> to add a timestamp to a PDF
+document:
+
+~~~ ruby
+require 'hexapdf'
+
+doc = HexaPDF::Document.open(ARGV[0])
+doc.sign("signed.pdf", handler: :timestamp, reason: 'Some reason',
+                       tsa_url: 'https://freetsa.org/tsr')
+~~~
