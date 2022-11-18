@@ -1,0 +1,18 @@
+---
+title: HexaPDF 0.27.0 - Timestamp Signatures
+created_at: 2022-11-18 23:00:00 +01:00
+---
+
+This release features many diverse additions, (breaking) changes and fixes. Notable ones are:
+
+* Support for timestamp signatures
+* Support for external signatures
+* Better support for destinations
+* Better support for outlines
+
+There have been many fixes throughout the code base, from fixes for parsing and writing to fixes for
+interactive forms, outlines and digital signatures.
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+[changelog]: /documentation/changelog.html
