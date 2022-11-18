@@ -116,6 +116,10 @@ recovered in many cases. Validation is available for all implemented dictionary 
 | 12.3.4 Thumbnail Images | ☑ | |
 | 12.3.5 Collections | | |
 | 12.4 Page-Level Navigation | | |
+| 12.4.1 General | ☑ | Just info |
+| 12.4.2 Page Labels | ☑ | |
+| 12.4.3 Articles | | |
+| 12.4.4 Presentations | | |
 | 12.5 Annotations | | |
 | 12.5.1 General | | |
 | 12.5.2 Annotation Dictionaries | ☑ | |
@@ -157,5 +161,12 @@ recovered in many cases. Validation is available for all implemented dictionary 
 | 14.3.3 Document Information Dictionary | ☑ | |
 | 14.4 File Identifiers | ☑ | |
 | 14.6 Marked Content | ☑ | |
+| 14.7 Logical Structure| | |
+| 14.7.1 General | ☑ | |
+| 14.7.2 Structure Hierarchy | ☑ | |
+| 14.7.3 Structure Types | | |
+| 14.7.4 Structure Content | | |
+| 14.7.5 Structure Attributes | | |
+| 14.7.6 Example of Logical Structure | | |
 | 14.11.2 Page Boundaries | ☑ | |
 
