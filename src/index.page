@@ -151,7 +151,7 @@ doc.write(output_file)</pre>
 
 <div class="row cta">
   <div class="col-sm-12 wmax center">
-    <p>Ready to start with HexaPDF? <a href="{relocatable: documentation/basics/}" class="button"><span class="icon-book-open"></span>&nbsp;Basics</a></p>
+    <p>Ready to start with HexaPDF? <a href="{relocatable: documentation/}" class="button"><span class="icon-book-open"></span>&nbsp;Getting Started</a></p>
   </div>
 </div>
 
