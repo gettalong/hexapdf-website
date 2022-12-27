@@ -111,7 +111,7 @@ There are four main types of fields which are further sub-divided:
 : These fields represent digital signatures and optional data for authenticating the signer name and
   the document's contents.
 
-Each field has a unique full name consisting of all the partial names connected with dots, i.e.
+Each field has a **unique full name** consisting of all the partial names connected with dots, i.e.
 "parent.child.terminal". This is possible because fields may be nested and the leafs of this field
 tree are called terminal fields. All other fields are non-terminal fields.
 
@@ -119,7 +119,7 @@ It is possible that two different field instances have the same full field name.
 those two field instances actually represent the same field. This is most often the case when the
 widget annotation is embedded in the field instances instead of using the `/Kids`.
 
-The visual appearance is defined by associated widget annotations. Each terminal field can have
+**The visual appearance is defined by associated widget annotations.** Each terminal field can have
 zero, one or more associated widgets. For example, each widget annotation of a radio button field
 describes one possible selection value. Another use for multiple widget annotations is on a
 multi-page form where a name entered by the user should appear in a header or footer on every page.
@@ -140,6 +140,10 @@ The standard PDF fonts Helvetica, Times and Courier work correctly and those are
 interacctive forms. For all other fonts a fallback font configured through the
 'acro_form.fallback_font` configuration option will be used.
 
+It is also possible to use **Javascript actions** together with form fields, for example for
+calculating the value of a form field based on the values of other form fields. As HexaPDF does
+*not* support Javascript those calculations won't work when filling out a form. However, HexaPDF
+*does* support some special Javascript based formatting methods, for example, for formatting numbers.
 
 ## Widget Annotations
 
@@ -166,6 +170,18 @@ It is also possible to force the creation of appearance streams even if there ar
 This is useful, for example, if an interactive form was filled out with a PDF reader that created
 bad or invalid visual appearances. Note that existing appearances for button fields are not deleted
 because they could potentially be reused somewhere.
+
+
+## Form Flattening
+
+Form flattening is the process of converting the whole interactive form or only some fields into a
+static representation that is not changable anymore.
+
+When a field is flattened all its widget annotations are flattened, meaning, their appearances are
+embedded into the page's content and the widget annotations themselves are removed. Furthermore, the
+field itself is removed from the field tree.
+
+Flattening can be achieved via [HexaPDF::Type::AcroForm::Form#flatten].
 
 
 ## General Sequence When Creating a Form
