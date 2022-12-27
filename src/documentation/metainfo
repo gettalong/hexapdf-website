@@ -1,40 +1,73 @@
+--- paths
+['basics/creating-*.page', 'basics/modifying-*.page']:
+  handler: tutorial_page
+  versions:
+    default:
+    pdf:
+
+
 --- name:alcn
-'**/*.html':
+['**/*.html', '**/*.html#*']:
   side_menu: true
 
-['**/index.*.html', reference/api/**/*.html]:
-  side_menu: false
-
-tutorials/:
-  title: <span class="icon-book-open"></span> Tutorials
+basics/:
+  title: Basics
   side_menu: true
   sort_info: 10
 
-howtos/:
-  title: <span class="icon-compass"></span> How-to Guides
+
+document-creation/:
+  title: Document Creation
   side_menu: true
   sort_info: 20
 
-key-topics/:
-  title: <span class="icon-key"></span> Key Topics
+
+encryption/:
+  title: Encryption
   side_menu: true
   sort_info: 30
 
-reference/:
-  title: <span class="icon-database"></span> Reference
+
+interactive-forms/:
+  title: Interactive Forms
   side_menu: true
   sort_info: 40
 
-reference/api/:
-  title: API
-  side_menu: true
 
-benchmarks/:
+digital-signatures/:
+  title: Digital Signatures
   side_menu: true
   sort_info: 50
 
-implementation_status.*.html:
+
+api/:
+  title: API Reference <span class="icon-database"></span>
+  side_menu: true
   sort_info: 60
 
-changelog.*.html:
+[api/**/*.html, api/**/*.html#*, api/*]:
+  side_menu: false
+
+hexapdf.*.html:
+  side_menu: true
   sort_info: 70
+
+[hexapdf.*.html#*]:
+  side_menu: false
+
+
+benchmarks/:
+  side_menu: true
+  sort_info: 500
+
+[benchmarks/**/index.*.html, benchmarks/index.*.html, benchmarks/*.html#*]:
+  side_menu: false
+
+implementation_status.*.html:
+  sort_info: 600
+
+changelog.*.html:
+  sort_info: 700
+
+[changelog.*.html#*]:
+  side_menu: false

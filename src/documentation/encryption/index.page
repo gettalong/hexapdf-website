@@ -1,16 +1,15 @@
 ---
-title: Encryption
+title: Overview
 subtitle: How encrypting PDFs works in general and how to use it with HexaPDF
-sort_info: 30
 ---
 
-# Encryption
+<h1>Encryption</h1>
 
 PDF documents have built-in support for securing them by encrypting the content and assigning usage
 rights. The main access point to this facility in HexaPDF is [HexaPDF::Document#encrypt].
 
 
-## How the Encryption Works
+## How Encryption Works
 
 The PDF specification defines the algorithms that are used for encrypting, namely RC4 or AES, and
 how the encryption should be done.

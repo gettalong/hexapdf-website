@@ -15,7 +15,7 @@ what the AGPL as license means to a new documentation section providing the [man
 Plans for the near future include TrueType font subsetting and image extraction support. If you like
 to see certain features in HexaPDF, have a look at the [roadmap] which is used for tracking them.
 
-[hp-modify]: /documentation/reference/hexapdf.1.html#modify
+[hp-modify]: /documentation/hexapdf.1.html#modify
 [changelog]: /documentation/changelog.html
-[manual page]: /documentation/reference/hexapdf.1.html
+[manual page]: /documentation/hexapdf.1.html
 [roadmap]: https://github.com/gettalong/hexapdf/wiki/Roadmap-and-Feature-Requests

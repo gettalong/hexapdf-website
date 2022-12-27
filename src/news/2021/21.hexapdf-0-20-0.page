@@ -23,4 +23,4 @@ incremental writing together with the `optimize: true` option; so updating is re
 As always, have a look at the [changelog] for an overview of all changes.
 
 [changelog]: /documentation/changelog.html
-[Signing PDFs]: /documentation/howtos/signing-pdfs.html
+[Signing PDFs]: /documentation/digital-signatures/signing-pdfs-howto.html

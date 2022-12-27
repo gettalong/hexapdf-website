@@ -39,5 +39,5 @@ layouting and support for kerning. **If you have a request**, drop me an
 
 [text rendering benchmark]: https://gist.github.com/gettalong/0d7c576064725774299cdf4d1a51d2b9
 [changelog]: /documentation/changelog.html
-[hp-batch]: /documentation/reference/hexapdf.1.html#batch
+[hp-batch]: /documentation/hexapdf.1.html#batch
 [open an issue]: https://github.com/gettalong/hexapdf/issues

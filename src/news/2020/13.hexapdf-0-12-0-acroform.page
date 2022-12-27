@@ -39,5 +39,5 @@ As always, have a look at the [changelog] for an overview of all changes.
 
 [gh]: https://github.com/gettalong/hexapdf/issues
 [changelog]: /documentation/changelog.html
-[kt-encryption]: /documentation/key-topics/encryption.html
-[kt-forms]: /documentation/key-topics/forms.html
+[kt-encryption]: /documentation/encryption/
+[kt-forms]: /documentation/interactive-forms/

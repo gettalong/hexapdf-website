@@ -4,7 +4,7 @@ side_menu: true
 toc_options:
   levels: [100, 100]
 ---
-# Implementation Status
+<h1>Implementation Status</h1>
 
 This page gives an overview of which features of PDF 1.7 are implemented in HexaPDF.
 

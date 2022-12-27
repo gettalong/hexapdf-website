@@ -1,9 +1,9 @@
 ---
-title: Migrating from Prawn
-toc_options: {levels: [3, 100]}
+title: Migrating from Prawn <span class="icon-compass"></span>
+toc_options: {levels: [2, 100]}
 ---
 
-# {title:}
+<h1>Migrating from Prawn</h1>
 
 This how-to guide provides information and code samples for Prawn users to get familiar with
 HexaPDF. While Prawn and HexaPDF are different in their respective capabilities, HexaPDF can do many
@@ -593,5 +593,5 @@ Digital signatures
   information on this.
 
 
-[forms]: /documentation/key-topics/forms.html
-[sig]: /documentation/key-topics/digital-signatures.html
+[forms]: /documentation/interactive-forms/
+[sig]: /documentation/digital-signatures/

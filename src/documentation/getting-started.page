@@ -1,0 +1,135 @@
+---
+title: Getting Started
+sidemenu: true
+sort_info: 1
+---
+
+<h1>Getting Started</h1>
+
+## Installation
+
+HexaPDF is a PDF library written in the Ruby programming language. To use it you first need to
+install a Ruby interpreter for your operating system (Linux, Windows, macOS and many others are
+supported). Please consult the [official documentation][ruby-install] for the required steps - don't
+worry, it is very easy! Just ensure that you have Ruby version 2.6 or above (better is 3.0 or above)
+installed as prior versions are not supported.
+
+<div class="card fluid information" markdown="1">
+
+If you are new to [Ruby](https://www.ruby-lang.org/), you might wanna have a look at a Ruby tutorial
+first, to get acquainted with the language. HexaPDF is 100% Ruby and provides a very idiomatic
+interface. So once you know Ruby, you should feel right at home with HexaPDF!
+
+At the [Ruby website](https://www.ruby-lang.org/en/documentation/) you will find all the necessary
+materials, whether you are new to programming entirely or you already know a few other languages.
+
+</div>
+
+Once the Ruby interpreter is available, installing HexaPDF as a Rubygems package is as easy as
+executing
+
+    gem install hexapdf
+
+from the command line. This will install HexaPDF and its few dependencies.
+
+To make sure that HexaPDF is correctly installed, you can run the following command which returns
+the installed version:
+
+    hexapdf version
+
+[ruby-install]: https://www.ruby-lang.org/en/documentation/installation/
+
+
+## Usage
+
+The HexaPDF package contains the library as well as the `hexapdf` CLI application. The application
+can be used to perform common tasks like merging PDF files, decrypting or encrypting PDF files and
+so on. See the [CLI manual page](hexapdf.1.html) for details.
+
+When HexaPDF is used as a library, it can be used to do all the tasks that the command line
+application does and much more. Here is a simple "Hello World" example that shows how to create a
+PDF file:
+
+~~~ ruby
+require 'hexapdf'
+
+doc = HexaPDF::Document.new
+page = doc.pages.add
+canvas = page.canvas
+canvas.font('Helvetica', size: 50).
+  fill_color(0, 128, 255)
+canvas.text("Hello World", at: [150, 396])
+doc.write("hello-world.pdf")
+~~~
+
+To get more information on what is going on in this code example, have a look at the {link:
+basics/creating-a-pdf-from-scratch.html} tutorial page.
+
+
+## Feature Overview
+
+* Pure Ruby
+* Minimal dependencies ('cmdparse' for `hexapdf` binary, 'geom2d' for document layout)
+* Easy to use, Ruby-esque API
+* Fully tested with 100% code coverage
+* Low-level API with high-level convenience interface on top
+* Complete [canvas API][HexaPDF::Content::Canvas] which directly maps to PDF internal operators
+* Path drawing operations like lines, polylines, rectangles, bézier curves, arcs, ...
+* Embedding images in JPEG (lossy), PNG (lossless) and PDF (vector) format with support for
+  transparency
+* UTF-8 text via TrueType fonts and support for font subsetting
+* High-level [document composition engine] with automatic content layout
+  * [Flowing text] around other content
+  * Pre-define [styles][HexaPDF::Layout::Style] and assign to multiple content boxes
+  * Automatic page breaks
+  * [(Un)ordered lists][HexaPDF::Layout::ListBox]
+  * [Multi-column layout][HexaPDF::Layout::ColumnBox]
+* [PDF forms] (AcroForm) with Adobe Reader like appearance generation
+* Annotations
+* [Document outline][HexaPDF::Type::Outline]
+* [Attaching files][HexaPDF::Document::Files] to the whole PDF or individual pages, extracting files
+* Image extraction
+* [Encryption] including PDF 2.0 features (e.g. AES256)
+* [Digital signatures]
+* [File size optimization]
+* PDF object validation
+* [`hexapdf` binary] for most common PDF manipulation tasks
+
+
+[document composition engine]: document-creation/document-layout.html
+[flowing text]: /examples/frame_text_flow.html
+[PDF forms]: interactive-forms/
+[Encryption]: encryption/
+[Digital Signatures]: digital-signatures/
+[File size optimization]: benchmarks/optimization.html
+[`hexapdf` binary]: hexapdf.1.html
+
+
+## Documentation Organization
+
+The main documentation is organized by topic and those topics are visible in the sidebar. So let's
+say you are a newcomer, then you would usually start at {link: basics/}. You need to work with
+interactive forms? Head over to {link: interactive-forms/}.
+
+Each topic section contains basic information about the topic itself. Furthermore, it may also
+contain additional in-depth and background information, tutorials, how-tos and examples, all
+pertaining to the topic at hand.
+
+The reason for organizing the documentation by topic is that working with PDFs can entail many
+different things. Some need to create new PDF documents while others need to fill out forms or add
+digital signatures. Through organizing by topic users can get quickly up to speed with what they
+need.
+
+Additional documentation that doesn't belong to a topic, like the [API reference](api/) or the
+[changelog](changelog.html) can be found at the bottom of the side menu.
+
+<div class="card fluid information" markdown="1">
+
+If you don't find what you are looking for in the available topic sections, use the search field at
+the top of the website to search for keywords. You will usually get some results pointing to parts
+of the API reference which might be of help.
+
+If you need still need help, [open an issue](https://github.com/gettalong/hexapdf/issues) or
+[contact me](mailto:t_leitner@gmx.at).
+
+</div>

@@ -1,10 +1,9 @@
 ---
-title: Interactive Forms
+title: Overview
 subtitle: Information on interactive PDF forms and how to use them with HexaPDF
-sort_info: 40
 ---
 
-# Interactive Forms
+<h1>Interactive Forms</h1>
 
 PDF is mainly used as format that provides consistent output regardless of the output device.
 However, it also provides various interactive features, one of them being support for forms.
@@ -43,7 +42,7 @@ These terminal fields can have a visible appearance which is provided by a widge
 field can have zero, one or more associated widgets.
 
 
-### Main Interactive Form Dictionary
+## Main Interactive Form Dictionary
 
 The main form dictionary can be referenced from the document catalog via the `/AcroForm` key (see
 [HexaPDF::Type::Catalog#acro_form]). It is implemented by the [HexaPDF::Type::AcroForm::Form] class.
@@ -73,7 +72,7 @@ allows you to list, modify, create and delete the form fields. By relying on the
 convenience methods all the tedious but needed book-keeping is done behind the scenes.
 
 
-### Form Fields
+## Form Fields
 
 A form field dictionary contains, among other things, the type of the field, its name and its value.
 
@@ -142,7 +141,7 @@ interacctive forms. For all other fonts a fallback font configured through the
 'acro_form.fallback_font` configuration option will be used.
 
 
-### Widget Annotations
+## Widget Annotations
 
 A widget annotation describes the visual appearance of a form field on a page. It is implemented by
 [HexaPDF::Type::Annotations::Widget].
@@ -169,7 +168,7 @@ bad or invalid visual appearances. Note that existing appearances for button fie
 because they could potentially be reused somewhere.
 
 
-### General Sequence When Creating a Form
+## General Sequence When Creating a Form
 
 If you want to create a PDF containing an interactive form, the general sequence of instructions is
 describe below. Whether you create the non-form parts of the pages before, during or after form

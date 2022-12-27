@@ -26,4 +26,4 @@ updated to include visual examples.
 As always, have a look at the [changelog] for an overview of all changes.
 
 [changelog]: /documentation/changelog.html
-[migrating from Prawn]: /documentation/howtos/migrating-from-prawn.html
+[migrating from Prawn]: /documentation/document-creation/migrating-from-prawn.html

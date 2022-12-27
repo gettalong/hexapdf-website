@@ -1,10 +1,11 @@
 ---
-title: Creating a PDF Document from Scratch
+title: Creating a PDF from Scratch <span class="icon-book-open"></span>
 output_pdf: hello-world.pdf
-toc_options: {levels: [3, 100]}
+toc_options: {levels: [2, 100]}
+sort_info: 25
 ---
 
-# {title:}
+<h1>Creating a PDF from Scratch</h1>
 
 In this tutorial you will create a simple PDF document from scratch with HexaPDF. It only assumes
 that you have the [Ruby interpreter](https://www.ruby-lang.org/) already installed.

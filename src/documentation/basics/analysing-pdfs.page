@@ -1,14 +1,15 @@
 ---
-title: Analysing PDFs
+title: Analysing PDFs <span class="icon-compass"></span>
 toc_options: {levels: [3, 100]}
+sort_info: 30
 ---
 
-# {title:}
+<h1>Analysing PDFs</h1>
 
 This how-to guide shows how to use the `hexapdf inspect` command to analyse PDF files.
 
 
-### How `hexapdf inspect` Works
+## How `hexapdf inspect` Works
 
 The `hexapdf` command line tool comes with a variety of sub-commands, one of them being the
 [`inspect` command]. This command is designed to allow its user to inspect and analyse a PDF file.
@@ -35,10 +36,10 @@ Let's see those two ways of running `hexapdf inspect` in action:
 That's all the needed basics, let's dive into various usage scenarios and explore the `inspect`
 command's functionality.
 
-[`inspect` command]: ../reference/hexapdf.1.html
+[`inspect` command]: ../hexapdf.1.html
 
 
-### Traversing the PDF Tree Structure
+## Traversing the PDF Tree Structure
 
 The [key topic on PDF's document structure][doc-structure] explains the main structures used in PDF
 files. Basic knowledge of the places where certain information can be found is useful when analysing
@@ -73,10 +74,10 @@ not only show the requested object but also all objects referenced from it. Note
 often show you the whole document tree when one page is referenced since page nodes have a reference
 to their parent. See [Comparing PDF Files](#comparing-pdf-file-structure) below for details.
 
-[doc-structure]: ../key-topics/document-structure.html
+[doc-structure]: document-structure.html
 
 
-### Analysing Pages
+## Analysing Pages
 
 In the last section you got a glimpse at inspecting pages, by navigating from the catalog
 dictionary. Since inspecting pages is often necessary the special `pages` command exists. It will
@@ -105,13 +106,13 @@ their content streams:
   - The next four lines draw the text "Hello World" at the location (150, 396).
 
 
-[tutorial]: ../tutorials/creating-a-pdf-from-scratch.html
+[tutorial]: creating-a-pdf-from-scratch.html
 
 Page objects often contain much more information, for example references to image resources,
 annotations or form fields.
 
 
-### Searching for Data
+## Searching for Data
 
 Sometimes you need to find an object with some specific data in it. For example, when an error
 message provides the name of a dictionary key or (part of) a value. Or when you want to find all
@@ -131,7 +132,7 @@ prints those matching the given argument (a regular expression). Here is an exam
   object (2,0) refers to the root of the page tree.
 
 
-### Comparing PDF File Structure
+## Comparing PDF File Structure
 
 Comparing the structures of two PDF files allows you to analyse "behind the scenes" changes done by
 a program. If you want to compare two PDF files visually, i.e. the appearance of the page content,

@@ -57,10 +57,10 @@ template: default.template
     <h3><span class="hexagon"><span class="icon-plus inverse"></span></span>PDF Creation</h3>
 
     <p>HexaPDF includes facilities for creating PDF documents from scratch. Use the <a
-    href="{relocatable: /documentation/reference/api/HexaPDF/Content/Canvas.html}">low-level canvas
+    href="{relocatable: /documentation/api/HexaPDF/Content/Canvas.html}">low-level canvas
     API</a> for drawing graphics and outputting text if you want full control over every aspect. Or
     use the built-in <a href="{relocatable:
-    /documentation/reference/api/HexaPDF/Composer.html}">document layout engine</a> that provides a
+    /documentation/api/HexaPDF/Composer.html}">document layout engine</a> that provides a
     convenient, word-processor like way of creating complex documents, including automatically
     flowing text around other content.</p>
 
@@ -68,12 +68,12 @@ template: default.template
   <div class="col-md-6 col-sm-12 feature"><div>
     <pre>require 'hexapdf'
 doc = HexaPDF::Document.new
-doc.pages.add.<a href="{relocatable: /documentation/reference/api/HexaPDF/Content/Canvas.html}">canvas</a>.
+doc.pages.add.<a href="{relocatable: /documentation/api/HexaPDF/Content/Canvas.html}">canvas</a>.
   font("Times", size: 30).
   text("Hello World", at: [200, 300])
 doc.write("hello-world.pdf")</pre>
     <pre>require 'hexapdf'
-<a href="{relocatable: /documentation/reference/api/HexaPDF/Composer.html}">HexaPDF::Composer</a>.create("hello-world.pdf") do |composer|
+<a href="{relocatable: /documentation/api/HexaPDF/Composer.html}">HexaPDF::Composer</a>.create("hello-world.pdf") do |composer|
   composer.text("Hello World", font_size: 30,
                 align: :center, valign: :center)
 end</pre>
@@ -102,9 +102,9 @@ end</pre>
 
     <p>HexaPDF can read existing documents and modify them in various ways. It supports</p>
     <ul>
-      <li>adding, modifying, re-ordering, or deleting <a href="{relocatable: /documentation/reference/api/HexaPDF/Document/Pages.html}">pages</a>,</li>
+      <li>adding, modifying, re-ordering, or deleting <a href="{relocatable: /documentation/api/HexaPDF/Document/Pages.html}">pages</a>,</li>
       <li>handling annotations including adding new ones,</li>
-      <li>creating <a href="{relocatable: /documentation/key-topics/forms.html}">interactive forms</a> or filling them out,</li>
+      <li>creating <a href="{relocatable: /documentation/interactive-forms/}">interactive forms</a> or filling them out,</li>
       <li>attaching or extracting files,</li>
     </ul>
     <p>and much more!</p>
@@ -151,7 +151,7 @@ doc.write(output_file)</pre>
 
 <div class="row cta">
   <div class="col-sm-12 wmax center">
-    <p>Ready to start with HexaPDF? <a href="{relocatable: documentation/tutorials/}" class="button"><span class="icon-book-open"></span>&nbsp;Tutorials</a></p>
+    <p>Ready to start with HexaPDF? <a href="{relocatable: documentation/basics/}" class="button"><span class="icon-book-open"></span>&nbsp;Basics</a></p>
   </div>
 </div>
 

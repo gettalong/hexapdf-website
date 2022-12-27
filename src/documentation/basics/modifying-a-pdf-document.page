@@ -1,10 +1,11 @@
 ---
-title: Modifying a PDF Document
+title: Modifying a PDF Document <span class="icon-book-open"></span>
 output_pdf: modified.pdf
-toc_options: {levels: [3, 100]}
+toc_options: {levels: [2, 100]}
+sort_info: 26
 ---
 
-# {title:}
+<h1>Modifying a PDF Document</h1>
 
 In this tutorial you will learn how to open an existing PDF document and modify it by adding pages
 and changing existing pages. If you didn't do the [previous

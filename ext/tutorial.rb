@@ -6,7 +6,7 @@ class TutorialPage < Webgen::PathHandler::Page
       page_node.blocks['content'] << <<~TEXT
 
 
-      ### The Complete Code and Result PDF
+      ## The Complete Code and Result PDF
 
       Here is the complete code generating [this result PDF](#{page_node['output_pdf']}):
 

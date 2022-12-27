@@ -1,10 +1,10 @@
 ---
-title: Digital Signatures
+title: Overview
 subtitle: Information about digital signatures with respect to PDF
 sort_info: 50
 ---
 
-# Digital Signatures
+<h1>Digital Signatures</h1>
 
 Digital signatures are used to authenticate the content of PDF files and of users. When a digital
 signature is applied, it stores the state of the document at the signing time as well as information

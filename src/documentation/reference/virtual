@@ -1,7 +1,0 @@
-api/index.html:
-  routed_title: API Reference
-  dest_path: HexaPDF/index.html
-
-api/HexaPDF.html:
-  routed_title: HexaPDF
-  dest_path: HexaPDF/index.html

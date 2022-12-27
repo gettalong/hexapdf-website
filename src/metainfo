@@ -38,6 +38,7 @@ documentation/:
   routed_title: Docs
   main_menu: true
   sort_info: 7
+  proxy_path: getting-started.html
 
 github:
   main_menu: true

@@ -1,5 +1,5 @@
 ---
-title: hexapdf CLI
+title: hexapdf CLI Manual
 side_menu: true
 dest_path: <parent><basename>(-<version>)(.<lang>).1.html
 cn: <basename>(-<version>)(.<lang>).1.html

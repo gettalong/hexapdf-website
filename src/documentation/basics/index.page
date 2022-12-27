@@ -1,0 +1,130 @@
+---
+title: Introduction
+side_menu: true
+sort_info: 1
+---
+<h1>Introduction</h1>
+
+PDF files are ubiquitous in today's digital world and HexaPDF provides easy but fully-featured
+access to all those PDF files. The only thing HexaPDF won't implement is rendering of PDF documents.
+
+
+## About PDF
+
+PDF, the Portable Document Format, is a file format created by Adobe for representing digital
+documents independently from applications, operating systems or hardware. It is the defacto standard
+for digital documents and for their interchange. It can not only contain text and graphics but also
+annotations, links, form fields, layers, rich media like video and many more things.
+
+While the PDF specification has started out as a propriertary, though open, document format at
+Adobe, the PDF 1.7 specification became an ISO standard (32000-1:2008) in 2008. It then took nine
+years for the next version of the specification, PDF 2.0, to get published in 2017.
+
+Because the original ISO standard was nearly identical to the then already publicly available Adobe
+PDF 1.7 specification, it is one of the few (or the only?) ISO specifications that is [**freely
+available to the public at Adobe's website**][PDF1.7 specification]. I suggest getting it for
+first-hand knowledge about PDF topics.
+
+But... shouldn't you get the PDF 2.0 specification which is nine years newer? Yes, you could buy it
+but first it will cost money and second PDF 2.0 is more evolution than revolution. It clarified,
+fixed and explained many things but there are not many new features. So the PDF 1.7 specification is
+fine in most cases.
+
+You will find that the API documentation has many references to applicable sections of the PDF 1.7
+specification. So having the specification at hand will allow you dive deeper into a certain topic.
+
+[PDF1.7 specification]: https://opensource.adobe.com/dc-acrobat-sdk-docs/standards/pdfstandards/pdf/PDF32000_2008.pdf
+
+
+## HexaPDF API Design
+
+HexaPDF was designed with ease of use and performance in mind. To this end the API follows some
+guidelines:
+
+* To use HexaPDF you only need to `require 'hexapdf'`. All other parts of HexaPDF are automatically
+  loaded when needed to avoid unnecessary resource usage.
+
+* Everything should be accessible through methods once the main [HexaPDF::Document] (or
+  [HexaPDF::Composer]) instance is created. This especially means that you don't need to remember a
+  multitude of class names.
+
+* There is a **low-level interface** which allows direct access to PDF internals. However, you will
+  only rarely use that interface since the high-level interface is much more convenient. The
+  low-level interface is there for cases where some PDF feature is not yet implemented in the
+  high-level HexaPDF interface or when you need more control over PDF structures.
+
+* **The main PDF data type is the [dictionary] (hash)** which is used to implement the various PDF
+  dictionary types, like the page object. HexaPDF implements those PDF types by subclassing the
+  [HexaPDF::Dictionary] class. However, even if a PDF dictionary type is not yet supported by
+  HexaPDF through a high-level interface, you can work with it through the standard dictionary
+  interface.
+
+* The **high-level interface** is usually implemented directly on the class implementing the PDF
+  type, for example [HexaPDF::Type::Page] or [HexaPDF::Type::Outline]. If some PDF functionality
+  can't be implemented on a concrete PDF dictionary type, a helper class is created and made
+  accessible on the main document class, for example [HexaPDF::Document::Destinations] via
+  [HexaPDF::Document#destinations].
+
+* It is possible to use the low-level interface to directly manipulate PDF structures like the page
+  tree. However, when available it is advised to use the high-level interface to ensure the validity
+  of the created PDF structures as some of them have various complex requirements.
+
+* The base PDF object classes [HexaPDF::Object], [HexaPDF::PDFArray] and [HexaPDF::Dictionary] as
+  well as the implemented PDF dictionary types contain **validation** routines to ensure the
+  underlying PDF structures are valid. Validation is automatically done by default before writing a
+  PDF document, see below for more information.
+
+Apart from these guidelines concerning the API care has been taken to make sure that HexaPDF
+performs well and doesn't use much memory. Most parts of HexaPDF are therefore already very
+optimized and various [benchmarks](../benchmarks/) ensure that HexaPDF gets still faster over time.
+
+The library is also thoroughly tested with 100% code coverage.
+
+[dictionary]: pdf-object-representation.html#basic-object-types
+
+
+## General Usage Pattern
+
+As stated above you will only need to remember the class name [HexaPDF::Document] for creating a new
+document or loading an existing one:
+
+~~~ ruby
+doc = HexaPDF::Document.new
+# or
+doc = HexaPDF::Document.open(pdf_file)
+~~~
+
+You might optionally set some **configuration options** when instantiating the main class or later
+via the [HexaPDF::Document#config] method. The configuration options allow you to fine tune internal
+behaviour to your liking. For example, by default HexaPDF is quite forgiving when it comes to
+corrupt or invalid PDF files and can handle or recover from many. This can be changed by changing
+the appropriate configuration options like `parser.on_correctable_error`.
+
+Next you work with the document: add, delete or change pages, handle annotations, fill out or create
+interactive forms and much more.
+
+The final step is to write out the document:
+
+~~~ ruby
+doc.write('output.pdf', optimize: true)
+~~~
+
+Optimizing the resulting file is optional but highly recommended to produce quite a bit smaller PDF
+files. The default optimization should be fine for most cases. However, if you need more control,
+you can invoke the task [HexaPDF::Task::Optimize] yourself before writing out the document.
+
+Additionally, before writing out the document, the validation routine [HexaPDF::Document#validate]
+is called to validate and possibly auto-correct problems. It is advised not to disable it.
+Un-correctable validation problems lead to an exception. If you want to handle this part yourself,
+e.g. by customizing your reaction to validation problems, you would pass `validate: false` to
+[HexaPDF::Document#write] and invoke [#validate][HexaPDF::Document#validate] before writing.
+
+The smallest HexaPDF application which writes out a minimal PDF is:
+
+~~~ ruby
+HexaPDF::Document.new.write('output.pdf')
+~~~
+
+HexaPDF doesn't automatically add any content to a newly created document, not even a page. However,
+if you look at the resulting PDF you will see that it has a single, blank page. This is because for
+a PDF to valid it needs at least one page and the validation routine ensure that.

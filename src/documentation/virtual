@@ -1,0 +1,14 @@
+api/index.html:
+  routed_title: API Reference <span class="icon-database"></span>
+  dest_path: HexaPDF/index.html
+
+api/HexaPDF.html:
+  routed_title: HexaPDF
+  dest_path: HexaPDF/index.html
+
+
+separator:
+  title: '<hr style="padding: 0"/>'
+  dest_path: ''
+  side_menu: true
+  sort_info: 59

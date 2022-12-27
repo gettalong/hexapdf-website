@@ -9,7 +9,7 @@
   <div class="col-sm-12 col-md-4 sidebar">
      <%= context.render_block(name: "sidebar-before", notfound: "ignore", node: "first") %>
      <nav>
-       <% opts = context.persistent[:menu] || {'mi' => {'side_menu' => true}, 'siblings' => [0, -1], 'sort' => true} %>
+       <% opts = context.persistent[:menu] || {'mi' => {'side_menu' => true}, 'siblings' => [0, -1], 'or' => {'descendants' => true, 'mi' => {'side_menu' => true}}, 'sort' => true, levels: [1, 3]} %>
        <%= context.tag('menu', 'options' => opts, 'item_level_class' => 'sublink-') %>
      </nav>
      <%= context.render_block(name: "sidebar-after", notfound: "ignore", node: "first") %>

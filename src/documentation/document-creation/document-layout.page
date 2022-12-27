@@ -1,10 +1,10 @@
 ---
-title: Document Layout
+title: Automatic Document Layout <span class="icon-key"></span>
 subtitle: Information about HexaPDF's automatic document layout feature
 sort_info: 60
 ---
 
-# Document Layout
+<h1>Automatic Document Layout</h1>
 
 The automatic document layout feature of HexaPDF allows one to easily create complex documents. It
 works by first defining the area where the content should be placed and then adding content boxes.
@@ -12,7 +12,7 @@ The layout engine places the boxes into the area according to the their position
 allows, for example, for flowing text around other content.
 
 
-## Overview
+## Introduction
 
 Defining the contents of a PDF document works a bit differently than what one is used to from word
 processors like LibreOffice Writer.
@@ -46,7 +46,7 @@ HexaPDF. This is because the PDF parts only come into play once text and graphic
 laid out and need to be drawn on a canvas.
 
 
-### Main Layout Classes
+## Layout Class Overview
 
 The main classes used by the layout engine are
 
@@ -69,7 +69,7 @@ convenience interface for working with them. However, they are most commonly use
 The inner workings and main features of the mentioned classes are discussed below.
 
 
-## Boxes
+## Boxes for Content
 
 Boxes encapsulate content and know how to fit the content into a frame, how to optionally split the
 content and how to draw the content.
@@ -105,7 +105,7 @@ Therefore it is best to create new box subclasses whenever something needs to be
 one time.
 
 
-## Frames
+## Frames for Layout
 
 A **[HexaPDF::Layout::Frame]** defines the area where content boxes can be placed and provides the
 methods to place them. Once placed their occupied space (which is different for different types of
@@ -179,7 +179,7 @@ To have the most control over this process, one can use the frame class directly
 cases it is easier to use the BoxFitter class.
 
 
-## Box Fitter
+## Fitting Boxes into Frames
 
 The [HexaPDF::Layout::BoxFitter] class encapsulates the default logic for laying out boxes into one
 or more frames. Due to this it is used by container boxes like the [HexaPDF::Layout::ColumnBox] for
@@ -208,9 +208,9 @@ After the `#fit` method is called for every box, the stored fit results can be u
 boxes. And the stored remaining boxes can be used during a box splitting operation.
 
 
-## Convenience Interface for Layout Classes
+## Convenience Interface
 
-Though the layout classes can be used directly, it is easier to use the convenience interface
+Though the layout classes can be created directly, it is easier to use the convenience interface
 provided by [HexaPDF::Document::Layout]. It can be accessed through [HexaPDF::Document#layout].
 
 This interface provides a central store for styles. Through them it is easy to define document wide
@@ -223,7 +223,7 @@ general method [HexaPDF::Document::Layout#box]. The latter one uses the configur
 create and register custom box classes and use them like the built-in ones.
 
 
-## The Composer
+## All-in-on Document Composition
 
 All the classes discussed above focus on special aspects of the layouting work. The
 [HexaPDF::Composer] class now ties all the classes together to provide a very easy to use interface

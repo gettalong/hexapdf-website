@@ -1,10 +1,10 @@
 ---
-title: Document Structure
+title: Document Structure <span class="icon-key"></span>
 subtitle: How a PDF document is structured and the most important objects
 sort_info: 20
 ---
 
-# PDF Document Structure
+<h1>PDF Document Structure</h1>
 
 The PDF specification defines a single entry point into the document structure, the file trailer
 dictionary, from which all other objects are referenced (n.b.: It is possible to store objects in a
@@ -64,23 +64,33 @@ Because of this complexity the class [HexaPDF::Type::PageTreeNode] which impleme
 tree provides all the necessary convenience methods for adding, retrieving and deleting pages as
 well as getting the zero-based index of a page.
 
-To make it still easier to work with pages, HexaPDF provides a convenience wrapper
+To make it still easier to work with pages, HexaPDF provides an additional convenience wrapper
 [HexaPDF::Document::Pages] that can be accessed via [HexaPDF::Document#pages]. This wrapper allows
 you to use standard methods names like `#add`, `#delete` and `#[]` when working with pages. If you
-still want to access the page tree itself, use [HexaPDF::Type::Catalog#pages].
+still want to access the page tree itself, use [HexaPDF::Document::Pages#root].
 
 
 
 ## Page
 
 For each page in a PDF document exists one page object that holds all the needed information for
-displaying the page.
+displaying that page.
 
 The most important information is stored in the following keys:
 
 Media box (key `/MediaBox`)
 
-: Defines the size of the page.
+: Defines the size of the physical medium on which the page is to be printed.
+
+  This key is required and HexaPDF sets this key when creating a new page, defaulting to A4.
+
+Crop box (key `/CropBox`)
+
+: Defines the region to which the contents of the page should be clipped when viewed or printed.
+
+  This key is optional and if not set defaults to the value of the media box. Note, however, that
+  this key is used (by HexaPDF and other PDF libraries, viewers, ...) to determine the actual page
+  size!
 
 Content streams (key `/Contents`)
 
@@ -95,15 +105,23 @@ There are many other keys for specifying things like page transitions, annotatio
 Page pbjects are represented by [HexaPDF::Type::Page]. This class provides all the necessary
 convenience methods to work with pages, for example:
 
-* The [HexaPDF::Type::Page#canvas] method gives you access to a [HexaPDF::Content::Canvas] object
-  for drawing on the page. You could manually assemble the content streams but this is error prone
-  and very tedious - better rely on the canvas object.
+[`#canvas`][HexaPDF::Type::Page#canvas]
 
-* Use [HexaPDF::Type::Page#orientation] and [HexaPDF::Type::Page#rotate] methods to retrieve the
-  page orientation and to rotate a page.
+: Gives you access to a [HexaPDF::Content::Canvas] object for drawing on the page. You could
+  manually assemble the content streams but this is error prone and very tedious - better rely on
+  the canvas object.
 
-* The [HexaPDF::Type::Page#box] method allows you to view or change the various page boxes like the
-  media box.
+[`#orientation`][HexaPDF::Type::Page#orientation] and [`#rotation`][HexaPDF::Type::Page#rotate]
+
+: Use these methods to retrieve the page orientation and to rotate a page.
+
+[`#box`][HexaPDF::Type::Page#box]
+
+: Allows you to view or change the various page boxes like the crop box.
+
+[`#each_annotation`][HexaPDF::Type::Page#each_annotation]
+
+: Iterates over all annotations of the page. It is also possible to flatten one or more annotations.
 
 To access an existing page object you can use [HexaPDF::Document::Pages#[]] with a zero-based index;
 to add a new one use [HexaPDF::Document::Pages#add].

@@ -1,13 +1,12 @@
 ---
-title: Signing PDFs
-toc_options: {levels: [3, 100]}
+title: 'How-to: Signing PDFs <span class="icon-compass"></span>'
 ---
 
-# {title:}
+<h1>Signing PDFs</h1>
 
 This how-to guide provides information and code samples for applying digital signatures to PDF
 files. It is assumed that you are familiar with digital signatures, if not, have a look at the
-[Digital Signatures](../key-topics/digital-signatures.html) key topic.
+[Digital Signatures](index.html) key topic.
 
 All the examples use the demo certificates that are included with the HexaPDF distribution. For real
 world usage you have to provide your own signing certificate!
