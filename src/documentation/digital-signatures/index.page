@@ -1,5 +1,5 @@
 ---
-title: Overview
+title: Introduction
 subtitle: Information about digital signatures with respect to PDF
 sort_info: 50
 ---
@@ -35,8 +35,8 @@ cryptographic signature is determined. This information is filled back into the 
 the appropriate field of the signature dictionary.
 
 Afterwards a digest over the whole file minus the placeholder is taken and this digest is then
-signed with the provided certificate and private key (or sent to an external signing provider). The
-resulting signature structure is embedded into the written file and now the PDF file is properly
+signed with the provided certificate and private key (or handled via an external signing provider).
+The resulting signature structure is embedded into the written file and now the PDF file is properly
 finished.
 
 **Note**: Since the PDF document needs to be written to be properly signed, no changes to it can be
