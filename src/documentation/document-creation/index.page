@@ -1,5 +1,23 @@
 ---
-title: Overview
+title: Introduction
 side_menu: true
 sort_info: 1
 ---
+
+<h1>Introduction</h1>
+
+This documentation section is about creating a new PDF document and its contents from scratch. So
+think *creating an invoice* and not *combining pages from multiple documents*.
+
+There are basically two ways to achieve this with HexaPDF:
+
+* By using the high-level document layout functionality available in the [HexaPDF::Layout] module
+  standalone or through [HexaPDF::Composer].
+
+  This is the recommend way to create documents. See {link: document-layout.html} for details.
+
+* By manually creating and building the contents yourself using the low-level
+  [HexaPDF::Content::Canvas] API.
+
+  This is possible but for complex documents you will probably re-implement all the logic that is
+  already available in the document layout functionality of HexaPDF.
