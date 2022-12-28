@@ -1,0 +1,105 @@
+---
+title: Outline / Bookmarks
+dest_path: <parent><basename>(-<version>)/index.(<lang>.)html
+---
+
+<h1>Document Outline</h1>
+
+
+## Introduction
+
+The document outline, also knows as bookmarks, provides a way for a user to interactively navigate
+through a document.
+
+The outline is structured as a tree and usually shown similar to this:
+
+~~~
+- Root level item      1
+- Another item
+  - Sub item           4
+  - Another sub item   5
++ Third root item      9
+~~~
+
+The above outline shows a few things:
+
+* The outline has 5 **visible items**. From those 5 items 3 are at the root level without a parent
+  item. And the other 2 are sub items of "Another item".
+
+* The numbers to the right of the items are the page numbers (viewers usually use the page labels
+  instead of the page numbers). When clicking on an item with a page number, the viewer changes to
+  that page.
+
+* The second item "Another item" just **acts as a container** since it doesn't have an associated
+  page number.
+
+* The last item "Third root item" is **closed** which means that its items are not shown. When
+  clicking on the item text, the viewer changes to page 9. However, when clicking on the plus
+  symbol, the hidden outline items would be shown.
+
+Some of the changeable properties of outline items have been mentioned above, here is the full list:
+
+Title
+
+: This is the only mandatory property and it specifies the text of the outline item.
+
+Destination/Action
+
+: An outline item usually has an associated destination or action that gets activated when clicking
+  on the item's text. It is possible to omit the destination/action. However, this is only useful if
+  the item acts as a container, i.e. when it has sub items.
+
+Open or closed
+
+: An outline item that has sub items may initially be open or closed. If it is open, its sub items
+  are visible. Otherwise the sub items are not visible.
+
+Color of the item text
+
+: The default color of an outline item is black. However, it can be changed to any RGB color.
+
+Style characteristics of the item text
+
+: The item text is normally shown with a regular style font variant. However, it is possible to use
+  a bold, italic or bold italic font variant.
+
+
+## Usage
+
+A PDF outline is represented by two dictionary types:
+
+Main outline dictionary
+
+: This dictionary is referenced from the catalog via the `/Outlines` entry and is implemented by the
+  class [HexaPDF::Type::Outline]. To make accessing it still easier there is the
+  [HexaPDF::Document#outline] method which also automatically creates it if it does not exist.
+
+  It just contains the list of root level items and only has two methods `#add_item` and
+  `#each_item`. These two methods work like the ones in the outline item dictionary implementation.
+
+Outline item dictionary
+
+: This dictionary represents a single outline item and is implemented by the
+  [HexaPDF::Type::OutlineItem] class. It contains convenience methods for all things, like adding a
+  sub item, iterating over all child items or setting the title.
+
+Items are either added to the main outline dictionary (root level items) or to an already created
+item:
+
+~~~ ruby
+doc.outline.add_item("Section 1") do |section1|     # add root level item
+  section1.add_item("Header 1.1", destination: 0)   # add sub item
+end
+# or
+section1 = doc.outline.add_item("Section 1")
+section1.add_item("Header 1.1", destination: 0)
+~~~
+
+When creating an item it is possible to provide all outline item properties. Alternatively, the
+properties can be set later:
+
+~~~ ruby
+section = doc.outline.add_item("Section", destination: 0, open: false)
+section.text_color("red")
+section.flag(:bold)
+~~~

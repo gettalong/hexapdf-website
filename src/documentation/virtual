@@ -14,6 +14,10 @@ interactive-forms/:
   routed_title: Interactive Forms
   routing_path: index.html
 
+outline/:
+  routed_title: Interactive Forms
+  routing_path: index.html
+
 separator:
   title: '<hr style="padding: 0"/>'
   dest_path: ''

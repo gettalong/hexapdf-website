@@ -21,15 +21,17 @@ document-creation/:
   side_menu: true
   sort_info: 20
 
-
-encryption.*.html:
-  title: Encryption
+outline.*.html:
   side_menu: true
   sort_info: 30
 
-
 interactive-forms.*.html:
   title: Interactive Forms
+  side_menu: true
+  sort_info: 35
+
+encryption.*.html:
+  title: Encryption
   side_menu: true
   sort_info: 40
 
