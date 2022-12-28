@@ -125,10 +125,3 @@ convenience methods to work with pages, for example:
 
 To access an existing page object you can use [HexaPDF::Document::Pages#[]] with a zero-based index;
 to add a new one use [HexaPDF::Document::Pages#add].
-
-
----
-
-Outline
-
-AcroForm
