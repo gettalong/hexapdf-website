@@ -1,6 +1,7 @@
 ---
 title: Overview
 subtitle: Information on interactive PDF forms and how to use them with HexaPDF
+dest_path: <parent><basename>(-<version>)/index.(<lang>.)html
 ---
 
 <h1>Interactive Forms</h1>

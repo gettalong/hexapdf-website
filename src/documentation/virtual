@@ -6,6 +6,13 @@ api/HexaPDF.html:
   routed_title: HexaPDF
   dest_path: HexaPDF/index.html
 
+encryption/:
+  routed_title: Encryption
+  routing_path: index.html
+
+interactive-forms/:
+  routed_title: Interactive Forms
+  routing_path: index.html
 
 separator:
   title: '<hr style="padding: 0"/>'

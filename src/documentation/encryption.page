@@ -1,6 +1,7 @@
 ---
-title: Overview
+title: Encryption
 subtitle: How encrypting PDFs works in general and how to use it with HexaPDF
+dest_path: <parent><basename>(-<version>)/index.(<lang>.)html
 ---
 
 <h1>Encryption</h1>
