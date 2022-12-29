@@ -2,6 +2,7 @@
 title: Getting Started
 sidemenu: true
 sort_info: 1
+dest_path: <parent><basename>(-<version>)/index.(<lang>.)html
 ---
 
 <h1>Getting Started</h1>

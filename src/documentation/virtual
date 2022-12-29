@@ -6,6 +6,9 @@ api/HexaPDF.html:
   routed_title: HexaPDF
   dest_path: HexaPDF/index.html
 
+getting-started/:
+  routing_path: /documentation/getting-started/index.html
+
 encryption/:
   routed_title: Encryption
   routing_path: index.html
