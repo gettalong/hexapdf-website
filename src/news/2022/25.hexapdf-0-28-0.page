@@ -1,0 +1,87 @@
+---
+title: HexaPDF 0.28.0
+created_at: 2022-12-30 22:30:00 +01:00
+---
+
+This is another release with many small additions, a few breaking changes and fixes.
+
+Here is an overview:
+
+* **Interactive Forms (AcroForm)** gained the ability to correctly format numbers by implementing
+  the Javascript `AFNumber_Format` method. Note that only this one method is currently supported and
+  there is no general Javascript support. You can see this in action in the [AcroForm example].
+
+  Additionally, iterating over all form field widgets was greatly sped up by relying on the
+  validation feature to combine same-name fields. This means that, in some cases, you will need to
+  run `doc.acro_form.validate` before working with individual fields.
+
+  There are also several fixes to avoid creating appearances if there are already existing ones. And
+  rotated form fields are now also supported.
+
+* **Annotation handling** was improved in two ways: By rotating annotations in case a page gets
+  rotated. And by enhancing the flattening of annotations to work for rotated annotations.
+
+* Fully-embedded TrueType fonts can now be used, e.g. when filling out interactive forms.
+
+* HexaPDF can now tell whether a PDF file is a **linearized PDF**. That information is also shown in
+  the output of `hexapdf info`. And the two revisions of a linearized PDF are now treated as a
+  single revision.
+
+* Importing objects from other documents has been simplified to allow the import of arbitrary
+  objects.
+
+Additionally, the **HexaPDF documentation has been restructured** to provide a more topic oriented
+structure. For example, there is a section {link: /documentation/interactive-forms} which contains
+everything related to interactive forms. Additionally, a {link: /documentation/getting-started}
+section has been added as well as a section for {link: /documentation/outline}.
+
+The new documentation structure should make it easier for newcomers to find what they need since most
+people come to the HexaPDF website with a specific goal in mind, for example, creating documents or
+filling out interactive forms.
+
+Finally, with the new Ruby 3.2.0 release which marks the YJIT just in time compiler as production
+ready, HexaPDF gets a nice performance boost and compares very well against the C++ library qpdf
+when optimizing PDF files:
+
+![Optimization benchmark](assets/optimization.svg){: style="border: 1px solid black; display: block; margin: 0 auto"}
+
+Here are the raw numbers:
+
+~~~
+|--------------------------------------------------------------------|
+|                              ||    Time |     Memory |   File size |
+|--------------------------------------------------------------------|
+| hexapdf CS  | a.pdf          |    194ms |  30,100KiB |      49,225 |
+| hexapdf CS YJIT | a.pdf      |    278ms |  35,184KiB |      49,225 |
+| qpdf CS     | a.pdf          |     17ms |   8,112KiB |      49,287 |
+|--------------------------------------------------------------------|
+| hexapdf CS  | b.pdf          |    744ms |  50,024KiB |  11,045,208 |
+| hexapdf CS YJIT | b.pdf      |    752ms |  57,572KiB |  11,045,208 |
+| qpdf CS     | b.pdf          |    328ms |  22,980KiB |  11,126,861 |
+|--------------------------------------------------------------------|
+| hexapdf CS  | c.pdf          |  1,390ms |  54,304KiB |  13,180,713 |
+| hexapdf CS YJIT | c.pdf      |  1,120ms |  59,652KiB |  13,180,713 |
+| qpdf CS     | c.pdf          |  1,177ms |  95,548KiB |  13,228,102 |
+|--------------------------------------------------------------------|
+| hexapdf CS  | d.pdf          |  3,012ms |  77,724KiB |   6,418,481 |
+| hexapdf CS YJIT | d.pdf      |  2,498ms |  83,852KiB |   6,418,481 |
+| qpdf CS     | d.pdf          |  1,655ms |  69,220KiB |   6,703,374 |
+|--------------------------------------------------------------------|
+| hexapdf CS  | e.pdf          |    717ms | 109,732KiB |  21,751,181 |
+| hexapdf CS YJIT | e.pdf      |    744ms | 114,452KiB |  21,751,180 |
+| qpdf CS     | e.pdf          |    388ms |  31,376KiB |  21,787,558 |
+|--------------------------------------------------------------------|
+| hexapdf CS  | f.pdf          | 42,854ms | 549,772KiB | 117,545,254 |
+| hexapdf CS YJIT | f.pdf      | 31,712ms | 553,196KiB | 117,545,254 |
+| qpdf CS     | f.pdf          | 25,788ms | 975,180KiB | 118,114,521 |
+|--------------------------------------------------------------------|
+~~~
+
+Have a look at the last section for `f.pdf` in the results above: **Without YJIT HexaPDF takes
+around 42 seconds, with YJIT only 31 seconds!** qpdf is still faster with around 25 seconds but uses
+nearly twice the memory.
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+[AcroForm example]: /examples/acro_form.html
+[changelog]: /documentation/changelog.html
