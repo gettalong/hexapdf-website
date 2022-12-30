@@ -57,10 +57,10 @@ template: default.template
     <h3><span class="hexagon"><span class="icon-plus inverse"></span></span>PDF Creation</h3>
 
     <p>HexaPDF includes facilities for creating PDF documents from scratch. Use the <a
-    href="{relocatable: /documentation/api/HexaPDF/Content/Canvas.html}">low-level canvas
-    API</a> for drawing graphics and outputting text if you want full control over every aspect. Or
-    use the built-in <a href="{relocatable:
-    /documentation/api/HexaPDF/Composer.html}">document layout engine</a> that provides a
+    href="{relocatable: /documentation/api/HexaPDF/Content/Canvas.html}"><b>low-level canvas
+    API</b></a> for drawing graphics and outputting text if you want full control over every aspect. Or
+    use the <b>built-in <a href="{relocatable:
+    /documentation/api/HexaPDF/Composer.html}">document layout engine</a></b> that provides a
     convenient, word-processor like way of creating complex documents, including automatically
     flowing text around other content.</p>
 
@@ -103,8 +103,8 @@ end</pre>
     <p>HexaPDF can read existing documents and modify them in various ways. It supports</p>
     <ul>
       <li>adding, modifying, re-ordering, or deleting <a href="{relocatable: /documentation/api/HexaPDF/Document/Pages.html}">pages</a>,</li>
-      <li>handling annotations including adding new ones,</li>
-      <li>creating <a href="{relocatable: /documentation/interactive-forms/}">interactive forms</a> or filling them out,</li>
+      <li><b>handling annotations</b> including adding new ones,</li>
+      <li>creating <a href="{relocatable: /documentation/interactive-forms/}"><b>interactive forms</b></a> or filling them out,</li>
       <li>attaching or extracting files,</li>
     </ul>
     <p>and much more!</p>
@@ -141,8 +141,8 @@ doc.write(output_file)</pre>
   <div class="col-md-5 col-md-offset-1 col-sm-12 feature"><div>
     <h3><span class="hexagon"><span class="icon-cog inverse"></span></span>PDF Optimization</h3>
 
-    <p>HexaPDF writes output PDF files as compactly as possible. Additionally, it can lossleesly
-    optimize existing PDF files to reduce their file size.</p>
+    <p>HexaPDF writes output PDF files as compactly as possible. Additionally, it can <b>lossleesly
+    optimize existing PDF</b> files to reduce their file size.</p>
   </div></div>
   <div class="col-md-6 col-sm-12 feature">
     <img src="{relocatable: /assets/images/optimization.gif}" />
