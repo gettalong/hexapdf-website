@@ -589,7 +589,7 @@ Digital signatures
 : HexaPDF supports adding one or more digital signatures to a document. Such signed documents will
   be visually flagged in supported PDF readers.
 
-  See the topic ["Digital Signatures"][sig] and [HexaPDF::Document::Signatures#add] for more
+  See the topic ["Digital Signatures"][sig] and [HexaPDF::DigitalSignature::Signatures#add] for more
   information on this.
 
 
