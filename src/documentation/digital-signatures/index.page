@@ -14,10 +14,10 @@ about the signer. The signer is identified by their X.509 certificate and privat
 ## How Signing Works
 
 The digital signature and associated information is stored in a [signature
-dictionary][HexaPDF::Type::Signature]. And that signature dictionary is the value of a [signature
-form field][HexaPDF::Type::AcroForm::SignatureField].
+dictionary][HexaPDF::DigitalSignature::Signature]. And that signature dictionary is the value of a
+[signature form field][HexaPDF::Type::AcroForm::SignatureField].
 
-So to sign a PDF document there must either be an existing signature field to fill in or a new one
+So, to sign a PDF document there must either be an existing signature field to fill in or a new one
 must be created. Since a signature is associated with a form field, it is possible to visually
 represent the signature with an appearance stream.
 
@@ -43,9 +43,70 @@ finished.
 made afterwards. So to work with the signed document, one has to load it again.
 
 
-## Types of Signatures
+## CMS and PAdES Signatures
 
-The PDF specifications defines different types of signatures:
+The PDF 2.0 specification defines three types of supported digital signatures:
+
+* PKCS#1 signatures
+* CMS (Cryptographic Message Syntax a.k.a. PKCS#7) signatures
+* PAdES signatures (CAdES - CMS Advanced Electronic Signatures - signatures as used in PDF)
+
+With PDF 2.0 the PKCS#1 signatures are deprecated and therefore creating such signatures is not
+supported by HexaPDF. While CMS signatures have been supported by PDF for a long time, PAdES
+signatures are new with PDF 2.0 (although they have been possible with PDF 1.7 through the use of
+extensions).
+
+HexaPDF supports both old-style CMS as well as the newer PAdES signatures through
+[HexaPDF::DigitalSignature::Signing::DefaultHandler]. By default CMS signatures are used for
+backwards-compatibility and PAdES signatures are created when explicitly requested.
+
+PAdES signatures are more complicated and have more features/requirements. They support two
+different profiles called PAdES-BES (Basic Electronic Signature) and PAdES-EPES (Explicit Policy
+Electronic Signature). HexaPDF supports part of the PAdES-BES profile which has four levels of
+baseline signatures called B-B, B-T, B-LT, and B-LTA. Of these four levels B-B and B-T are currently
+supported where the difference between B-B and B-T is that a timestamp signature is incorporated for
+B-T.
+
+While the PDF specification supports creating CMS digital signatures for certificates using the RSA,
+DSA and ECDSA algorithms, HexaPDF currently only supports certificates using the RSA algorithm.
+
+
+## Signing Modes
+
+As suggested above there are basically two ways for creating the CMS signatures needed when signing
+a PDF file (customizable through [HexaPDF::DigitalSignature::Signing::DefaultHandler#external_signing]):
+
+Internal Signing
+
+: If all the signing certificate and private key are available to HexaPDF, HexaPDF can create the
+  CMS signature itself without relying on anything external. This is the preferred way if is
+  possible.
+
+External Signing
+
+: If the private key is not available to HexaPDF, it cannot (completely) create the CMS signature
+  and has to rely on an external mechanism for signing and/or creating the CMS signature.
+
+  Depending on whether the signing certificate is available the signing happens differently:
+
+  * If the certificate is available, the CMS signature object itself is created by HexaPDF and only
+    the signing itself is done by the external mechanism. This is useful, for example, if the
+    signing key is only available through a HSM.
+
+  * If the certificate is not available, the external mechanism has to create the complete CMS
+    signature. This is useful for creating CMS signatures that HexaPDF is not yet able to create
+    itself, e.g. when a certificate uses an unsupported algorithm.
+
+Asynchrounous Signing
+
+: This is a variant of external signing where the CMS signature creation happens at a different time
+  than the creation of the prepared PDF file itself. In such a case the PDF is "finished" with a
+  dummy CMS signature and the correct one later replaces the dummy one.
+
+
+## Types of PDF Signatures
+
+The PDF specifications also defines different types of signatures:
 
 * **Certification signature** (aka author signature)
 
@@ -61,10 +122,10 @@ The PDF specifications defines different types of signatures:
   example, when digitally signing a contract both (or more) parties sign the document, thereby
   agreeing to it.
 
-* **Time stamp signatures**
+* **Timestamp signatures**
 
   These signatures were introduced with PDF 2.0 and are used when the time of signing is important.
-  They use a trusted time stamp server to receive a signed time-stamp token.
+  They use a trusted timestamp server to receive a signed timestamp token.
 
 
 ## Restricting Changes to a Signed Document {#docmdp}
@@ -89,7 +150,7 @@ sign the PDF.
 Option 3 allows in addition to the permitted changes of option 2 the creation, deletion and
 modification of annotations. Note that in this case. it might be possible to change the document in
 a way that it still validates but misleads the recipients (see the [PDF Insecurity
-website](https://pdf-insecurity.org/).
+website](https://pdf-insecurity.org/)).
 
 The default signing handler supports this feature via the
-[HexaPDF::Document::Signatures::DefaultHandler#doc_mdp_permissions=] method.
+[HexaPDF::DigitalSignature::Signing::DefaultHandler#doc_mdp_permissions=] method.

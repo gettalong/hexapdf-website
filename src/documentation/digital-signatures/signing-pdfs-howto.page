@@ -8,8 +8,10 @@ This how-to guide provides information and code samples for applying digital sig
 files. It is assumed that you are familiar with digital signatures, if not, have a look at the
 [Digital Signatures](index.html) key topic.
 
-All the examples use the demo certificates that are included with the HexaPDF distribution. For real
-world usage you have to provide your own signing certificate!
+All the examples can be run with or without a PDF file supplied as first argument, e.g. copying the
+code and pasting it to a running `ruby` process just works. The examples use the demo certificates
+that are included with the HexaPDF distribution. For real world usage you have to provide your own
+signing certificate!
 
 
 ## Applying a Single Signature {#single}
@@ -29,7 +31,7 @@ signature object) is automatically created with default values.
 require 'hexapdf'
 require HexaPDF.data_dir + '/cert/demo_cert.rb'
 
-doc = HexaPDF::Document.open(ARGV[0])
+doc = ARGV[0] ? HexaPDF::Document.open(ARGV[0]) : HexaPDF::Document.new.pages.add.document
 doc.sign("signed.pdf", reason: 'Some reason',
                        certificate: HexaPDF.demo_cert.cert,
                        key: HexaPDF.demo_cert.key,
@@ -46,7 +48,7 @@ this is a bit more involved and the signature might not show correctly in all vi
 
 The visual appearance needs to be set on the signature field associated with the signature. This
 means we need to create the signature field beforehand and create its appearance stream; and then
-pass the field to the signing method.
+pass that field to the signing method.
 
 The following code is nearly the same as the [one for applying a single signature](#single), we just
 add the necessary appearance creation.
@@ -55,7 +57,7 @@ add the necessary appearance creation.
 require 'hexapdf'
 require HexaPDF.data_dir + '/cert/demo_cert.rb'
 
-doc = HexaPDF::Document.open(ARGV[0])
+doc = ARGV[0] ? HexaPDF::Document.open(ARGV[0]) : HexaPDF::Document.new.pages.add.document
 
 sig_field = doc.acro_form(create: true).create_signature_field('signature')
 widget = sig_field.create_widget(doc.pages[0], Rect: [20, 500, 120, 600])
@@ -90,7 +92,12 @@ require 'hexapdf'
 require 'stringio'
 require HexaPDF.data_dir + '/cert/demo_cert.rb'
 
-in_io = StringIO.new(File.binread(ARGV[0]))
+in_io = StringIO.new
+if ARGV[0]
+  in_io.string = File.binread(ARGV[0])
+else
+  HexaPDF::Document.new.write(in_io)
+end
 
 3.times do |i|
   doc = HexaPDF::Document.new(io: in_io)
@@ -104,6 +111,36 @@ in_io = StringIO.new(File.binread(ARGV[0]))
 end
 
 File.write('signed.pdf', in_io.string)
+~~~
+
+
+## Applying a PAdES Signature
+
+HexaPDF creates the older CMS signatures by default but also supports the newer PAdES signatures. To
+create a PAdES compatible signature, the [DefaultHandler#signature_type]
+[HexaPDF::DigitalSignature::Signing::DefaultHandler#signature_type] attribute has to be set to
+`:pades`.
+
+If no timestamp handler is set via [DefaultHandler#timestamp_handler]
+[HexaPDF::DigitalSignature::Signing::DefaultHandler#timestamp_handler], the created signature is a
+PAdES-BES level B-B signature. Otherwise it is a level B-T signature.
+
+The following example creates a level B-T signature:
+
+~~~ ruby
+require 'hexapdf'
+require HexaPDF.data_dir + '/cert/demo_cert.rb'
+
+doc = ARGV[0] ? HexaPDF::Document.open(ARGV[0]) : HexaPDF::Document.new.pages.add.document
+ts_handler = doc.signatures.signing_handler(name: :timestamp,
+                                            tsa_url: 'http://freetsa.org/tsr')
+doc.sign("signed.pdf", reason: 'Some reason',
+                       signature_type: :pades,
+                       timestamp_handler: ts_handler,
+                       certificate: HexaPDF.demo_cert.cert,
+                       key: HexaPDF.demo_cert.key,
+                       certificate_chain: [HexaPDF.demo_cert.sub_ca,
+                                           HexaPDF.demo_cert.root_ca])
 ~~~
 
 
@@ -124,7 +161,7 @@ The following code creates a signed document that allows no modifications:
 require 'hexapdf'
 require HexaPDF.data_dir + '/cert/demo_cert.rb'
 
-doc = HexaPDF::Document.open(ARGV[0])
+doc = ARGV[0] ? HexaPDF::Document.open(ARGV[0]) : HexaPDF::Document.new.pages.add.document
 doc.sign("signed.pdf", doc_mdp_permissions: :no_changes,
                        certificate: HexaPDF.demo_cert.cert,
                        key: HexaPDF.demo_cert.key,
@@ -135,22 +172,42 @@ doc.sign("signed.pdf", doc_mdp_permissions: :no_changes,
 
 ## Using an External Mechanism for Signing {#external}
 
-Sometimes the built-in mechanism for signing cannot be used because the certificate and private key
-are not readily available. Such situations often arise when a hardware security module (HSM) is used
-for signing since it doesn't allow extracting the private key.
+Sometimes the built-in mechanism for signing cannot be used because the private key is not readily
+available. Such situations often arise when a hardware security module (HSM) is used for signing
+since it doesn't allow extracting the private key.
 
 In such cases signing itself has to be done by the application using HexaPDF. And since HexaPDF
 doesn't know anything about the signature, one also has to tell HexaPDF the signature size so that
 enough space is reserved.
 
-The following code uses the demo certificates together with the external signing mechanism to
-achieve the same result as one would get when using the standard signing mechanism:
+The following code uses the demo certificate together with the external signing mechanism for
+signing the data but let's HexaPDF handle the CMS signature creation (note the assignment of the
+`certificate`):
 
 ~~~ ruby
 require 'hexapdf'
 require HexaPDF.data_dir + '/cert/demo_cert.rb'
 
-doc = HexaPDF::Document.open(ARGV[0])
+doc = ARGV[0] ? HexaPDF::Document.open(ARGV[0]) : HexaPDF::Document.new.pages.add.document
+signing_mechanism = lambda do |digest_method, data|
+  HexaPDF.demo_cert.key.sign_raw(digest_method, data)
+end
+doc.sign("signed.pdf", external_signing: signing_mechanism,
+                       certificate: HexaPDF.demo_cert.cert,
+                       certificate_chain: [HexaPDF.demo_cert.sub_ca,
+                                           HexaPDF.demo_cert.root_ca])
+~~~
+
+If HexaPDF is not able to create the CMS signature, e.g. because it doesn't support the
+certificate's key algorithm, it is also possible to delegate the CMS signature creation completely
+to the external signing mechanism (note the absence of the `certificate` key in
+[HexaPDF::Document#sign]):
+
+~~~ ruby
+require 'hexapdf'
+require HexaPDF.data_dir + '/cert/demo_cert.rb'
+
+doc = ARGV[0] ? HexaPDF::Document.open(ARGV[0]) : HexaPDF::Document.new.pages.add.document
 signing_mechanism = lambda do |io, byte_range|
   # Read the bytes to be signed
   io.pos = byte_range[0]
@@ -158,7 +215,7 @@ signing_mechanism = lambda do |io, byte_range|
   io.pos = byte_range[2]
   data << io.read(byte_range[3])
 
-  # Create the DER encoded PKCS#7 signed-data structure
+  # Create the DER encoded CMS signed-data structure
   OpenSSL::PKCS7.sign(HexaPDF.demo_cert.cert, HexaPDF.demo_cert.key,
                       data, [HexaPDF.demo_cert.sub_ca, HexaPDF.demo_cert.root_ca],
                       OpenSSL::PKCS7::DETACHED | OpenSSL::PKCS7::BINARY).to_der
@@ -190,7 +247,7 @@ The following code does exactly this:
 require 'hexapdf'
 require HexaPDF.data_dir + '/cert/demo_cert.rb'
 
-doc = HexaPDF::Document.open(ARGV[0])
+doc = ARGV[0] ? HexaPDF::Document.open(ARGV[0]) : HexaPDF::Document.new.pages.add.document
 
 # Prepare the document for embedding of the digital signature
 data = nil # Used for storing the to-be-signed data
@@ -210,11 +267,11 @@ signature = OpenSSL::PKCS7.sign(HexaPDF.demo_cert.cert, HexaPDF.demo_cert.key, d
                                 OpenSSL::PKCS7::DETACHED | OpenSSL::PKCS7::BINARY).to_der
 
 # Embed the signature
-HexaPDF::Document::Signatures.embed_signature(File.open('signed.pdf', 'rb+'), signature)
+HexaPDF::DigitalSignature::Signing.embed_signature(File.open('signed.pdf', 'rb+'), signature)
 ~~~
 
 
-## Adding a Timestamp Signature {#timestamp}
+## Applying a Timestamp Signature {#timestamp}
 
 Timestamp signatures are similar to standard signatures in that they use the same signing
 infrastructure. The differences lie in some signature dictionary field values and the structure of
@@ -231,7 +288,8 @@ document:
 ~~~ ruby
 require 'hexapdf'
 
-doc = HexaPDF::Document.open(ARGV[0])
+doc = ARGV[0] ? HexaPDF::Document.open(ARGV[0]) : HexaPDF::Document.new.pages.add.document
 doc.sign("signed.pdf", handler: :timestamp, reason: 'Some reason',
+                       signature_size: 20_000,
                        tsa_url: 'https://freetsa.org/tsr')
 ~~~
