@@ -1,0 +1,28 @@
+---
+title: HexaPDF 0.29.0 - PAdES Compatible Digital Signatures
+created_at: 2023-01-30 23:45:00 +01:00
+---
+
+This release features major internal changes for the support of digital signatures. The whole code
+was refactored and now HexaPDF itself creates the necessary CMS signed-data structures.
+
+Due to this changes HexaPDF is now able to support **PAdES-BES level B-B and B-T** signatures!
+
+Additionally, it is now *very* easy to create digital signatures via HSM calls:
+
+~~~ ruby
+require 'hexapdf'
+
+# Set up client for HSM module
+client = ...
+
+doc = HexaPDF::Document.open(ARGV[0])
+signing = lambda {|digest_method, data| client.sign_raw(digest_method, data) }
+doc.sign("signed.pdf", external_signing: signing,
+                       certificate: client.signing_certificate,
+                       certificate_chain: client.certificate_chain)
+~~~
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+[changelog]: /documentation/changelog.html
