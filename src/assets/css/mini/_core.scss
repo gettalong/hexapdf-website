@@ -137,7 +137,7 @@ img {
 
 h1, h2, h3, h4, h5, h6 {
   line-height: $heading-line-height;
-  margin: calc(1.5 * var(#{$universal-margin-var})) var(#{$universal-margin-var});
+  margin: calc(3 * var(#{$universal-margin-var})) var(#{$universal-margin-var}) calc(1.5 * var(#{$universal-margin-var}));
   font-weight: $heading-font-weight;
   small {
     color: var(#{$secondary-fore-color-var});
