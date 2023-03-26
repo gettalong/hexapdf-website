@@ -1,5 +1,5 @@
 --- paths
-['basics/creating-*.page', 'basics/modifying-*.page']:
+['basics/creating-*.page', 'basics/modifying-*.page', 'document-creation/*-tutorial.page']:
   handler: tutorial_page
   versions:
     default:

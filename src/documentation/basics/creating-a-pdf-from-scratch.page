@@ -57,8 +57,9 @@ canvas = page.canvas
 ~~~
 
 The canvas provides many methods for drawing lines, rectangles, curves, text, ... and for changing
-drawing aspects like the stroke color. For now, you will just draw the text "Hello World" on it. Set
-the font and font size as well as the fill color like this:
+drawing aspects like the stroke color. For now, you will just draw the text "Hello World" on it
+(head over to the [canvas tutorial](../document-creation/canvas-tutorial.html) if you want to know
+more). Set the font and font size as well as the fill color like this:
 
 ~~~ ruby
 canvas.font('Helvetica', size: 50).
