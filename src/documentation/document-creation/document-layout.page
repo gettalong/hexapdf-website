@@ -1,10 +1,10 @@
 ---
-title: Automatic Document Layout <span class="icon-key"></span>
+title: Document Layout <span class="icon-key"></span>
 subtitle: Information about HexaPDF's automatic document layout feature
 sort_info: 20
 ---
 
-<h1>Automatic Document Layout</h1>
+<h1>Document Layout</h1>
 
 The automatic document layout feature of HexaPDF allows one to easily create complex documents. It
 works by first defining the area where the content should be placed and then adding content boxes.
@@ -223,7 +223,7 @@ general method [HexaPDF::Document::Layout#box]. The latter one uses the configur
 create and register custom box classes and use them like the built-in ones.
 
 
-## All-in-on Document Composition
+## All-in-one Document Composition
 
 All the classes discussed above focus on special aspects of the layouting work. The
 [HexaPDF::Composer] class now ties all the classes together to provide a very easy to use interface
