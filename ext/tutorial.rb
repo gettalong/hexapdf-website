@@ -42,7 +42,7 @@ class TutorialPage < Webgen::PathHandler::Page
   end
 
   def code(node)
-    node.blocks['content'].scan(/\n~~~ ruby\n(.*?)\n~~~/m).map(&:first).join("\n\n").gsub(/\\\{/, '{')
+    node.blocks['content'].scan(/\n~~~ ruby\n(.*?)\n~~~/m).map(&:first).join("\n\n").gsub(/\\+\{/, '{')
   end
 
 end
