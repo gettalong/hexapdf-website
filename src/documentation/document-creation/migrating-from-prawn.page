@@ -109,17 +109,20 @@ And here is the HexaPDF code with [its result](invoice-hexapdf.pdf):
 ~~~ ruby
 require 'hexapdf'
 
-composer = HexaPDF::Composer.new(page_size: :A4, margin: 72)
-
+composer = HexaPDF::Composer.new(skip_page_creation: true)
+composer.page_style(:default, page_size: :A4) do |canvas, style|
+  box = canvas.context.box(:media)
+  canvas.save_graphics_state do
+    canvas.fill_color("77C3EC").
+      rectangle(0, 0, box.width, 50).
+      rectangle(0, box.height - 50, box.width, 50).
+      fill
+  end
+  style.frame = style.create_frame(canvas.context, 72)
+end
 composer.style(:base, font: "Helvetica", font_size: 12, line_spacing: 1.2)
 
-box = composer.page.box(:media)
-composer.canvas.
-  fill_color("77C3EC").
-  rectangle(0, 0, box.width, 50).
-  rectangle(0, box.height - 50, box.width, 50).
-  fill
-
+composer.new_page
 composer.text("HexaPDF Example Inc.\nGarnish Street 3a\n4567 New South East\nWorld",
               width: 150, height: 100, padding: 5, border: \{width: 1},
               position: :float, position_hint: :right)
@@ -202,7 +205,7 @@ document.pages.add.canvas.
   text("Hello World", at: [100, 500])    # Do something
 document.write("hello-hexapdf.pdf")
 
-# HexaPDF composer
+# HexaPDF Composer
 composer = HexaPDF::Composer.new
 composer.text("Hello World")    # Do something
 composer.write("hello-composer.pdf")
@@ -212,12 +215,12 @@ With HexaPDF there are two possible ways when creating a document:
 
 * The first one shown creates a new document instance and is intended for small scale creation task.
   The reason for this is that it doesn't really provide convenient document creation facilities out
-  of the box.
+  of the box. Have a look at the {link: canvas-tutorial.html} to get started.
 
 * The second one uses the [HexaPDF::Composer] class which is similar to Prawn's document class in
   that it provides convenience methods for creating the contents of a document. Since one can access
   the document instance, it is also possible to do low-level stuff when needed. This is what one
-  would usually use.
+  would usually use. Have a look at the {link: composer-tutorial.html} to get started.
 
 Additionally, there is also the possibility to use a block form when creating a document:
 
@@ -227,7 +230,7 @@ Prawn::Document.generate("hello-prawn.pdf") do |doc|
   # Do something with the document
 end
 
-# HexaPDF composer
+# HexaPDF Composer
 HexaPDF::Composer.create("hello-composer.pdf") do |composer|
   # Do something with the composer
 end
@@ -253,9 +256,9 @@ bounding box whatsoever; so all coordinates are relative to the page's origin at
 The canvas methods are intentionally low-level as this class should just be a thin layer of
 convenience methods above the respective PDF operators.
 
-The **HexaPDF composer** class provides some high-level methods for working with text and images and
-is more in line with what one would expect coming from Prawn. The current canvas object can be
-accessed via [HexaPDF::Composer#canvas] and through this all graphical operations are available.
+The **HexaPDF composer** class provides high-level methods for working with text, images, ... and is
+more in line with what one would expect coming from Prawn. The current canvas object can be accessed
+via [HexaPDF::Composer#canvas] and through this all graphical operations are available.
 
 The following lists show the HexaPDF equivalents of common operations:
 
@@ -439,6 +442,26 @@ Other methods
 
 ## Other Prawn Functionality
 
+Column box (`doc.column_box`)
+
+: HexaPDF also has the notion of a [column box][HexaPDF::Layout::ColumnBox]:
+
+  ~~~ ruby
+  # Prawn
+  doc.column_box([0, doc.cursor], columns: 2, width: doc.bounds.width) do
+    doc.text("Some content here")
+  end
+
+  # HexaPDF
+  composer.column(columns: 2, gaps: 10) do |column|
+    column.text("Some content here")
+  end
+  ~~~
+
+  The column box works like any other box. It can use `position: :flow` for using the shape of the
+  current frame instead of just a rectangular area. And it can make all column heights (roughly)
+  equal if specified to do so.
+
 Repeatable content (`doc.repeat`)
 
 : This can be done in HexaPDF by iterating over the pages, getting their canvas objects and drawing
@@ -541,9 +564,9 @@ Document outline
 
 There are some things that are not yet supported in HexaPDF via convenience methods:
 
-* Bounding boxes (`doc.bounding_box`, `doc.span`, `doc.column_box`, `doc.indent`). This
-  functionality will most probably not be incorporated into HexaPDF in this way due to a different
-  approach in document layouting using the [HexaPDF::Composer] class and the box system.
+* Bounding boxes (`doc.bounding_box`, `doc.span`, `doc.indent`). This functionality will most
+  probably not be incorporated into HexaPDF in this way due to a different approach in document
+  layouting using the [HexaPDF::Composer] class and the box system.
 
 * Gradients (`doc.fill_gradient`, `doc.stroke_gradient`)
 
@@ -558,6 +581,11 @@ There are some things that are not yet supported in HexaPDF via convenience meth
 
 Since HexaPDF is a full-blown PDF library, it can do many more things than just creating a document,
 for example:
+
+Advanced boxes
+
+: In addition to the [column box][HexaPDF::Layout::ColumnBox] HexaPDF also supports bullet and
+  numbered [lists][HexaPDF::Layout::ListBox].
 
 Existing PDF file as template
 
