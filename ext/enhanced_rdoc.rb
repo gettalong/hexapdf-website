@@ -1,4 +1,17 @@
 require 'rdoc/rdoc'
+require 'rouge'
+
+class RDoc::Markup::ToHtml
+  def accept_verbatim(verbatim)
+    text = verbatim.text.rstrip
+    format = verbatim.format || (verbatim.ruby? || parseable?(text) ? 'ruby' : nil)
+    lexer = Rouge::Lexer.find_fancy(format, text) || Rouge::Lexers::PlainText
+    formatter = Rouge::Formatters::HTML.new
+    result = formatter.format(lexer.lex(text))
+    @res << "\n<div class='language-ruby highlighter-rouge'><div class='highlight'>" \
+      "<pre class='highlight'>#{result}</pre></div></div>\n"
+  end
+end
 
 class RDoc::Store
 
