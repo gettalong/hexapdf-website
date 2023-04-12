@@ -21,7 +21,7 @@ template: default.template
   </div>
 </div>
 
-<div class="row" style="background-color: #eee">
+<div class="row" style="background-color: var(--secondary-back-color);">
   <div class="col-sm-12 wmax row">
     <div class="col-sm-12 col-md-6" style="display: flex; align-items: center; justify-content: center; gap: 5rem">
        <img src="{relocatable: /assets/images/logo-daisybill.png}" style="height: 3rem;" />

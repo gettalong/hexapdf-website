@@ -62,12 +62,12 @@ span[class^='#{$icon-prefix}-'] {
     filter: invert(25%);
   }
   &.#{$icon-inverse-color-name}{
-    -webkit-filter: invert(100%);
-    filter: invert(100%);
+    -webkit-filter: brightness(400%);
+    filter: brightness(400%);
   }
 }
 span{
-  $stroke-color: str-replace(#{$fore-color}, '#', '%23');
+  $stroke-color: str-replace(unquote("#{$fore-color}"), '#', '%23');
   &.#{$icon-prefix}-#{$icon-alert-name}{
     background-image: #{str-replace("url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12' y2='16'%3E%3C/line%3E%3C/svg%3E\")",'currentColor',$stroke-color)};
   }

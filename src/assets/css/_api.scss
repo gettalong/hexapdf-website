@@ -199,9 +199,9 @@
   .method-heading {
     position: relative;
     padding: 2px 4px 0 20px;
-    font-weight: bold;
     * {
       font-family: monospace;
+      font-weight: bold;
     }
   }
   .method-heading :visited {
@@ -270,14 +270,14 @@
   margin: var(--universal-margin);
 }
 
-.ruby-constant   { color: #008080; background: transparent; }
-.ruby-keyword    { color: #007020; font-weight: bold; background: transparent; }
+.ruby-constant   { color: #445588; font-weight: bold; background: transparent; }
+.ruby-keyword    { color: #000000; font-weight: bold; background: transparent; }
 .ruby-ivar       { color: #008080; background: transparent; }
-.ruby-operator   { color: #007020; background: transparent; }
-.ruby-identifier { color: #000000; background: transparent; }
+.ruby-operator   { color: #000000; font-weight: bold; background: transparent; }
+.ruby-identifier { color: #990000; font-weight: bold; background: transparent; }
 .ruby-node       { color: #ffa07a; background: transparent; }
-.ruby-comment    { color: #666688; font-style: italic; background: transparent; }
-.ruby-regexp     { color: #808000; background: transparent; }
+.ruby-comment    { color: #999988; font-style: italic; background: transparent; }
+.ruby-regexp     { color: #009926; background: transparent; }
 .ruby-value      { color: #009999; background: transparent; }
 
 

@@ -159,8 +159,8 @@ module RDocPDFImages
           end
         end
         list.reverse_each do |counter, index, modifier|
-          part = RDoc::Markup::Raw.new("<p class='pdf-#{modifier}'><a href='#{file_name}#{counter}.pdf'>" \
-                                       "<img class='pdf-image' src='#{file_name}#{counter}.png' /></a></p>")
+          part = RDoc::Markup::Raw.new("<p class='pdf-image pdf-#{modifier}'><a href='#{file_name}#{counter}.pdf'>" \
+                                       "<img src='#{file_name}#{counter}.png' /></a></p>")
           if modifier == 'hide'
             markup.parts[index] = part
           else
