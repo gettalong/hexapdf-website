@@ -28,7 +28,7 @@ class PDFImage
     pdf_file = "#{node['file_base']}.pdf"
     page = node['pdf_page'] || 1
 
-    ARGV[0] = pdf_file
+    $website_out = pdf_file
     load(source_file, true)
     doc = HexaPDF::Document.open(pdf_file)
     doc.files.add(source_file, name: File.basename(source_file), description: 'Source code')

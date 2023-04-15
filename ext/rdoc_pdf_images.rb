@@ -15,7 +15,7 @@ module RDocPDFImages
 
       %s
 
-      doc.write(ARGV[0] || 'out.pdf')
+      doc.write($website_out || ARGV[0] || 'out.pdf')
     SOURCE_CODE
     'center' => <<~SOURCE_CODE,
       require 'hexapdf'
@@ -32,7 +32,7 @@ module RDocPDFImages
 
       %s
 
-      doc.write(ARGV[0] || 'out.pdf')
+      doc.write($website_out || ARGV[0] || 'out.pdf')
     SOURCE_CODE
     'big' => <<~SOURCE_CODE,
       require 'hexapdf'
@@ -48,7 +48,7 @@ module RDocPDFImages
 
       %s
 
-      doc.write(ARGV[0] || 'out.pdf')
+      doc.write($website_out || ARGV[0] || 'out.pdf')
     SOURCE_CODE
     'small' => <<~SOURCE_CODE,
       require 'hexapdf'
@@ -64,7 +64,7 @@ module RDocPDFImages
 
       %s
 
-      doc.write(ARGV[0] || 'out.pdf')
+      doc.write($website_out || ARGV[0] || 'out.pdf')
     SOURCE_CODE
     'composer' => <<~SOURCE_CODE,
       require 'hexapdf'
@@ -86,7 +86,7 @@ module RDocPDFImages
 
       %s
 
-      composer.write(ARGV[0] || 'out.pdf')
+      composer.write($website_out || ARGV[0] || 'out.pdf')
     SOURCE_CODE
     'composer100' => <<~SOURCE_CODE,
       require 'hexapdf'
@@ -108,7 +108,7 @@ module RDocPDFImages
 
       %s
 
-      composer.write(ARGV[0] || 'out.pdf')
+      composer.write($website_out || ARGV[0] || 'out.pdf')
     SOURCE_CODE
   }
 
