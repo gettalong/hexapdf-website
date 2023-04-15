@@ -61,7 +61,9 @@ composer.text('Composer Tutorial', font: ['Lato', variant: :bold],
               font_size: 24, align: :center)
 ~~~
 
-This will print 'Composer Tutorial' at the top of the page since boxes are laid out from top to
+{pdf: [0-2, -1]}
+
+This will show 'Composer Tutorial' at the top of the page since boxes are laid out from top to
 bottom.
 
 We can enable the debug mode to see the extent of a layed out box:
@@ -72,13 +74,16 @@ composer.text("Let's enable debug mode to see the box extent", font: 'Lato')
 composer.document.config['debug'] = false
 ~~~
 
+{pdf: [0-3, -1]}
+
 This text box is shown in light green and we see that it takes the full width of the frame. It
 doesn't cover the full width of the page since by default there is a margin around the frame.
 Enabling debug mode is useful for debugging layout problems.
 
-Besides simple text HexaPDF also has built-in support for formatted text,
-[images][HexaPDF::Layout::ImageBox], [column boxes][HexaPDF::Layout::ColumnBox] and
-[lists][HexaPDF::Layout::ListBox]. Let's put a list into a column box:
+Besides simple text HexaPDF also has built-in support for [formatted
+text][[HexaPDF::Composer#formatted_text], [images][HexaPDF::Layout::ImageBox], [column
+boxes][HexaPDF::Layout::ColumnBox] and [lists][HexaPDF::Layout::ListBox]. Let's put a list into a
+column box:
 
 ~~~ ruby
 composer.column(columns: 2, gaps: 30, equal_height: true) do |column|
@@ -92,6 +97,8 @@ composer.column(columns: 2, gaps: 30, equal_height: true) do |column|
   end
 end
 ~~~
+
+{pdf: [0-4, -1]}
 
 The [`#formatted_text`][HexaPDF::Composer#formatted_text] method uses an array of strings and hashes
 to define its content. The simplest form of such a hash is `\{text: 'Some test',
@@ -130,15 +137,15 @@ size][HexaPDF::Layout::Style#font_size] as well as a [margin][HexaPDF::Layout::S
 some other style properties. For example, the header will have a green bar to its left curtesy of
 the `header_marker` [overlay][HexaPDF::Layout::Style#overlays].
 
-Now we just need to use those styles:
+Now we just need to use those styles and so we put a text box formatted as header and another text
+box formatted as paragraph onto the page:
 
 ~~~ ruby
 composer.text('This is our Header!', style: :header)
 composer.lorem_ipsum(style: :paragraph)
 ~~~
 
-This will put a text box formatted as header and another text box formatted as paragraph onto the
-page.
+{pdf: [0-6, -1]}
 
 
 ## Placement of Content
@@ -168,6 +175,8 @@ composer.canvas.
   restore_graphics_state
 ~~~
 
+{pdf: [0-7, -1]}
+
 You can see that the frame is not rectangular anymore! The space occupied by the floating image has
 been removed from it.
 
@@ -177,6 +186,8 @@ frame's shape. So if we draw some text, it will be put right next to the floatin
 ~~~ ruby
 composer.lorem_ipsum(count: 2, style: :paragraph)
 ~~~
+
+{pdf: [0-8, -1]}
 
 Putting the text to the right works but the text does not go beneath the image, i.e. it doesn't flow
 around it. The reason for this is that by default the box is fit into to above mentioned rectangular
@@ -190,6 +201,8 @@ around it:
 composer.image(image, width: 100, position: :float, margin: [0, 10, 0, 0])
 composer.lorem_ipsum(count: 2, style: :paragraph, position: :flow)
 ~~~
+
+{pdf: [0-9, -1]}
 
 Note the added `position: :flow` argument which makes the difference. You would generally also use
 that argument with container boxes if you use it for text boxes.
@@ -220,6 +233,9 @@ end
 composer.new_page(:simple)
 composer.lorem_ipsum(count: 2)
 ~~~
+
+{pdf: {snippets: [0-10, -1], page: 2}}
+
 
 All new pages will now use that page style. By setting the `#next_style` attribute of the page
 style, it is possible to automatically switch between styles (e.g. between a left page style and a
