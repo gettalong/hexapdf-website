@@ -102,6 +102,8 @@ doc.pages << page
 doc.write("sample.pdf")
 ~~~
 
+{pdf: {snippets: [0], filename: 'sample.pdf'}}
+
 Note that the [HexaPDF::Document#add] call actually returns a [HexaPDF::Type::Page] object and not a
 simple dictionary, allowing the use of its `#contents` method. See below for details.
 

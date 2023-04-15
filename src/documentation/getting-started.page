@@ -63,6 +63,8 @@ canvas.text("Hello World", at: [150, 396])
 doc.write("hello-world.pdf")
 ~~~
 
+{pdf: {snippets: [0], filename: 'hello-world.pdf'}}
+
 To get more information on what is going on in this code example, have a look at the {link:
 basics/creating-a-pdf-from-scratch.html} tutorial page.
 
