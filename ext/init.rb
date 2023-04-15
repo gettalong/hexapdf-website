@@ -7,6 +7,7 @@ require_relative 'tutorial'
 require_relative 'enhanced_rdoc'
 require_relative 'pdf_image'
 require_relative 'rdoc_pdf_images'
+require_relative 'snippet_pdf'
 
 website.ext.path_handler.register(Examples, patterns: ['**/*.examples'], insert_at: 4)
 
@@ -24,6 +25,10 @@ website.ext.tag.register('code', config_prefix: 'tag.code',
   context.node.blocks['code'].split("\n")[range].join("\n")
 end
 website.config.define_option('tag.code.range', nil)
+
+website.ext.tag.register(SnippetPDF, names: 'pdf', config_prefix: 'tag.pdf', mandatory: ['snippets'])
+website.config.define_option('tag.pdf.snippets', [])
+website.config.define_option('tag.pdf.page', 1)
 
 website.ext.path_handler.register(PDFImage, insert_at: 4, name: 'pdf_image')
 
