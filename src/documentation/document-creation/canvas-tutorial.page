@@ -77,6 +77,8 @@ canvas.translate(100, 100)
 canvas.rectangle(0, 0, page_box.width - 200, page_box.height - 200, radius: 15).stroke
 ~~~
 
+{pdf: [0-2, -1]}
+
 Since we translated the origin to the point (100, 100), the rectangle's lower-left corner will
 actually be at (100, 100) instead of (0, 0).
 
@@ -108,9 +110,11 @@ canvas.save_graphics_state do
 end
 ~~~
 
-The above instructions will fill a rectangle of size 100x100 instead of 1000x1000. If we hadn't
-saved the graphics state before and restored it afterwards, we wouldn't be able to draw anywhere
-else from this point onwards.
+{pdf: [0-4, -1]}
+
+The above instructions fill a rectangle of size 100x100 instead of 1000x1000. If we hadn't saved the
+graphics state before and restored it afterwards, we wouldn't be able to draw anywhere else from
+this point onwards.
 
 
 ## Drawing Graphics
@@ -131,6 +135,8 @@ canvas.line_width(10).
 canvas.polygon(300, 550, 300, 630, 360, 590, 270, 580, radius: 10).stroke
 ~~~
 
+{pdf: [0-5, -1]}
+
 Note that we first change parts of the graphics state, setting the fill color to blue and the stroke
 color to red. Although it might seem that this change is restricted to the rectangle, it is actually
 not. The same happens with the line width which stays changed for the rounded polygon.
@@ -147,6 +153,8 @@ canvas.save_graphics_state do
 end
 ~~~
 
+{pdf: [0-6, -1]}
+
 The canvas also features an extension system which allows one to easily draw more complex things,
 like a pie chart:
 
@@ -160,6 +168,8 @@ canvas.draw(pie, start_angle: 110, end_angle: 130).fill
 canvas.fill_color('aaffaa')
 canvas.draw(pie, start_angle: 130, end_angle: 30).fill
 ~~~
+
+{pdf: [0-7, -1]}
 
 
 ## Drawing Text
@@ -184,25 +194,32 @@ canvas.fill_color("black")
 end
 ~~~
 
+{pdf: [0-8, -1]}
+
+
 Besides the standard PDF fonts it is also possible to use any **TrueType font** with HexaPDF:
 
 ~~~ ruby
-canvas.font('/usr/share/fonts/truetype/lato/Lato-Hairline.ttf', size: 12)
+canvas.font('/usr/share/fonts/truetype/lato/Lato-Regular.ttf', size: 12)
 canvas.text("HexaPDF Canvas with\nTrueType font", at: [20, 270])
 ~~~
+
+{pdf: [0-9, -1]}
 
 Either specify the font file directly, as above, or configure and reference it by name later:
 
 ~~~ ruby
 doc.config['font.map'] = {
   'Lato' => {
-    none: '/usr/share/fonts/truetype/lato/Lato-Hairline.ttf',
-    italic: '/usr/share/fonts/truetype/lato/Lato-HairlineItalic.ttf',
+    none: '/usr/share/fonts/truetype/lato/Lato-Regular.ttf',
+    italic: '/usr/share/fonts/truetype/lato/Lato-Italic.ttf',
   }
 }
 canvas.font('Lato', variant: :italic)
 canvas.text("Lato Italic font variant", at: [200, 270])
 ~~~
+
+{pdf: [0-10, -1]}
 
 The [#text][HexaPDF::Content::Canvas#text] method used here for drawing recognizes line breaks but
 nothing more. For more complex text output one would need to use [HexaPDF::Layout::TextLayouter]
@@ -214,9 +231,8 @@ nothing more. For more complex text output one would need to use [HexaPDF::Layou
 At the beginning we introduced Form XObjects as the other PDF object type supporting a canvas. Form
 XObjects are used to define graphics once and use them multiple times.
 
-One thing to remember with Form XObjects is that they *do not reset the graphics state*. So all the
-graphics state set when drawing a Form XObject will be used for the drawing operations of the Form
-XObject.
+One thing to remember is that **Form XObjects do not reset the graphics state**. So all the graphics
+state set when drawing a Form XObject will be used for the drawing operations of the Form XObject.
 
 Let's draw something on our Form XObject and then draw it twice:
 
@@ -230,8 +246,11 @@ canvas.line_width(5).stroke_color("black").opacity(stroke_alpha: 0.5).
 canvas.xobject(form, at: [220, 120])
 ~~~
 
+{pdf: [0-11, -1]}
+
 As expected anything outside of the form's bounding box is clipped and not visible when drawing the
-form. And it can clearly be seen that the graphics state influences the form's drawing operations.
+form. And it can clearly be seen that the change in the graphics state between the invocations
+influences the form's drawing operations.
 
 
 Now we just need to write the document
