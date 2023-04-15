@@ -29,6 +29,7 @@ website.config.define_option('tag.code.range', nil)
 website.ext.tag.register(SnippetPDF, names: 'pdf', config_prefix: 'tag.pdf', mandatory: ['snippets'])
 website.config.define_option('tag.pdf.snippets', [])
 website.config.define_option('tag.pdf.page', 1)
+website.config.define_option('tag.pdf.filename', nil)
 
 website.ext.path_handler.register(PDFImage, insert_at: 4, name: 'pdf_image')
 
