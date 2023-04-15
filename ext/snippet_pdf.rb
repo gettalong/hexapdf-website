@@ -28,8 +28,9 @@ class SnippetPDF
                             'modified_at' => File.mtime(source_file),
                             'handler' => 'pdf_image', 'file_base' => file_base,
                             'pdf_page' => context[:config]['tag.pdf.page'])
-    context.website.ext.path_handler.create_secondary_nodes(path, code)
-    "<p class='pdf-image'><a href='#{file_name}.pdf'><img src='#{file_name}.png' /></a></p>"
+    png_node, pdf_node = context.website.ext.path_handler.create_secondary_nodes(path, code)
+    "<p class='pdf-image'><a href='#{context.dest_node.route_to(pdf_node)}'>" \
+      "<img src='#{context.dest_node.route_to(png_node)}' /></a></p>"
   end
 
 end
