@@ -1,9 +1,8 @@
 $color-primary: #0080FF;
 $color-primary-light: #56b0ff;
 $color-primary-dark: #1c5bd8;
-$color-secondary: #ff8000;
-$color-tertiary: #008c82;
-$color-tertiary-light: #e0f2f2;
+$color-secondary: #00908b;
+$color-secondary-light: #e0f1f2;
 $color-grey: #212121;
 $color-grey-light: #e0e0e0;
 $color-grey-extralight: #eeeeee;
@@ -24,12 +23,13 @@ $nav-sublink-start: 2;
 $nav-sublink-depth: 4;
 $table-max-height: inherit;
 $header-logo-font-size: 1.6em;
+$input-back-color: $back-color;
 
 @import 'mini/core';
 @import 'mini/layout';
 
 @include make-card-alt-size ('fluid', 100%);
-@include make-card-alt-color ('information', $color-tertiary-light);
+@include make-card-alt-color ('information', $color-secondary-light);
 
 @import 'mini/input_control';
 
@@ -86,8 +86,6 @@ span {
   --color-primary-light: #{$color-primary-light};
   --color-primary-dark: #{$color-primary-dark};
   --color-secondary: #{$color-secondary};
-  --color-tertiary: #{$color-tertiary};
-  --color-tertiary-light: #{$color-tertiary-light};
   --color-grey: #{$color-grey};
   --color-grey-light: #{$color-grey-light};
   --color-grey-extralight: #{$color-grey-extralight};
@@ -278,7 +276,7 @@ nav {
 }
 
 .breadcrumb {
-  background-color: #eee;
+  background-color: var(--secondary-back-color);
   > div {
     padding: var(--universal-padding) var(--universal-padding);
   }
