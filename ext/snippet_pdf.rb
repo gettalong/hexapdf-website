@@ -11,7 +11,7 @@ class SnippetPDF
       end
     end.flatten.join("\n\n")
     pdf_file_name = context[:config]['tag.pdf.filename'] || context.content_node['output_pdf']
-    code.sub!(/((["'])#{Regexp.escape(pdf_file_name)}\2)/, '$website_out || \1')
+    code.gsub!(/((["'])#{Regexp.escape(pdf_file_name)}\2)/, '$website_out || \1')
 
     hexapdf_path = File.join(context.website.config['path_handler.example_pdf.hexapdf_lib'], '..')
     dir = context.website.tmpdir("snippet_pdf")
