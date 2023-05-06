@@ -9,13 +9,13 @@ module RDocPDFImages
       machu_picchu = File.join(hp_path, "examples", "machupicchu.jpg")
       canvas = doc.pages.add([0, 0, 200, 200]).canvas
       canvas.save_graphics_state do
-        canvas.line_width(2).line_dash_pattern(1).stroke_color("lightgray").
+        canvas.line_width(2).line_dash_pattern(1).stroke_color("hp-gray-light").
           line(-200, 0, 200, 0).line(0, 200, 0, -200).stroke
       end
 
       %s
 
-      doc.write($website_out || ARGV[0] || 'out.pdf')
+      doc.write('out.pdf')
     SOURCE_CODE
     'center' => <<~SOURCE_CODE,
       require 'hexapdf'
@@ -26,13 +26,13 @@ module RDocPDFImages
       canvas = doc.pages.add([0, 0, 200, 200]).canvas
       canvas.translate(100, 100)
       canvas.save_graphics_state do
-        canvas.line_width(1).line_dash_pattern(1).stroke_color("lightgray").
+        canvas.line_width(1).line_dash_pattern(1).stroke_color("hp-gray-light").
           line(-200, 0, 200, 0).line(0, 200, 0, -200).stroke
       end
 
       %s
 
-      doc.write($website_out || ARGV[0] || 'out.pdf')
+      doc.write('out.pdf')
     SOURCE_CODE
     'big' => <<~SOURCE_CODE,
       require 'hexapdf'
@@ -42,13 +42,13 @@ module RDocPDFImages
       machu_picchu = File.join(hp_path, "examples", "machupicchu.jpg")
       canvas = doc.pages.add([0, 0, 400, 400]).canvas
       canvas.save_graphics_state do
-        canvas.line_width(2).line_dash_pattern(1).stroke_color("lightgray").
+        canvas.line_width(2).line_dash_pattern(1).stroke_color("hp-gray-light").
           line(0, 0, 400, 0).line(0, 400, 0, 0).stroke
       end
 
       %s
 
-      doc.write($website_out || ARGV[0] || 'out.pdf')
+      doc.write('out.pdf')
     SOURCE_CODE
     'small' => <<~SOURCE_CODE,
       require 'hexapdf'
@@ -58,13 +58,13 @@ module RDocPDFImages
       machu_picchu = File.join(hp_path, "examples", "machupicchu.jpg")
       canvas = doc.pages.add([0, 0, 100, 100]).canvas
       canvas.save_graphics_state do
-        canvas.line_width(2).line_dash_pattern(1).stroke_color("lightgray").
+        canvas.line_width(2).line_dash_pattern(1).stroke_color("hp-gray-light").
           line(0, 0, 100, 0).line(0, 100, 0, 0).stroke
       end
 
       %s
 
-      doc.write($website_out || ARGV[0] || 'out.pdf')
+      doc.write('out.pdf')
     SOURCE_CODE
     'composer' => <<~SOURCE_CODE,
       require 'hexapdf'
@@ -80,13 +80,13 @@ module RDocPDFImages
       machu_picchu = File.join(hp_path, "examples", "machupicchu.jpg")
       composer.canvas.save_graphics_state.
         line_width(1).line_dash_pattern(1).
-        stroke_color("lightgray").
+        stroke_color("hp-gray-light").
         rectangle(10, 10, 180, 180).stroke.
         restore_graphics_state
 
       %s
 
-      composer.write($website_out || ARGV[0] || 'out.pdf')
+      composer.write('out.pdf')
     SOURCE_CODE
     'composer100' => <<~SOURCE_CODE,
       require 'hexapdf'
@@ -102,13 +102,20 @@ module RDocPDFImages
       machu_picchu = File.join(hp_path, "examples", "machupicchu.jpg")
       composer.canvas.save_graphics_state.
         line_width(1).line_dash_pattern(1).
-        stroke_color("lightgray").
+        stroke_color("hp-gray-light").
         rectangle(10, 10, 180, 80).stroke.
         restore_graphics_state
 
       %s
 
-      composer.write($website_out || ARGV[0] || 'out.pdf')
+      composer.write('out.pdf')
+    SOURCE_CODE
+    'full' => <<~SOURCE_CODE,
+      require 'hexapdf'
+      require 'geom2d'
+
+      hp_path = '%s'
+      %s
     SOURCE_CODE
   }
 
@@ -145,6 +152,7 @@ module RDocPDFImages
             template = TEMPLATES[template_name] || TEMPLATES["canvas"]
             part.parts[0].sub!(/\A.*?\n/, '')
             code = format(template, hexapdf_path, part.text)
+            code.sub!("'out.pdf'", "$website_out || ARGV[0] || 'out.pdf'")
             file_base = File.join(dir, "#{file_name}#{counter}")
             source_file = "#{file_base}.rb"
             if !File.exist?(source_file) || File.read(source_file) != code
