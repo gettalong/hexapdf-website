@@ -83,6 +83,7 @@ module RDocPDFImages
         stroke_color("hp-gray-light").
         rectangle(10, 10, 180, 180).stroke.
         restore_graphics_state
+      layout = composer.document.layout
 
       %s
 
@@ -105,6 +106,7 @@ module RDocPDFImages
         stroke_color("hp-gray-light").
         rectangle(10, 10, 180, 80).stroke.
         restore_graphics_state
+      layout = composer.document.layout
 
       %s
 
