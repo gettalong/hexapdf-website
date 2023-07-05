@@ -140,22 +140,11 @@ invoice_data = [
 end
 invoice_data << ["", "", "$ 450"]
 
-invoice_data.each_with_index do |row, rindex|
-  row.each_with_index do |content, cindex|
-    style = \{height: 25, padding: 5, border: {width: 1}, margin: [0, -1, -1, 0], valign: :center}
-    if rindex == 0 || rindex == invoice_data.length - 1
-      style.update(\{font: ["Helvetica", variant: :bold], background_color: "EEE"})
-    end
-    case cindex
-    when 0 then style.update(width: 250, position: :float)
-    when 1 then style.update(width: 80, position: :float, align: :right)
-    when 2 then style.update(align: :right)
-    end
-    composer.text(content.to_s, **style, )
-  end
+composer.table(invoice_data, column_widths: [250, 80], margin: [0, 0, 40]) do |args|
+  args[0, 0..-1] = \{font: ["Helvetica", variant: :bold], cell: {background_color: "EEE"}}
+  args[-1, 0..-1] = \{font: ["Helvetica", variant: :bold], cell: {background_color: "EEE"}}
+  args[0..-1, 1..-1] = \{align: :right}
 end
-
-composer.draw_box(HexaPDF::Layout::Box.new(height: 40))
 
 composer.formatted_text(
   ["Please transfer the money to the following bank account:\n",
@@ -176,15 +165,12 @@ Short comparison:
   sender and recipient rather easy. Prawn's bounding boxes are more versatile but also more verbose
   when doing this task.
 
-* HexaPDF doesn't yet have a table implementation, so the table has to be created manually. This is
-  doable but more verbose and error prone than the Prawn version.
-
 * Use of the `#formatted_text` methods in Prawn and HexaPDF is quite similar which is no coincidence
   since the idea was taken from Prawn. What HexaPDF doesn't allow but Prawn does is using HTML-like
   inline formatting.
 
 * Both examples use the default method for optimizing the size of the output file. The PDF file
-  created by HexaPDF is about 12% smaller than the one from Prawn.
+  created by HexaPDF is about 11% smaller than the one from Prawn.
 
 
 ## Creating a Document
@@ -442,6 +428,29 @@ Other methods
 
 ## Other Prawn Functionality
 
+Tables (`doc.table`)
+
+: This functionality is not part of Prawn itself but part of the official `prawn-table` gem.
+  Creating tables with Prawn is very easy and straightforward, with advanced functionality also
+  available.
+
+  HexaPDF also has a [table box][HexaPDF::Layout::TableBox] implementation which is quite similar:
+
+  ~~~ ruby
+  # Prawn
+  doc.table([['Cell 1', 'Cell 2'], ['Row 2 Cell 1', 'Row 2 Cell 2']])
+
+  # HexaPDF
+  composer.table([['Cell 1', 'Cell 2'], ['Row 2 Cell 1', 'Row 2 Cell 2']])
+  ~~~
+
+  Both, Prawn and HexaPDF, support defining cell borders and background colors as well as column and
+  row spans, can selectively apply styling to certain cell ranges, and split the table.
+
+  In addition, HexaPDF's implementation allows any kind of content in a cell while Prawn is limited
+  to text, images or sub-tables.
+
+
 Column box (`doc.column_box`)
 
 : HexaPDF also has the notion of a [column box][HexaPDF::Layout::ColumnBox]:
@@ -461,6 +470,7 @@ Column box (`doc.column_box`)
   The column box works like any other box. It can use `position: :flow` for using the shape of the
   current frame instead of just a rectangular area. And it can make all column heights (roughly)
   equal if specified to do so.
+
 
 Repeatable content (`doc.repeat`)
 
@@ -506,8 +516,8 @@ Stamps (`doc.create_stamp`, `doc.stamp`, `doc.stamp_at`)
   composer.image(stamp)
   ~~~
 
-  There will be a [HexaPDF::Composer] convenience method for creating such Form XObjects to make it
-  easier.
+  The [HexaPDF::Composer#create_stamp] method allows creating such stamps but currently only
+  provides a canvas to draw on (and not a composer-like interface).
 
 
 Document encryption
@@ -573,8 +583,6 @@ There are some things that are not yet supported in HexaPDF via convenience meth
 * Soft masks (`doc.soft_mask`)
 
 * Grids (`doc.define_grid`, `doc.grid`)
-
-* Tables (Prawn uses the official `prawn-table` gem for this)
 
 
 ## HexaPDF functionality not supported in Prawn
