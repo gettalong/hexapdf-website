@@ -1,0 +1,66 @@
+---
+title: HexaPDF 0.33.0 - Table Support
+created_at: 2023-08-03 00:15:00 +02:00
+---
+
+This release contains many different changes and fixes. The highlight, however, is the support for
+tables.
+
+### Table Implementation
+
+The biggest change in this release is the addition of [HexaPDF::Layout::TableBox] which allows the
+creation of fixed width tables:
+
+![Table box example](assets/table_box.png){: style="border: 1px solid black; display: block; margin: 0 auto"}
+
+With this addition creating a table becomes very easy:
+
+~~~ ruby
+require 'hexapdf'
+
+HexaPDF::Composer.create('table.pdf') do |composer|
+  composer.table([['This', 'is'], ['a', 'table']], column_widths: [100, 100])
+end
+~~~
+
+The table implementation supports
+
+* one or more boxes of any type inside a table cell,
+* header and footer rows,
+* column and row spans, as well as
+* easy styling of the whole table, rows, columns or individual cells.
+
+There is also a new [table benchmark] which shows that HexaPDF is outperforming Prawn with the
+`prawn-table` gem.
+
+[table benchmark]: /documentation/benchmarks/table.html
+
+
+### Website Overhaul
+
+The website got an overhaul and looks a bit (just a bit) different now. The changes were made to
+make the website feel more coherent in terms of styling and colors. Here are before and after images
+where this can be seen:
+
+![Image of API before change](assets/api-before.png){: style="width: 45%"}
+![Image of API now](assets/api-now.png){: style="width: 45%"}
+
+The documentation pages have also been enhanced with more sample PDFs. While the former version had
+183 PDFs created with HexaPDF during the website generation, the current version has 237, so about
+30% more!
+
+
+### Other Notable Changes
+
+There was a bit of work making HexaPDF faster and use less memory. This can be seen in the [line
+wrapping benchmark] where the low-level version and the [HexaPDF::Composer] version are now nearly
+on par. Another change reduced the number of Fiber instances which greatly improves HexaPDF
+performance on TruffleRuby.
+
+The API documentation of many classes has also been updated and enhanced. This is an ongoing process
+which will see all API documentation being updated.
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+[line wrapping benchmark]: /documentation/benchmarks/line_wrapping.html
+[changelog]: /documentation/changelog.html
