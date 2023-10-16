@@ -1,3 +1,7 @@
 github:
   title: Code
   dest_path: https://github.com/gettalong/hexapdf
+
+examples/cli-examples.html:
+  title: CLI commands
+  dest_path: ../documentation/hexapdf.1.html#examples
