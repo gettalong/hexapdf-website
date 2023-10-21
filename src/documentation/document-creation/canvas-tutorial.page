@@ -96,6 +96,7 @@ Let's use the current transformation matrix of the graphics state to find out th
 the current origin:
 
 ~~~ ruby
+# Note that one would normally use canvas.pos(0, 0) for this
 p canvas.graphics_state.ctm.evaluate(0, 0)  # prints [100, 100]
 ~~~
 
