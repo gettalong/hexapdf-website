@@ -21,20 +21,20 @@ Adobe, the PDF 1.7 specification became an ISO standard (32000-1:2008) in 2008. 
 years for the next version of the specification, PDF 2.0, to get published in 2017.
 
 Because the original ISO standard was nearly identical to the then already publicly available Adobe
-PDF 1.7 specification, it is one of the few (or the only?) ISO specifications that is [**freely
-available to the public at Adobe's website**][PDF1.7 specification]. I suggest getting it for
-first-hand knowledge about PDF topics.
+PDF 1.7 specification, it is one of the few ISO specifications that is [freely available to the
+public at Adobe's website][PDF1.7 specification].
 
-But... shouldn't you get the PDF 2.0 specification which is nine years newer? Yes, you could buy it
-but first it will cost money and second PDF 2.0 is more evolution than revolution. It clarified,
-fixed and explained many things but there are not many new features. So the PDF 1.7 specification is
-fine in most cases.
+While it was *not* publicly available from the beginning, the PDF Association has managed to make
+[**the PDF 2.0 specification freely available**][PDF2.0 specification] via sponsors. Although it is
+more evolution than revolution, it is better to get it while it is easily available since it has
+better and more detailed explanations for a few sections and fixes and corrections for previously
+underspecified functionality. I suggest getting it for first-hand knowledge about PDF topics.
 
-You will find that the API documentation has many references to applicable sections of the PDF 1.7
+You will find that the API documentation has many references to applicable sections of the PDF 2.0
 specification. So having the specification at hand will allow you dive deeper into a certain topic.
 
 [PDF1.7 specification]: https://opensource.adobe.com/dc-acrobat-sdk-docs/standards/pdfstandards/pdf/PDF32000_2008.pdf
-
+[PDF2.0 specification]: https://www.pdfa-inc.org/product/iso-32000-2-pdf-2-0-bundle-sponsored-access/
 
 ## HexaPDF API Design
 
