@@ -30,6 +30,10 @@ interactive-forms.*.html:
   side_menu: true
   sort_info: 35
 
+optional_content.*.html:
+  side_menu: true
+  sort_info: 37
+
 encryption.*.html:
   title: Encryption
   side_menu: true

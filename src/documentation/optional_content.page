@@ -1,0 +1,126 @@
+---
+title: Optional Content / Layers
+dest_path: <parent><basename>(-<version>)/index.(<lang>.)html
+---
+
+<h1>Optional Content</h1>
+
+
+## Introduction
+
+Optional content, also known as layers, provides the means to document authors and viewers to
+selectively show or hide contents.
+
+The content to be shown or hidden is marked up using **optional content groups** (OCGs). Those
+groups provide a name for the content they mark up and that name can optionally be shown in a user
+interface. This allows viewers to show or hide the content. It is also possible to show or hide
+individual groups using actions, for example, when clicking on a link.
+
+The visual representation in a user interface allows creating a tree like structure showing the
+groups. This structure does not necessarily represent nesting of groups inside each other, though
+nesting groups is possible.
+
+When creating a document the author can define the initial (i.e. default) state of all optional
+content groups, i.e. whether they are shown ("on") or hidden ("off"). Additionally, the visual
+representation of the optional content group can be defined as well as the possibility to show or
+hide groups based on the current state of the viewer (e.g. based on the zoom level). That later
+functionality, though, is not supported by all PDF viewers.
+
+Sometimes it is necessary to define more complex requirements for showing or hiding optional
+content. By using **optional content membership** dictionaries it is possible to show or hide
+content based on one or more optional content group. This allows, for example, to show content if a
+group is off instead of on. Membership dictionaries are, however, not supported by all PDF viewers.
+
+
+## Dictionary Types
+
+Optional content properties
+
+: This is the main dictionary for working with optional content. It is implemented by
+  [HexaPDF::Type::OptionalContentProperties] and accessible via [HexaPDF::Document#optional_content].
+
+  The properties dictionary provides convenience methods for listing all groups, creating them as
+  well as membership dictionaries and returning the default configuration dictionary.
+
+  It is important to note that only groups added to the properties dictionary are used by viewers.
+  All groups that are used for marking up content but are not added to the properties dictionary,
+  are ignored by viewers.
+
+Optional content configuration
+
+: The configuration dictionaries describe the state of the groups and how that state may be changed
+  automatically through external factors, like changing zoom levels. It is implemented by
+  [HexaPDF::Type::OptionalContentConfiguration].
+
+  The PDF specification allows the definition of more than one configuration dictionary. The default
+  configuration that is applied when the document is opened is accessible via
+  [HexaPDF::Type::OptionalContentProperties#default_configuration] and it mandates that all OCGs are
+  on by default.
+
+  Next to setting and getting the state of groups the dictionary also provides convenience methods
+  for defining the visual representation.
+
+
+Optional content group
+
+: This dictionary represents an optional content group and is implemented by the class
+  [HexaPDF::Type::OptionalContentGroup]. The class provides various convenience methods to define
+  the default state of the group, like whether it is on or off.
+
+  Optional content group dictionaries can either be created through the main optional content
+  properties dictionary or when marking up content. Anytime a group is needed as argument, the name
+  of the group or the group dictionary itself can be provided.
+
+  Note that it is possible to define multiple groups with the same name. When this is done and a
+  group is specified via a name the first group found in the list of groups in the optional content
+  properties dictionary is used.
+
+Optional content membership
+
+: A membership dictionary describes a more complex visibility policy for content. It is implemented
+  by [HexaPDF::Type::OptionalContentMembership].
+
+  Content may be assigned directly to a group or to a membership dictionary which itself relies on
+  the state of groups to define the visibility.
+
+
+## Usage
+
+HexaPDF provides the [HexaPDF::Content::Canvas#optional_content] method for wrapping a part of a
+content stream inside the necessary instructions:
+
+~~~ ruby
+canvas.optional_content('Hints') do
+  # drawing instructions
+end
+~~~
+
+This will automatically create an optional content group with the given name and add it to the list
+of known OCGs, or use the first found OCG with that name.
+
+Once an OCG is created, it can be accessed through the content properties dictionary and modified:
+
+~~~ ruby
+hints_ocg = document.optional_content.ocg('Hints')
+hints_ocg.off!
+hints_ocg.add_to_ui(path: 'Debug')
+~~~
+
+Optional content can also be used together with the document layout system. By specifying the
+property "optional_content" for a box, the content of that box can be controlled via the provided
+OCG:
+
+~~~ ruby
+require 'hexapdf'
+HexaPDF::Composer.create('ocg.pdf', page_size: [0, 0, 300, 100]) do |composer|
+  composer.text("This text can be toggled via the 'Text' layer.",
+                properties: {"optional_content" => 'Text'})
+  composer.document.optional_content.ocg('Text').add_to_ui
+end
+~~~
+
+{pdf: {snippets: [2], filename: 'ocg.pdf'}}
+
+Lastly, it is possible to control the state of optional content groups via the [SetOCGState
+action][HexaPDF::Type::Actions::SetOCGState]. Such an action can be triggered via a link, see the
+[optional content example](/examples/composer_optional_content.html).
