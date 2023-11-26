@@ -58,7 +58,7 @@ Let's output some basic text:
 
 ~~~ ruby
 composer.text('Composer Tutorial', font: ['Lato', variant: :bold],
-              font_size: 24, align: :center)
+              font_size: 24, text_align: :center)
 ~~~
 
 {pdf: [0-2, -1]}
@@ -129,7 +129,7 @@ end
 composer.style(:header, font: ['Lato', variant: :bold], font_size: 16,
                margin: [20, 0, 16], padding: [10, 0, 8], overlays: [header_marker])
 composer.style(:paragraph, font: 'Lato', font_size: 12, margin: [0, 0, 12],
-               align: :justify)
+               text_align: :justify)
 ~~~
 
 Both styles define the [font][HexaPDF::Layout::Style#font] and [font

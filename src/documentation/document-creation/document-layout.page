@@ -234,7 +234,7 @@ require 'hexapdf'
 
 HexaPDF::Composer.create('output.pdf') do |composer|
   composer.text("Hello World", font_size: 20)
-  composer.image("some image.jpg", align: :center, width: 300)
+  composer.image("some image.jpg", text_align: :center, width: 300)
 end
 ~~~
 
