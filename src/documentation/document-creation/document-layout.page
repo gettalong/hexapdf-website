@@ -7,8 +7,8 @@ sort_info: 20
 <h1>Document Layout</h1>
 
 The automatic document layout feature of HexaPDF allows one to easily create complex documents. It
-works by first defining the area where the content should be placed and then adding content boxes.
-The layout engine places the boxes into the area according to the their position information and
+works by first defining the space where the content should be placed and then adding content boxes.
+The layout engine places the boxes into the space according to the their position information and
 allows, for example, for flowing text around other content.
 
 
@@ -56,7 +56,7 @@ The main classes used by the layout engine are
 * [HexaPDF::Layout::Style] for encapsulating all the styling information for boxes (and some other
   classes),
 
-* [HexaPDF::Layout::Frame] for providing the area where to place the boxes, and
+* [HexaPDF::Layout::Frame] for providing the space where to place the boxes, and
 
 * [HexaPDF::Layout::BoxFitter] for fitting boxes into one or more frames using their style
   information.
@@ -107,9 +107,9 @@ one time.
 
 ## Frames for Layout
 
-A **[HexaPDF::Layout::Frame]** defines the area where content boxes can be placed and provides the
-methods to place them. Once placed their occupied space (which is different for different types of
-positions) is removed from the available area, making the frame ready for the next box placement.
+A **[HexaPDF::Layout::Frame]** defines the space where content boxes can be placed and provides the
+methods to place them. Once placed their occupied area (which is different for different types of
+positions) is removed from the available space, making the frame ready for the next box placement.
 Note that placing a box in a frame doesn't necessarily mean actually drawing the box, e.g. when
 frames are used inside container boxes.
 
@@ -117,17 +117,17 @@ frames are used inside container boxes.
 ### Frame Shape
 
 The **shape** of a frame is initially rectangular. Once boxes are fitted and drawn inside the frame,
-its available area gets reduced. Due to this the shape of a frame may be a polygon set consisting of
-arbitrary rectilinear polygons. For example, if a box is placed using absolute coordinates, a hole
-in the shape may appear.
+its available space gets reduced. Due to this the shape of a frame may be a polygon set consisting
+of arbitrary rectilinear polygons. For example, if a box is placed using absolute coordinates, a
+hole in the shape may appear.
 
 The frame's shape is used to determine the current placement position (available through the
 [HexaPDF::Layout::Frame#x] and [HexaPDF::Layout::Frame#y] attributes). Together with the
 [HexaPDF::Layout::Frame#available_width] and [HexaPDF::Layout::Frame#available_height] attributes
-they define a rectangular area inside which the next box is placed.
+they define a rectangular region inside which the next box is placed.
 
 There is one exception though: If the to-be-placed box is to be flown around content (style property
-position=:flow), this rectangular area is ignored and the frame's shape is directly used to
+position=:flow), this rectangular region is ignored and the frame's shape is directly used to
 determine where to place the box's content.
 
 
@@ -166,14 +166,14 @@ Handling a negative fit result
   this case the [HexaPDF::Layout::Frame#find_next_region] method may be called to determine a new
   region for fitting the box and the process is repeated from the top.
 
-Drawing the result and/or removing the box's area
+Drawing the result and/or removing the box's occupied area
 
 : Once a successful fit result has been obtained, the [HexaPDF::Layout::Frame#draw] method can be
-  called to draw the box and remove the area of the box from the frame's shape.
+  called to draw the box and remove the occupied area of the box from the frame's shape.
 
   Alternatively, the [HexaPDF::Layout::Frame#remove_area] method is called to just remove the box's
-  area from the frame's shape without drawing the box. This is useful, for example, when boxes are
-  fitted into a temporary frame inside a container box.
+  occupied area from the frame's shape without drawing the box. This is useful, for example, when
+  boxes are fitted into a temporary frame inside a container box.
 
 To have the most control over this process, one can use the frame class directly. However, in most
 cases it is easier to use the BoxFitter class.

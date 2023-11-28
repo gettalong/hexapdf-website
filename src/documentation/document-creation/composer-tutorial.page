@@ -44,8 +44,8 @@ composer.document.config['font.map'] = {
 ~~~
 
 Everytime a page is created by the composer, an accompanying [HexaPDF::Layout::Frame] instance is
-also created. That frame defines the content area used for laying out the content. We will come back
-to that later.
+also created. This frame defines the space used for laying out the content. We will come back to
+that later.
 
 
 ## Adding Content
@@ -155,7 +155,7 @@ instruct the layout engine to use different placements using the
 [#position][HexaPDF::Layout::Style#position] and
 [#position_hint][HexaPDF::Layout::Style#position_hint] style properties.
 
-The [frame][HexaPDF::Layout::Frame] that gets created when adding a page defines the area where
+The [frame][HexaPDF::Layout::Frame] that gets created when adding a page defines the space where
 boxes may be placed. Usually, the frame has a rectangular shape but it may actually be a set of
 arbitrary, axis-aligned, rectilinear polygons.
 
@@ -180,7 +180,7 @@ composer.canvas.
 You can see that the frame is not rectangular anymore! The space occupied by the floating image has
 been removed from it.
 
-The default placement uses a rectangular area starting from the top-most, left-most point of the
+The default placement uses a rectangular region starting from the top-most, left-most point of the
 frame's shape. So if we draw some text, it will be put right next to the floating image:
 
 ~~~ ruby
@@ -191,7 +191,7 @@ composer.lorem_ipsum(count: 2, style: :paragraph)
 
 Putting the text to the right works but the text does not go beneath the image, i.e. it doesn't flow
 around it. The reason for this is that by default the box is fit into to above mentioned rectangular
-area.
+region.
 
 If we need to flow the text around the image, we need to instruct the layout engine and box
 implementations to use the shape of the frame. Let's draw the image again and now flow the text

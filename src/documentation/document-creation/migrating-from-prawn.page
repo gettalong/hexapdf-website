@@ -468,7 +468,7 @@ Column box (`doc.column_box`)
   ~~~
 
   The column box works like any other box. It can use `position: :flow` for using the shape of the
-  current frame instead of just a rectangular area. And it can make all column heights (roughly)
+  current frame instead of just a rectangular region. And it can make all column heights (roughly)
   equal if specified to do so.
 
 
