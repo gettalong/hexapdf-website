@@ -152,8 +152,9 @@ composer.lorem_ipsum(style: :paragraph)
 
 Content boxes are usually placed top to bottom, one below the other. However, it is possible to
 instruct the layout engine to use different placements using the
-[#position][HexaPDF::Layout::Style#position] and
-[#position_hint][HexaPDF::Layout::Style#position_hint] style properties.
+[#position][HexaPDF::Layout::Style#position], [#align][HexaPDF::Layout::Style#align],
+[#valign][HexaPDF::Layout::Style#valign] and [#mask_mode][HexaPDF::Layout::Style#mask_mode] style
+properties.
 
 The [frame][HexaPDF::Layout::Frame] that gets created when adding a page defines the space where
 boxes may be placed. Usually, the frame has a rectangular shape but it may actually be a set of

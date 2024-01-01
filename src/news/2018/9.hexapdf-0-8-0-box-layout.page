@@ -43,8 +43,8 @@ easy:
   consist of multiple polygons.
 
 * Boxes can be styled using the new [`position`][HexaPDF::Layout::Style#position] and
-  [`position_hint`][HexaPDF::Layout::Style#position_hint] style properties to remove the whole
-  vertical stripe in which they are in, imitating the basic cursor model.
+  `position_hint` style properties to remove the whole vertical stripe in which they are in,
+  imitating the basic cursor model.
 
 * And these style properties can also make a box "float" to the left or right, like blocks in HTML,
   removing only their occupied region.

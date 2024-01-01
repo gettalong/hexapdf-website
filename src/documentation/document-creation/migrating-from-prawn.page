@@ -125,7 +125,7 @@ composer.style(:base, font: "Helvetica", font_size: 12, line_spacing: 1.2)
 composer.new_page
 composer.text("HexaPDF Example Inc.\nGarnish Street 3a\n4567 New South East\nWorld",
               width: 150, height: 100, padding: 5, border: \{width: 1},
-              position: :float, position_hint: :right)
+              position: :float, align: :right)
 
 composer.text("Customer Here\nAvailability Arcarde 1\n 8901 Old North West\nMoon",
               width: 150, height: 100, padding: 5, border: \{width: 1})
