@@ -78,7 +78,7 @@ We will use such a form XObject to create the background layout of the content p
 create the needed form XObject and get its canvas object:
 
 ~~~ ruby
-form = doc.add(Type: :XObject, Subtype: :Form, BBox: HexaPDF::Type::Page.media_box(:A4))
+form = doc.add(\{Type: :XObject, Subtype: :Form, BBox: HexaPDF::Type::Page.media_box(:A4)})
 form_canvas = form.canvas
 ~~~
 

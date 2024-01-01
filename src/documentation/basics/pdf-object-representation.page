@@ -96,7 +96,7 @@ document's page tree:
 require 'hexapdf'
 
 doc = HexaPDF::Document.new
-page = doc.add(Type: :Page, MediaBox: [0, 0, 100, 100])
+page = doc.add(\{Type: :Page, MediaBox: [0, 0, 100, 100]})
 page.contents = "0 0 m 100 100 l S"
 doc.pages << page
 doc.write("sample.pdf")

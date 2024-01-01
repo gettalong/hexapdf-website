@@ -30,7 +30,7 @@ class TutorialPage < Webgen::PathHandler::Page
       code_file = pdf_file + '.rb'
 
       Dir.mkdir(tutorials_dir) unless File.directory?(tutorials_dir)
-      File.write(code_file, code(node), mode: 'w')
+      File.write(code_file, code(node).gsub(/\\+\{/, '{'), mode: 'w')
       Dir.chdir(tutorials_dir) do
         unless system("ruby -I#{hexapdf_lib} #{File.basename(code_file)}")
           raise "Error creating tutorial PDF file from #{node.versions['default'].alcn}"
@@ -42,7 +42,7 @@ class TutorialPage < Webgen::PathHandler::Page
   end
 
   def code(node)
-    node.blocks['content'].scan(/\n~~~ ruby\n(.*?)\n~~~/m).map(&:first).join("\n\n").gsub(/\\+\{/, '{')
+    node.blocks['content'].scan(/\n~~~ ruby\n(.*?)\n~~~/m).map(&:first).join("\n\n")
   end
 
 end

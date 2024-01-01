@@ -4,7 +4,9 @@ class SnippetPDF
     snippets = context.persistent['snippets'] ||=
       context.content.scan(/\n~~~ ruby\n(.*?)\n~~~/m).map {|a| a.first.gsub(/\\+\{/, '{') }
     code = context[:config]['tag.pdf.snippets'].map do |selector|
-      if selector =~ /\A(\d+)-(\d+)\z/
+      if selector.kind_of?(Integer)
+        snippets[selector]
+      elsif selector =~ /\A(\d+)-(\d+)\z/
         snippets[($1.to_i)..($2.to_i)]
       else
         snippets[selector.to_i]
