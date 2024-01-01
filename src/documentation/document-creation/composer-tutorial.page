@@ -87,7 +87,7 @@ column box:
 
 ~~~ ruby
 composer.column(columns: 2, gaps: 30, equal_height: true) do |column|
-  column.list(item_type: :square, item_spacing: 16) do |list|
+  column.list(marker_type: :square, item_spacing: 16) do |list|
     list.multiple do |item_1|
       item_1.formatted_text(["This is ", \{text: "formatted", fill_color: "red"},
                              " text. And one of two boxes of this item."], font: 'Lato')
