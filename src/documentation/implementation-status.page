@@ -103,6 +103,28 @@ with damaged or invalid files.
 | 9.8 Font descriptors | ☑ | |
 | 9.9 Embedded font programs | ☑ | TrueType fonts only |
 | 9.10 Extraction of text content | ☑ | No CMap support for composite fonts |
+| 10 Rendering | ☐ | HexaPDF does not support rendering PDFs |
+| 11 **Transparency** | | |
+| 11.1 General | ☑ | Just info |
+| 11.2 Overview of transparency | ☑ | Just info |
+| 11.3 Basic compositing computations | ☑ | Just info  |
+| 11.4 Transparency groups | ☑ | Just info |
+| 11.5 Soft masks | ☑ | Just info  |
+| 11.6 **Specifying transparency in PDF** | |  |
+| 11.6.1 General | ☑ | Just info |
+| 11.6.2 Specifying source and backdrop colours | ☑ | Just info |
+| 11.6.3 Specifying blending colour space and blend mode | ☐ |  |
+| 11.6.4 **Specifying shape and opacity** | | |
+| 11.6.4.1 General | ☑ | Just info |
+| 11.6.4.2 Object shape and opacity | ☑ | Just info |
+| 11.6.4.3 Mask shape and opacity | ☐ | |
+| 11.6.4.4 Constant shape and opacity | ☑ | |
+| 11.6.5 **Specifying soft masks** | | |
+| 11.6.5.1 Soft-mask dictionaries | ☐ | |
+| 11.6.5.2 Soft-mask images | ☐ | |
+| 11.6.6 Transparency group XObjects | ☐ | |
+| 11.6.7 Patterns and transparency | ☐ | |
+| 11.7 Colour space and rendering issues | ☐ | |
 | 12 **Interactive Features** | | |
 | 12.1 General | ☑ | Just info |
 | 12.2 Viewer Preferences | ☑ | |
