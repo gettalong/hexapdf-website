@@ -1,0 +1,32 @@
+---
+title: HexaPDF 0.35.0 - Fallback Fonts
+created_at: 2024-01-07 00:30:00 +01:00
+---
+
+This release contains many small features and fixes and **breaking changes**. So make sure you read
+the [changelog] before upgrading!
+
+The most notable additions and changes are:
+
+* The document layout engine gained support for **fallback fonts**. Just define the fallback fonts
+  using the new configuration option 'font.fallback' and you are set.
+
+  ![fallback font example](assets/fallback_fonts.png){: style="border: 1px solid black; display: block; margin: 0 auto"}
+
+  The fallback font support is also used when generating appearances for AcroForm text fields.
+
+* It is now possible to use the document layout functionality for a single canvas/page via the new
+  [HexaPDF::Content::CanvasComposer] class, easily instantiated via
+  [`canvas.composer`][HexaPDF::Content::Canvas#composer].
+
+* The style properties 'align' and 'valign' have been renamed (**breaking change**) to 'text_align'
+  and 'text_valign' so that the old names can be used for box placement. With the addition of the
+  style property 'mask_mode' one has now even more control over box placement, e.g. overlaying boxes
+  is now possible (see the [added example](/examples/frame_mask_mode.html)).
+
+* The new 'psd' command for `hexapdf inspect` provides easier to read output for page content
+  streams, e.g. by decoding the text output parts and showing the nesting levels.
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+[changelog]: /documentation/changelog.html
