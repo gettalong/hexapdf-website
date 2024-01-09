@@ -119,8 +119,8 @@ new_page.canvas.circle(200, 200, 30).fill
 doc.write(output_file)</pre>
     <pre class="cycle2">require 'hexapdf'
 doc = HexaPDF::Document.open(input_file)
-doc.acro_form.field_by_name('firstname').value = 'Thomas'
-doc.acro_form.field_by_name('city').value = 'Vienna'
+doc.acro_form.field_by_name('firstname').field_value = 'Thomas'
+doc.acro_form.field_by_name('city').field_value = 'Vienna'
 doc.write(output_file)</pre>
   </div></div>
 </div>
