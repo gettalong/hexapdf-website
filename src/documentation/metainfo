@@ -21,6 +21,10 @@ document-creation/:
   side_menu: true
   sort_info: 20
 
+metadata.*.html:
+  side_menu: true
+  sort_info: 25
+
 outline.*.html:
   side_menu: true
   sort_info: 30

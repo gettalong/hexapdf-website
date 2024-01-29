@@ -1,0 +1,72 @@
+---
+title: Metadata
+dest_path: <parent><basename>(-<version>)/index.(<lang>.)html
+---
+
+<h1>Metadata</h1>
+
+
+## Introduction
+
+A PDF document can contain metadata in various locations. The main locations are the [information
+dictionary in the trailer][HexaPDF::Type::Info] (accessible via `document.trailer.info` and the [XMP
+metadata stream in the document catalog][HexaPDF::Type::Metadata] (accessible via
+`document.catalog[:Metadata]`).
+
+Among the supported metadata are the title and author(s) of the document, the application creating
+the original document from which the PDF was converted, the PDF processor creating the PDF itself,
+and the creation and modification dates.
+
+Up to and including PDF 1.7 the information dictionary was as important as the main metadata stream.
+However, with PDF 2.0 all metadata keys except /CreationDate and /ModDate in the information
+dictionary have been deprecated in favor of the metadata stream.
+
+The metadata stream is the more standard way of defining metadata since it can be read by any XMP
+processor. This is even possible if the XMP processor doesn't understand the PDF file format since
+the metadata stream is always written without any PDF filters and may also be exempted from being
+encrypted.
+
+HexaPDF fully supports the information dictionary as source and destination of metadata. Howver, it
+only supports the XMP metadata stream as destination, not as source.
+
+
+## Usage
+
+There are two ways to access the metadata: manually or through a dedicated interface.
+
+Manually accessing the information dictionary can be done via `document.trailer.info` for the
+information dictionary and `document.catalog[:Metadata]` for the metadata stream. As mentioned
+above, the metadata stream has to be parsed manually to extract the needed information.
+
+~~~ ruby
+require 'hexapdf'
+
+doc = HexaPDF::Document.open(ARGV[0])
+puts doc.trailer.info[:Title]
+~~~
+
+The dedicated interface is available via [`document.metadata`][HexaPDF::Document::Metadata]. Once
+this method is invoked the metadata is read from the information dictionary and stored internally
+where it can be read and changed. When writing the PDF document, the stored information is written
+back to the information dictionary and the main metadata stream. Note that this will overwrite any
+metadata manually changed in the information dictionary and a possibly existing metadata stream.
+
+Whether the information dictionary and/or the XMP metadata stream are written can be controlled by
+using the appropriate methods.
+
+The convenience interface supports all metadata from the information dictionary. Additionally, it
+supports adding custom XMP metadata, albeit not to the full extent possible with XMP. For this, the
+used XMP namespaces as well as property types need to be registered beforehand. That additional XMP
+metadata is only written to the metadata stream.
+
+~~~ ruby
+require 'hexapdf'
+
+doc = HexaPDF::Document.open(ARGV[0])
+puts doc.metadata.title
+doc.metadata.author(['Author1', 'Author2'])
+doc.metadata.register_property_type('dc', 'contributor', 'UnorderedArray')
+doc.metadata.property('dc', 'contributor', ['Name1', 'Name2'])
+doc.encrypt(owner_password: 'Some password here', encrypt_metadata: false)
+doc.write('encrypted_with_XMP_metadata.pdf', optimize: true)
+~~~
