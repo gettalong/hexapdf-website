@@ -18,7 +18,7 @@ interactive-forms/:
   routing_path: index.html
 
 outline/:
-  routed_title: Interactive Forms
+  routed_title: Outline / Bookmarks
   routing_path: index.html
 
 separator:
