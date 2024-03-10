@@ -43,11 +43,14 @@ encryption.*.html:
   side_menu: true
   sort_info: 40
 
-
 digital-signatures/:
   title: Digital Signatures
   side_menu: true
   sort_info: 50
+
+pdfa.*.html:
+  side_menu: true
+  sort_info: 55
 
 
 api/:

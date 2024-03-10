@@ -1,0 +1,153 @@
+---
+title: PDF/A Conformance
+dest_path: <parent><basename>(-<version>)/index.(<lang>.)html
+---
+
+<h1>PDF/A Conformance</h1>
+
+
+## Introduction
+
+The PDF/A specifications ISO 19005-1 through 19005-4 define restrictions on the PDF format to enable
+its use as archival format. Many governments, libraries, news papers, etc. need such a format to
+permanently store PDF documents.
+
+The benefit of using PDF/A for this is that it restricts the use of certain PDF functionality which
+would make the PDF file dependent on external resources or special viewers. For example, all fonts
+have to be embedded and multimedia/Javascript content is forbidden.
+
+While PDF/A-1 is based on PDF 1.4, PDF/A-2 and PDF/A-3 are based on PDF 1.7. The newest iteration
+PDF/A-4 is based on PDF 2.0.
+
+Each PDF/A specification comes with a set of conformance levels to which a PDF file may conform:
+
+PDF/A-1
+: The first iteration of PDF/A supports the levels 'B' (basic conformance) and 'A' (accessible
+  conformance). Level 'A' is a superset of 'B' and requires PDF files to be tagged.
+
+PDF/A-2
+: The second iteration of PDF/A supports the same conformance levels as PDF/A-1. Additionally, it
+  adds the level 'U' which is between 'A' and 'B' and requires that all text has Unicode mappings
+  available.
+
+PDF/A-3
+: This is the same as PDF/A-2 but allows embedding any kind of file (whereas PDF/A-2 only allows
+  embedding PDF/A conforming files).
+
+PDF/A-4
+: This specification differs a bit from the former because it abandons the 'B', 'U' and 'A'
+  conformance levels. A file may be conforming to PDF/A-4 or to the new conformance levels 'F'
+  (PDF/A-4 with embedded files) or 'E' (PDF/A-4 for engineering).
+
+HexaPDF supports the creation of PDF files conforming to the levels 2b, 2u, 3b, and 3u. Once tagged
+PDF is implemented, HexaPDF will eventually support levels 2a and 3a.
+
+
+## Creating a PDF/A Conforming Document
+
+Though HexaPDF supports the creation of PDF/A files, the author needs to make sure they don't use
+anything that is forbidden in them.
+
+To tell HexaPDF that a document should be conforming to PDF/A, the `:pdfa` task needs to be invoked,
+with the optional `level` argument specifying the conformance level:
+
+~~~ ruby
+document.task(:pdfa, level: '3b')
+~~~
+
+The task ensures, among other things, that the basic additions to a standard PDF to make it PDF/A
+compatible are done.
+
+Here is a partial list of requirements that need to be followed:
+
+* The trailer ID must be set. Note that this is automatically done by HexaPDF when running the
+  validation task before writing.
+
+* No encryption may be used.
+
+* Streams may not use external stream data.
+
+* The LZW filter may not be used.
+
+* Integers must be between -2**31 und 2**31-1.
+
+* Strings may not be longer than 32,767 bytes.
+
+* q/Q pairs (`save_graphics_state` and `restore_graphics_state`) may not be nested more than 28
+  levels.
+
+* HexaPDF adds an sRGB output intent if no output intent has been set up. This takes care of using
+  RGB and gray colors. If a document contains CMYK colors, the author needs to make sure to add an
+  appropriate output intent for CMYK *and* RGB (if used).
+
+* All fonts must be embedded. This means the standard 14 PDF fonts cannot be used! HexaPDF's PDF/A
+  task enforces this by removing the font loader for the standard 14 PDF fonts.
+
+* The 3D, Sound, Screen, and Movie annotations may not be used.
+
+* All annotations must have the print flag set and the hidden/invisible/toggle_no_view/no_view flags unset.
+
+* All text annotations must have the no_zoom/no_rotate flags set.
+
+* All annotations need an appearance dictionary, except zero-width/zero-height ones or popups.
+
+* The Launch, Sound, Movie, ResetForm, ImportData, Hide, SetOCGState, Rendition, Trans, GoTo3DView
+  and JavaScript actions may not be used.
+
+* Fields, widgets, pages, and the catalog may not use the /AA entry.
+
+* The /Name entry must be set for all optional content configuration dictionaries. HexaPDF sets this
+  entry for the default optional content configuration dictionary.
+
+* All optional content groups must be in the /Order array of the optional content configuration
+  dictionary if it exists.
+
+* The /AS entry of an optional content configuration dictionary may not be used
+
+* The /AlternatePresentations in a document's name dictionary may not be sued.
+
+* The /PresSteps entry in any page dictionary may not be used.
+
+* The /Requirements entry on the document's catalog may not be used.
+
+
+To ensure that a document created with HexaPDF is PDF/A compliant, a PDF/A validation tool like
+[veraPDF](https://verapdf.org) can be used.
+
+An PDF/A file created by HexaPDF that follows these rules is available as an
+[example](/examples/pdfa.html).
+
+
+## Best Practices
+
+* Call the PDF/A task as early as possible to avoid any problems:
+
+  ~~~ ruby
+  HexaPDF::Composer.create('sample.pdf') do |composer|
+    composer.task(:pdfa)
+    ...
+  end
+  ~~~
+
+* Use the 'font.map' configuration option to define substitute fonts for the standard 14 PDF fonts
+  in case some code explicitly refers to them:
+
+  ~~~ ruby
+  composer.document.config['font.map'] = {
+    'Times' => {
+      none: 'Inter-Regular.ttf',
+      bold: 'Inter-Bold.ttf',
+      italic: 'Inter-Italic.ttf',
+      bold_italic: 'Inter-BoldItalic.ttf',
+    },
+    'Helvetica' => {
+      none: 'OpenSans-Regular.ttf',
+      bold: 'OpenSans-Bold.ttf',
+      italic: 'OpenSans-Italic.ttf',
+      bold_italic: 'OpenSans-BoldItalic.ttf',
+    },
+    'ZapfDingbats' => {
+      none: 'ZapfDingbats Regular.ttf'
+    }
+  }
+  ~~~
