@@ -141,18 +141,18 @@ end
 invoice_data << ["", "", "$ 450"]
 
 composer.table(invoice_data, column_widths: [250, 80], margin: [0, 0, 40]) do |args|
-  args[0, 0..-1] = \{font: ["Helvetica", variant: :bold], cell: {background_color: "EEE"}}
-  args[-1, 0..-1] = \{font: ["Helvetica", variant: :bold], cell: {background_color: "EEE"}}
+  args[0, 0..-1] = \{font: "Helvetica bold", cell: {background_color: "EEE"}}
+  args[-1, 0..-1] = \{font: "Helvetica bold", cell: {background_color: "EEE"}}
   args[0..-1, 1..-1] = \{text_align: :right}
 end
 
 composer.formatted_text(
   ["Please transfer the money to the following bank account:\n",
-   \{text: "IBAN: ", font: ["Helvetica", variant: :bold]},
+   \{text: "IBAN: ", font: "Helvetica bold"},
    "AT65 1234 1234 5678 9012 3456, ",
-   \{text: "BIC: ", font: ["Helvetica", variant: :bold]},
+   \{text: "BIC: ", font: "Helvetica bold"},
    "ABCDAT12345\n",
-   \{text: "Thank you for choosing us!", font: ["Helvetica", variant: :italic], font_size: 8}],
+   \{text: "Thank you for choosing us!", font: "Helvetica bold", font_size: 8}],
   text_align: :center
 )
 

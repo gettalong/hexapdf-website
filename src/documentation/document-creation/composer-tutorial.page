@@ -57,7 +57,7 @@ document-layout.html} for details.
 Let's output some basic text:
 
 ~~~ ruby
-composer.text('Composer Tutorial', font: ['Lato', variant: :bold],
+composer.text('Composer Tutorial', font: 'Lato bold',
               font_size: 24, text_align: :center)
 ~~~
 
@@ -143,7 +143,7 @@ Let's define two styles, one for headers and one for paragraphs:
 header_marker = lambda do |canvas, box|
   canvas.line_width(10).stroke_color("6a6").line(-8, 0, -8, box.height).stroke
 end
-composer.style(:header, font: ['Lato', variant: :bold], font_size: 16,
+composer.style(:header, font: 'Lato bold', font_size: 16,
                margin: [20, 0, 16], padding: [10, 0, 8], overlays: [header_marker])
 composer.style(:paragraph, font: 'Lato', font_size: 12, margin: [0, 0, 12],
                text_align: :justify)
