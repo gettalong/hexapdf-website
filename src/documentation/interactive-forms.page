@@ -141,10 +141,43 @@ The standard PDF fonts Helvetica, Times and Courier work correctly and those are
 interacctive forms. For all other fonts a fallback font configured through the
 'acro_form.fallback_font` configuration option will be used.
 
-It is also possible to use **Javascript actions** together with form fields, for example for
-calculating the value of a form field based on the values of other form fields. As HexaPDF does
-*not* support Javascript those calculations won't work when filling out a form. However, HexaPDF
-*does* support some special Javascript based formatting methods, for example, for formatting numbers.
+### JavaScript Actions
+
+It is possible to use JavaScript actions together with form fields, for example for formatting a
+value in a certain way or for calculating the value of a form field.
+
+Implementing full support for JavaScript actions would entail using a full-blown JavaScript engine.
+This is not supported by HexaPDF. However, field actions can use certain, pre-defined JavaScript
+functions that *are* supported by HexaPDF.
+
+There are four special action types for form fields and of those four the "format" and "calculate"
+actions are currently supported:
+
+* The "format" action is used for formatting a field's value before displaying it. For example, a
+  number entered like "2,345" could automatically be formatted as "2.35" (using two decimal places
+  and a point for the separator).
+
+  HexaPDF executes such actions when generating the appearance of a text field. To apply a "format"
+  action to a text field, the [HexaPDF::Type::AcroForm::TextField#set_format_action] can be used.
+
+* The "calculate" action allows calculating a field's value based on the values of other fields.
+  This is usually done by a PDF viewer when the value of any field changes. The calculation order, a
+  dictionary entry in the main form dictionary, defines the order of the recalculation of the
+  fields.
+
+  HexaPDF, however, doesn't automatically recalculate the field values on changes as that might lead
+  to many unnecessary calculations. The method [HexaPDF::Type::AcroForm::Form#recalculate_fields]
+  must be called once all field values are set.
+
+  To apply a "calculate" action to a text field, the
+  [HexaPDF::Type::AcroForm::TextField#set_calculate_action] can be used. This will also
+  automatically add the text field to the calculation order dictionary entry.
+
+The module [HexaPDF::Type::AcroForm::JavaScriptActions] contains the implementations of the
+supported JavaScript functions, like [formatting
+numbers][HexaPDF::Type::AcroForm::JavaScriptActions#apply_af_number_format] and [calculating values
+based on a few pre-defined
+functions][HexaPDF::Type::AcroForm::JavaScriptActions#run_af_simple_calculate].
 
 ## Widget Annotations
 
