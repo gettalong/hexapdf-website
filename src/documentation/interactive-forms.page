@@ -197,6 +197,12 @@ needed widget annotation and field properties when the widget is created. Later 
 used during the creation of the appearance (like some PDF readers would do when the
 `/NeedAppearances` key on the main form object is set).
 
+The appearance generator also sets the "print" flag on the widget annotations and removes a possibly
+set "hidden" flag. The first is done so that the field value appears on print outs and the second so
+that generated appearances are actually visible (some interactive forms toggle the "hidden" flag
+based on a JavaScript action but those aren't universally supported by HexaPDF, so it is better to
+generally remove the "hidden" flag).
+
 You can naturally provide the appearance streams yourself if needed since those are just Form
 XObjects.
 
