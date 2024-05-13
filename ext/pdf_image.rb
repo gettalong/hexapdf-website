@@ -28,6 +28,8 @@ class PDFImage
     pdf_file = "#{node['file_base']}.pdf"
     page = node['pdf_page'] || 1
 
+    return if File.exist?(png_file) && File.mtime(png_file) > File.mtime(source_file)
+
     $website_out = pdf_file
     load(source_file, true)
     doc = HexaPDF::Document.open(pdf_file)
