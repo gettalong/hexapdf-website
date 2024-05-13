@@ -1,10 +1,4 @@
 --- name:paths
-/assets/search_data.js:
-  handler: tipue_search
-  entries: {alcn: /**/*.html}
-  mode: static
-  content_css: '#content'
-
 [/**/*.woff, /**/*.woff2, /**/*.svg, /**/*.eot, /**/*.ttf, /**/*.pdf, /.htaccess]:
   handler: copy
 

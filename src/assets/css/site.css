@@ -173,35 +173,25 @@ header {
 
   #search {
     display: inline-block;
+    width: 15em;
+    text-align: left;
   }
 
-  #tipue_search_input {
-    width: 10em;
-  }
-
-  #tipue_search_content {
-    margin: 0;
-    display: none;
-    position: absolute !important;
-    max-width: inherit;
-    width: 70%;
-    left: 15%;
+  .pagefind-ui__drawer {
+    position: absolute;
+    z-index: 10;
+    left: 20%;
+    width: 60%;
+    background-color: white;
+    color: var(--fore-color);
+    text-align: left;
+    white-space: normal;
     border: 2px solid var(--color-grey-light);
     border-top: 0px;
     box-shadow: 0px 10px 10px 10px rgba(0, 0, 0, 0.5);
-    background-color: white;
-    z-index: 1;
-    padding: 1em 2em;
-    line-height: 1.5em;
-    text-align: left;
-    white-space: normal;
-    color: initial;
 
-    .tipue_search_content_title {
-      margin-top: 0.5em;
-    }
-    .tipue_search_content_loc {
-      display: none;
+    .pagefind-ui__result-link {
+      font-weight: 700;
     }
   }
 }

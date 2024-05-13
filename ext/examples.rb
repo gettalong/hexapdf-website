@@ -1,4 +1,6 @@
 require 'tmpdir'
+require 'webgen/path_handler/base'
+require 'webgen/path_handler/page_utils'
 
 class ExamplePDF
 

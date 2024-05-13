@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="{relocatable: assets/css/site.css}" />
     <link rel="icon shortcut" type="image/ico" href="{relocatable: /assets/images/favicon.ico}" />
+    <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+    <script src="/pagefind/pagefind-ui.js"></script>
   </head>
   <body>
-
     <header>
       <div class="wmax row">
         <a class="logo col-sm" href="{relocatable: /}"><img src="{relocatable: /assets/images/logo.svg}" alt="HexaPDF logo" />HexaPDF</a>
@@ -19,9 +20,9 @@
             <label for="drawer-control" class="drawer-close"></label>
             <h2 class="center hidden-md hidden-lg">Menu</h2>
             {menu: {template: /navbar-menu.template, options: {mi: {main_menu: true}, sort: true, absolute_levels: 1}}}
-            <div id="search"><input type="text" placeholder="search" id="tipue_search_input" title="Search the site" /></div>
+            <div id="search"></div>
           </div>
-          <div id="tipue_search_content"></div>
+          <div id="search-results"></div>
         </div>
       </div>
     </header>
@@ -40,16 +41,10 @@
     <!-- Scripts -->
     <script src="{relocatable: assets/js/app.js}"></script>
     <script src="{relocatable: assets/search_data.js}"></script>
-    <script type="text/javascript">
-      $(document).ready(function() {
-        $('#tipue_search_input').tipuesearch({"mode":"static", "liveDescription":"#content"});
-      });
-      $(document).ready(function() {
-        $('#tipue_search_input').keyup(function(event) {
-          if(event.keyCode == '27') {
-            $('#tipue_search_content').hide();
-          }
-        });
+    <script>
+      window.addEventListener('DOMContentLoaded', (event) => {
+        new PagefindUI({ element: "#search", showSubResults: true });
+        document.getElementById('search-results').appendChild(document.getElementsByClassName('pagefind-ui__drawer')[0]);
       });
     </script>
 

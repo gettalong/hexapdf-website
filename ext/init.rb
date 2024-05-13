@@ -1,5 +1,4 @@
 require 'rdoc/store' rescue require 'rdoc/rdoc'
-load('tipue_search')
 
 require_relative 'examples'
 require_relative 'benchmark'
@@ -35,4 +34,8 @@ website.ext.path_handler.register(PDFImage, insert_at: 4, name: 'pdf_image')
 
 website.blackboard.add_listener(:website_initialized) do
   $:.unshift(File.expand_path(website.config['path_handler.example_pdf.hexapdf_lib']))
+end
+website.blackboard.add_listener(:website_generated) do
+  website.logger.info("Adding pagefind data for site search")
+  `pagefind -s #{File.join(__dir__, '..', 'out')}`
 end
