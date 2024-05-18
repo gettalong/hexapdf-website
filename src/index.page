@@ -23,9 +23,10 @@ template: default.template
 
 <div class="row" style="background-color: var(--secondary-back-color);">
   <div class="col-sm-12 wmax row">
-    <div class="col-sm-12 col-md-6" style="display: flex; align-items: center; justify-content: center; gap: 5rem">
+    <div class="col-sm-12 col-md-6" style="display: flex; flex-wrap: wrap; align-content: center; align-items: center; justify-content: center; gap: 5rem">
        <img src="{relocatable: /assets/images/logo-daisybill.png}" style="height: 3rem;" />
        <img src="{relocatable: /assets/images/logo-signwell.png}" style="height: 3rem;" />
+       <img src="{relocatable: /assets/images/logo-docuseal.svg}" style="height: 3rem;" />
     </div>
     <div class="col-sm-12 col-md-6"><div class="cycle">
       <blockquote class="cycle1" style="animation-duration: 15s" cite="Ruben Gamez, Founder, Signwell">
