@@ -27,7 +27,7 @@ HexaPDF::Composer.create('hello-world.pdf') do |pdf|
 end
 ~~~
 
-Text (or more generally every box) is layed out from top-to-bottom and can be flown around objects
+Text (or more generally every box) is layed out from top to bottom and can be flown around objects
 that have been placed on the page before. This makes it easy, for example, to flow text around
 images (see the new [composer example][cex]). Also, if some box doesn't fit on a page or can't be
 split, a new page is automatically created.
