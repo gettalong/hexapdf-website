@@ -37,13 +37,13 @@ operators, like showing text at a certain position. More complex document layout
 work like line wrapping algorithms, hyphenation algorithms, flowing text around other content and
 more.
 
-HexaPDF is naturally able to do the basic document creation tasks. These can be done using the
-[HexaPDF::Content::Canvas] class which also provides basic text output. The complex tasks are
+HexaPDF can do both the basic and the complex document creation tasks. These basic one can be done
+using the [HexaPDF::Content::Canvas] class which also provides text output. The complex one is
 handled by the classes in the [HexaPDF::Layout] module.
 
-Most classes in the [HexaPDF::Layout] module are completely decoupled from the PDF-specific parts of
-HexaPDF. This is because the PDF parts only come into play once text and graphics have been properly
-laid out and need to be drawn on a canvas.
+Most classes in the [HexaPDF::Layout] module are decoupled from the PDF-specific parts of HexaPDF.
+This is because the PDF parts only come into play once text and graphics have been properly laid out
+and need to be drawn on a canvas.
 
 
 ## Layout Class Overview
@@ -65,7 +65,6 @@ These classes can either be used directly or through [HexaPDF::Document::Layout]
 convenience interface for working with them. However, they are most commonly used through
 [HexaPDF::Composer] which ties them neatly together and provides the easiest interface for users.
 
-
 The inner workings and main features of the mentioned classes are discussed below.
 
 
@@ -76,7 +75,7 @@ content and how to draw the content.
 
 Examples of box classes that directly encapsulate content are [HexaPDF::Layout::TextBox] for drawing
 text and [HexaPDF::Layout::ImageBox] for drawing an image. Additionally, there are box classes that
-act as containers like [HexaPDF::Layout::ListBox] and [HexaPDF::Layout::ColumnBox]. Those container
+act as containers like [HexaPDF::Layout::ListBox] and [HexaPDF::Layout::ColumnBox]. The container
 classes internally use Frame and BoxFitter objects to do the actual layouting.
 
 Each box has at least the following attributes:
@@ -94,8 +93,8 @@ Each box has at least the following attributes:
   information for that box. Examples of style attributes are `position` (describing how to place the
   box in the frame) and `font_size`.
 
-The base class [HexaPDF::Layout::Box] already provides some useful properties for all box classes,
-for example the ability to draw a background and border.
+The base class [HexaPDF::Layout::Box] already provides some useful properties and a base
+implementation for all box classes, for example the ability to draw a background and border.
 
 By encapsulating content into a box class and *not* drawing it directly onto the canvas, the drawing
 logic becomes easily re-usable. Additionally, the box instances can be used together with frames for
@@ -110,16 +109,18 @@ one time.
 A **[HexaPDF::Layout::Frame]** defines the space where content boxes can be placed and provides the
 methods to place them. Once placed their occupied area (which is different for different types of
 positions) is removed from the available space, making the frame ready for the next box placement.
-Note that placing a box in a frame doesn't necessarily mean actually drawing the box, e.g. when
-frames are used inside container boxes.
+Note that placing a box in a frame doesn't necessarily mean actually drawing the box. For example,
+container boxes use one or more frames to fit the child boxes. Since that fitting process may be
+done several times due to inner or outer constraints, the drawing method may only be called once
+fitting is finalized.
 
 
 ### Frame Shape
 
-The **shape** of a frame is initially rectangular. Once boxes are fitted and drawn inside the frame,
-its available space gets reduced. Due to this the shape of a frame may be a polygon set consisting
-of arbitrary rectilinear polygons. For example, if a box is placed using absolute coordinates, a
-hole in the shape may appear.
+The **shape** of a frame is initially rectangular. Once boxes are fitted inside the frame, its
+available space gets reduced. Due to this the shape of a frame may be a polygon set consisting of
+arbitrary rectilinear polygons. For example, if a box is placed using absolute coordinates, a hole
+in the shape may appear.
 
 The frame's shape is used to determine the current placement position (available through the
 [HexaPDF::Layout::Frame#x] and [HexaPDF::Layout::Frame#y] attributes). Together with the
@@ -139,7 +140,7 @@ Fitting the box
 
 : The first step is fitting the box using the [HexaPDF::Layout::Frame#fit] method. This method in
   turn calls [HexaPDF::Layout::Box#fit] and lets the box decide whether it fits or not. The result
-  of Frame#fit is a [HexaPDF::Layout::Frame::FitResult] object, holding the information about
+  of Frame#fit is a [HexaPDF::Layout::Box::FitResult] object, holding the information about
   whether fitting was successful, where the box in the frame is placed and which area needs to be
   removed from the frame.
 
@@ -201,7 +202,7 @@ adjusted for use with multiple frames:
 * If no part of the box fits, a new region of the frame is determined and the process started again.
 
 * If no space is left on the current frame, the next frame is selected and the process started
-  again. However, it there is no next frame, the box (and any other after it) can't be fitted
+  again. However, if there is no next frame, the box (and any other after it) can't be fitted
   anymore and is stored separately from the fit results.
 
 After the `#fit` method is called for every box, the stored fit results can be used to draw the
