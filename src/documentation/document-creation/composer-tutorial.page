@@ -91,7 +91,7 @@ composer.document.config['font.map'] = {
   'Emoji' => \{none: File.expand_path('~/.fonts/NotoEmoji-Regular.ttf'),
               bold: File.expand_path('~/.fonts/NotoEmoji-Bold.ttf')}
 }
-composer.document.config['font.fallback'] = ['Emoji']
+composer.document.config['font.fallback'] << 'Emoji'
 composer.text("The monkey-no-see 🙈 and 😄 are provided by the fallback font.")
 ~~~
 
