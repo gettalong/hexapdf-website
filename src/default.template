@@ -1,8 +1,17 @@
 <!DOCTYPE HTML>
 <html lang="en">
   <head>
-    <title>HexaPDF - {title:}</title>
+    <title>{title:} - HexaPDF</title>
     <meta charset="utf-8" />
+
+    <meta name="author" content="Thomas Leitner &lt;t_leitner@gmx.at&gt;" />
+    <meta name="DC.creator" content="Thomas Leitner" />
+    <meta name="DC.title" content="{title: } - HexaPDF" />
+    <meta name="copyright" content="&copy; 2014- Thomas Leitner" />
+    <meta name="dcterms.rights" content="&copy; 2014- Thomas Leitner" />
+    <meta name="keywords" content="ruby pdf library, ruby pdf generator, ruby pdf reader, ruby pdf parser, pdf library" />
+    <meta name="generator" content="webgen - https://webgen.gettalong.org" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="{relocatable: assets/css/site.css}" />
     <link rel="icon shortcut" type="image/ico" href="{relocatable: /assets/images/favicon.ico}" />
