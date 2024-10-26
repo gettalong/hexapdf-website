@@ -1,0 +1,92 @@
+---
+title: HexaPDF 1.0.0
+created_at: 2024-10-26 22:47:00 +02:00
+---
+
+HexaPDF has been quite stable for a long time now. So without further ado I'm happy to announce the
+release of **HexaPDF 1.0.0**!
+
+And to celebrate this occasion you can [get HexaPDF licenses][lic] at 15% off with the discount code
+"10YEARS" for the next two weeks!
+
+[lic]: https://gettalong.at/hexapdf/
+
+
+## Changes
+
+Feature-wise this release is like the usual releases. The most important new feature is the ability
+to merge interactive forms (AcroForms) when merging PDFs, using the new [MergeAcroForm
+task][HexaPDF::Task::MergeAcroForm]. There is also a new
+[`#write_to_string`][HexaPDF::Document#write_to_string] method for more easily writing a PDF
+document to a string.
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+[changelog]: /documentation/changelog.html
+
+
+## BreakVer Versioning Scheme
+
+All versions until now were 0.x versions where nobody should expect much in terms of compatibility
+between versions. Even so, HexaPDF tried to follow a simple strategy for its 0.y.z version numbers:
+
+* If a version only contains bug fixes, increment the patch version ("z").
+
+* If a version contains new features, increment the minor version ("y").
+
+* If a version contains breaking changes, increment the minor version ("y") and *highlight* the
+  breaking changes in the changelog.
+
+Going forward HexaPDF will follow a similar scheme and intentionally *not* adhere to what's nowadays
+called "semantic versioning".
+
+Interestingly, somebody was thinking along the same lines and created [BreakVer] a few yers ago
+which is the versioning scheme HexaPDF will be using from now on. In short:
+
+* Version numbers still consist of "major.minor.patch".
+
+* A bump in the patch number indicates that there are no breaking changes. Usually this will be done
+  only when a release contains just bug fixes.
+
+* A bump in the minor number indicates that there *might* be minor breaking changes. Those breaking
+  changes will be highlighted clearly in the changelog so that this can easily be seen by just
+  glancing at the changelog. Most such releases will contain new features and no breaking changes,
+  though.
+
+* A bump in the major number indicates that there might be (and usually are) major breaking
+  changes. Again, those breaking changes are clearly highlighted in the changelog. Such releases
+  will usually be done when introducing major architectural changes.
+
+So why not use SemVer? HexaPDF has a very large public API surface. If SemVer was strictly followed,
+this could (and probably would) lead to high major numbers rather fast. And for me major numbers
+should indicate major changes in the codebase.
+
+For example, in version 0.40.0 there was a single breaking change, renaming the style property
+'text_overflow' to 'overflow'. In SemVer this would have led to bumping the major number. With
+BreakVer bumping the minor number would be the correct choice.
+
+[breakver]: https://www.taoensso.com/break-versioning
+
+
+## What's Next for HexaPDF?
+
+HexaPDF has been quite stable for a while now. Releasing version 1.0.0 provides another indication
+to existing and potential users that it is a mature library that can be relied on. Read the blog
+post ["10 Years of HexaPDF"][10y] to find out more about the journey.
+
+But releasing version 1.0.0 doesn't mean that HexaPDF is finished! Quite the opposite, there are
+still many parts of the PDF specification that can and will be implemented. The document creation
+and layout facilities can always be improved as well. And my private to-do list contains more than
+150 items, so... :-)
+
+For the near future there are plans to implement:
+
+* Logical structures (PDF 2.0 section 14.7) which is a pre-requisite for tagged PDF
+* LTV (long term validation) signatures
+* More annotation types
+* And many smaller internal changes and optimizations
+
+If *you* need something that is not yet implemented, please create [an issue][gh].
+
+[10y]: https://gettalong.org/blog/2024/10-years-of-hexapdf.html
+[gh]: https://github.com/gettalong/hexapdf/issues
