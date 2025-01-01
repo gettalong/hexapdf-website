@@ -33,8 +33,10 @@ class PDFImage
     $website_out = pdf_file
     load(source_file, true)
     doc = HexaPDF::Document.open(pdf_file)
-    doc.files.add(source_file, name: File.basename(source_file), description: 'Source code')
-    doc.write(pdf_file, optimize: true)
+    unless doc.signed?
+      doc.files.add(source_file, name: File.basename(source_file), description: 'Source code')
+      doc.write(pdf_file, optimize: true)
+    end
     system("pdftocairo -singlefile -png -r 144 -f #{page} -l #{page} -antialias subpixel #{pdf_file} #{png_file[0..-5]}")
   end
 
