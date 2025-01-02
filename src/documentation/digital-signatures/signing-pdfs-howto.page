@@ -82,7 +82,9 @@ widget = sig_field.create_widget(doc.pages[0], Rect: [20, 20, 120, 120])
 widget.create_appearance.canvas.
   stroke_color("red").rectangle(1, 1, 99, 99).stroke.
   font("Helvetica", size: 10).
-  text("Certified by signer", at: [10, 10])
+  text("Certified by signer", at: [10, 10]).
+  image(File.join(HexaPDF.data_dir, '..', '..', 'examples', 'machupicchu.jpg'),
+        at: [10, 20], height: 60)
 
 doc.sign("signed.pdf", signature: sig_field,
                        reason: 'Some reason',
@@ -125,8 +127,17 @@ end
 
 3.times do |i|
   doc = HexaPDF::Document.new(io: in_io)
+  sig_field = doc.acro_form(create: true).create_signature_field("signature#{i+1}")
+  widget = sig_field.create_widget(doc.pages[0], Rect: [20 + i * 130, 20, 120 + i * 130, 120])
+  widget.create_appearance.canvas.
+    stroke_color("red").rectangle(1, 1, 99, 99).stroke.
+    font("Helvetica", size: 10).
+    text("Approved by ##{i + 1}", at: [10, 10]).
+    image(File.join(HexaPDF.data_dir, '..', '..', 'examples', 'machupicchu.jpg'),
+          at: [10, 20], height: 60)
+
   out_io = StringIO.new(''.b)
-  doc.sign(out_io, reason: "Some reason #{i}",
+  doc.sign(out_io, signature: sig_field, reason: "Some reason #{i + 1}",
                    certificate: HexaPDF.demo_cert.cert,
                    key: HexaPDF.demo_cert.key,
                    certificate_chain: [HexaPDF.demo_cert.sub_ca,
