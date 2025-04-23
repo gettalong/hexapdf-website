@@ -246,7 +246,7 @@ The sequence:
   would be invisible).
 
   By using [HexaPDF::Type::Annotations::Widget#background_color],
-  [HexaPDF::Type::Annotations::Widget#border_style] and
+  [HexaPDF::Type::Annotations::BorderStyling#border_style] and
   [HexaPDF::Type::Annotations::Widget#marker_style] you can change the widget's appearance.
 
 * Set the field's value which will update all associated widgets to reflect that value.

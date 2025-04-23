@@ -22,7 +22,7 @@ The most notable additions and changes are:
 * The style properties 'align' and 'valign' have been renamed (**breaking change**) to 'text_align'
   and 'text_valign' so that the old names can be used for box placement. With the addition of the
   style property 'mask_mode' one has now even more control over box placement, e.g. overlaying boxes
-  is now possible (see the [added example](/examples/frame_mask_mode.html)).
+  is now possible (see the [added example](/examples/composer_mask_mode.html)).
 
 * The new 'psd' command for `hexapdf inspect` provides easier to read output for page content
   streams, e.g. by decoding the text output parts and showing the nesting levels.
