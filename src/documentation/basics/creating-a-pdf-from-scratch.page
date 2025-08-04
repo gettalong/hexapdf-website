@@ -92,7 +92,16 @@ it! If you followed the tutorial without having access to a computer, you can al
 file here](hello-world.pdf).
 
 You might wanna play around a bit with different [HexaPDF::Content::Canvas] methods, for example, to
-draw lines or bezier curvers with different line width and colors.
+draw lines or bezier curves with different line width and colors. To deepen your knowledge in this
+area, have a look at the [canvas tutorial].
+
+[canvas tutorial]: ../document-creation/canvas-tutorial.html
+
+Note that this tutorial uses a low-level form of creating content on a page. It is usually better to
+use the high-level [HexaPDF::Composer] for creating a document (see the [composer tutorial] for a
+quick start).
+
+[composer tutorial]: ../document-creation/composer-tutorial.html
 
 When you are ready, head on to the next tutorial about [modifying a PDF
 document](modifying-a-pdf-document.html).
