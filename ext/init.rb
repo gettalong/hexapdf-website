@@ -1,5 +1,7 @@
 require 'rdoc/store' rescue require 'rdoc/rdoc'
 
+$:.unshift(File.join(website.directory, '../hexapdf/lib'))
+
 require_relative 'examples'
 require_relative 'benchmark'
 require_relative 'tutorial'
