@@ -33,13 +33,11 @@ be accessed via the respective instance methods [#document][HexaPDF::Composer#do
 We use the document instance to define a TrueType font:
 
 ~~~ ruby
-composer.document.config['font.map'] = {
-  'Lato' => {
-    none: '/usr/share/fonts/truetype/lato/Lato-Regular.ttf',
-    bold: '/usr/share/fonts/truetype/lato/Lato-Bold.ttf',
-    italic: '/usr/share/fonts/truetype/lato/Lato-Italic.ttf',
-    bold_italic: '/usr/share/fonts/truetype/lato/Lato-BoldItalic.ttf',
-  }
+composer.document.config['font.map']['Lato'] = {
+  none: '/usr/share/fonts/truetype/lato/Lato-Regular.ttf',
+  bold: '/usr/share/fonts/truetype/lato/Lato-Bold.ttf',
+  italic: '/usr/share/fonts/truetype/lato/Lato-Italic.ttf',
+  bold_italic: '/usr/share/fonts/truetype/lato/Lato-BoldItalic.ttf',
 }
 ~~~
 
@@ -87,15 +85,31 @@ with emoji but can happen for any character. HexaPDF provides the ability to use
 such cases:
 
 ~~~ ruby
-composer.document.config['font.map'] = {
-  'Emoji' => \{none: File.expand_path('~/.fonts/NotoEmoji-Regular.ttf'),
-              bold: File.expand_path('~/.fonts/NotoEmoji-Bold.ttf')}
+composer.document.config['font.map']['Emoji'] = {
+  none: File.expand_path('~/.fonts/NotoEmoji-Regular.ttf'),
+  bold: File.expand_path('~/.fonts/NotoEmoji-Bold.ttf')
 }
 composer.document.config['font.fallback'] << 'Emoji'
 composer.text("The monkey-no-see 🙈 and 😄 are provided by the fallback font.")
 ~~~
 
 {pdf: [0-4, -1]}
+
+HexaPDF supports advanced typography like kerning and ligatures through the use of the HarfBuzz text
+shaping engine. While this is a nice-to-have for some languages/scripts, it is mandatory when
+working with more complex scripts that require, for example, ligatures.
+
+To use HarfBuzz the 'shaping_engine' style property needs to be set and the `harfbuzz-ruby` gem
+installed. OpenType features can be controlled via the 'font_features' property (this part uses the
+Inter font that is shipped with HexaPDF):
+
+~~~ ruby
+composer.text('This text is correctly kerned and ligature like ffi are done. There are ' \
+              'S⃞O⃞M⃞E⃞ OpenType features used as well.', shaping_engine: :harfbuzz,
+              font: 'Inter', font_features: \{dlig: true})
+~~~
+
+{pdf: [0-5, -1]}
 
 Besides simple text HexaPDF also has built-in support for [formatted
 text][HexaPDF::Composer#formatted_text], [images][HexaPDF::Layout::ImageBox], [column
@@ -115,7 +129,7 @@ composer.column(columns: 2, gaps: 30, equal_height: true) do |column|
 end
 ~~~
 
-{pdf: [0-5, -1]}
+{pdf: [0-6, -1]}
 
 The [`#formatted_text`][HexaPDF::Composer#formatted_text] method uses an array of strings and hashes
 to define its content. The simplest form of such a hash is `\{text: 'Some test',
@@ -162,7 +176,7 @@ composer.text('This is our Header!', style: :header)
 composer.lorem_ipsum(style: :paragraph)
 ~~~
 
-{pdf: [0-7, -1]}
+{pdf: [0-8, -1]}
 
 
 ## Placement of Content
@@ -193,7 +207,7 @@ composer.canvas.
   restore_graphics_state
 ~~~
 
-{pdf: [0-8, -1]}
+{pdf: [0-9, -1]}
 
 You can see that the frame is not rectangular anymore! The space occupied by the floating image has
 been removed from it.
@@ -205,7 +219,7 @@ frame's shape. So if we draw some text, it will be put right next to the floatin
 composer.lorem_ipsum(count: 2, style: :paragraph)
 ~~~
 
-{pdf: [0-9, -1]}
+{pdf: [0-10, -1]}
 
 Putting the text to the right works but the text does not go beneath the image, i.e. it doesn't flow
 around it. The reason for this is that by default the box is fit into to above mentioned rectangular
@@ -220,7 +234,7 @@ composer.image(image, width: 100, position: :float, margin: [0, 10, 0, 0])
 composer.lorem_ipsum(count: 2, style: :paragraph, position: :flow)
 ~~~
 
-{pdf: [0-10, -1]}
+{pdf: [0-11, -1]}
 
 Note the added `position: :flow` argument which makes the difference. You would generally also use
 that argument with container boxes if you use it for text boxes.
@@ -252,7 +266,7 @@ composer.new_page(:simple)
 composer.lorem_ipsum(count: 2)
 ~~~
 
-{pdf: {snippets: [0-11, -1], page: 2}}
+{pdf: {snippets: [0-12, -1], page: 2}}
 
 
 All new pages will now use that page style. By setting the `#next_style` attribute of the page
