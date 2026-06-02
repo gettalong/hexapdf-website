@@ -595,6 +595,16 @@ Advanced boxes
 : In addition to the [column box][HexaPDF::Layout::ColumnBox] HexaPDF also supports bullet and
   numbered [lists][HexaPDF::Layout::ListBox].
 
+Advanced text shaping
+
+: HexaPDF can optionally use a HarfBuzz based text shaping engine that allows full usage of TrueType
+  fonts and their OpenType features, like kerning, ligatures, mark positioning etc. This is
+  especially important for scripts that rely on such features for the correct display of the
+  glyphs.
+
+  To enable the HarfBuzz based text shaping engine one just has to set the style property
+  `shaping_engine` to `:harfbuzz` and assign a TrueType.
+
 Existing PDF file as template
 
 : Granted, there is `prawn-template` but it is very restricted in which files it can load/work with.
