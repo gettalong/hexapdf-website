@@ -1,0 +1,46 @@
+---
+title: HexaPDF 1.9.0 - Text shaping et al.
+created_at: 2026-06-07 13:30:00 +02:00
+---
+
+There hasn't been a news entry for quite some time. So this post details the newest changes in
+HexaPDF 1.9.0 as well as higlights some of the more important ones of the past releases.
+
+The most notable additions and changes of 1.9.0 are:
+
+* The document layout engine now supports text shaping by using the great HarfBuzz library! This
+  means that by using a TrueType font and setting the new
+  [`shaping_engine`][HexaPDF::Layout::Style#shaping_engine] style property it is now possible to use
+  all OpenType features a font provides.
+
+  The following image illustrates the difference (above without, below with HarfBuzz):
+
+  ![Sample text shaping image](assets/text-shaping.png)
+
+  This will now allow a wide range of scripts to be correctly shown.
+
+* The [HexaPDF::Layout::TableBox] now supports breaking table cells. This means that very high cells
+  don't lead to a fit error anymore.
+
+* The [ink annotation][HexaPDF::Type::Annotations::Ink] (sometimes called "scribble" annotation) is
+  now supported, including appearance generation.
+
+
+Additionally, HexaPDF gained some other nice features recently:
+
+* Importing pages is now possible with a [special task][HexaPDF::Task::ImportPages] that supports
+  preserving the optional content configuration and interactive form fields.
+
+* There is now a [`Page#extract_text`][HexaPDF::Type::Page#extract_text] method (see
+  [HexaPDF::Content::SmartTextExtractor] for details) for extracting the text from pages that
+  preserves the overall layout of the text.
+
+* The annotation types [Polygon][HexaPDF::Type::Annotations::Polygon],
+  [Polyline][HexaPDF::Type::Annotations::Polyline], [Square][HexaPDF::Type::Annotations::Square],
+  [Circle][HexaPDF::Type::Annotations::Circle], and [Line][HexaPDF::Type::Annotations::Line] are
+  fully supported with appearance generation.
+
+
+As always, have a look at the [changelog] for an overview of all changes.
+
+[changelog]: /documentation/changelog.html
