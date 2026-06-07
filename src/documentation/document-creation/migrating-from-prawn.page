@@ -448,7 +448,8 @@ Tables (`doc.table`)
   row spans, can selectively apply styling to certain cell ranges, and split the table.
 
   In addition, HexaPDF's implementation allows any kind of content in a cell while Prawn is limited
-  to text, images or sub-tables.
+  to text, images or sub-tables. While Prawn allows splitting a table on a row-by-row basis only,
+  HexaPDF can also split table cells.
 
 
 Column box (`doc.column_box`)
